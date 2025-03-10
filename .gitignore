@@ -1,0 +1,8 @@
+ASR_model
+# backend/logs
+backend/temp_audio
+backend/soul_backend/migrations
+backend/config/__pycache__
+backend/db.sqlite3
+
+
