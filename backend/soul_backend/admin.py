@@ -3,10 +3,11 @@ Soul Backend 管理界面配置
 将所有模块的模型统一在一个管理界面配置中
 """
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-# 导入所有模块的模型
+# 暂时注释掉模型导入和注册，因为我们现在不需要admin功能
+"""
+from django.contrib.auth.admin import UserAdmin
 from soul_backend.account.models import User
 from soul_backend.diary.models import Diary, DiaryTag, DiaryTagging
 from soul_backend.chat.models import ChatSession, ChatMessage
@@ -102,6 +103,7 @@ class FollowAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     search_fields = ('follower__username', 'following__username')
     readonly_fields = ('created_at',)
+"""
 
 # 自定义管理站点标题和页眉
 admin.site.site_header = _('SoulWhisper 管理后台')

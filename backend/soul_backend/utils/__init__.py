@@ -5,5 +5,5 @@
 """
 
 # 导出工具函数，方便直接导入
-from .asr.whisper_asr import transcribe_audio, transcribe_folder
-from .emotion.emotion_analysis import analyze_emotion 
+from .asr.whisper_asr import transcribe_audio
+# from .emotion.emotion_analysis import analyze_emotion 
