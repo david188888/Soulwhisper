@@ -1,4 +1,0 @@
-Django==5.1.7
-torch==2.6.0+cu126
-transformers==4.43.3
-~orch==2.6.0+cu126
