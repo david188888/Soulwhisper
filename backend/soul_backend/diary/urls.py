@@ -4,9 +4,9 @@ Diary 模块的URL配置
 from django.urls import path
 from . import views
 
+app_name = 'diary'
+
 urlpatterns = [
-    # path('create/', views.create_diary_view, name='create_diary'),
-    # path('list/', views.diary_list_view, name='diary_list'),
-    # path('<int:diary_id>/', views.diary_detail_view, name='diary_detail'),
-    path('voice/', views.voice_diary_view, name='voice_diary'),
-] 
+    path('asr_view/', views.asr_view, name='asr_view'),
+    path('emotion_view/', views.emotion_view, name='emotion_view'),
+]
