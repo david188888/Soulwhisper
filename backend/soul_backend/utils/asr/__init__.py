@@ -1,8 +1,7 @@
 """
 语音识别工具
 
-提供基于Transformer的语音转文字功能
+提供基于Transformer的语音转文字功能，支持原始Whisper模型和ONNX转换后的模型
 """
 
-# 导出主要功能函数
-from .whisper_asr import transcribe_audio, load_model 
+# 导出Whisper模型相关函数
