@@ -1,5 +1,5 @@
 """
-WSGI config for soul_backend project.
+WSGI config for apps project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

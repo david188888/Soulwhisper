@@ -73,10 +73,11 @@ backend/
 ## 模块间调用
 
 ### 1. 模型调用
+
 ```python
 # 在其他模块中导入模型
-from soul_backend.diary.models import Diary
-from soul_backend.account.models import User
+from apps.diary.models import Diary
+from apps.account.models import User
 
 # 使用示例
 diary = Diary.objects.create(
@@ -87,9 +88,10 @@ diary = Diary.objects.create(
 ```
 
 ### 2. 工具函数调用
+
 ```python
 # 在视图中使用工具函数
-from soul_backend.utils import transcribe_audio, analyze_emotion
+from apps.utils import transcribe_audio, analyze_emotion
 
 # 使用示例
 text = transcribe_audio(audio_file)
@@ -100,10 +102,10 @@ emotion = analyze_emotion(text)
 主URL配置（config/urls.py）统一管理所有模块的路由：
 ```python
 urlpatterns = [
-    path('api/account/', include('soul_backend.account.urls')),
-    path('api/diary/', include('soul_backend.diary.urls')),
-    path('api/chat/', include('soul_backend.chat.urls')),
-    path('api/community/', include('soul_backend.community.urls')),
+    path('api/account/', include('apps.account.urls')),
+    path('api/diary/', include('apps.diary.urls')),
+    path('api/chat/', include('apps.chat.urls')),
+    path('api/community/', include('apps.community.urls')),
 ]
 ```
 
@@ -161,7 +163,6 @@ psycopg2-binary==2.9.9  # PostgreSQL数据库驱动
 ```env
 DEBUG=True
 SECRET_KEY=your_secret_key
-DATABASE_URL=postgresql://user:password@localhost/dbname
 ```
 
 ### 4. 数据库迁移
