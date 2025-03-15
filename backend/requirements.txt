@@ -1,0 +1,8 @@
+Django==5.0.2
+djangorestframework==3.14.0
+torch==2.2.0
+transformers==4.37.2
+python-dotenv==1.0.1
+djongo==1.3.6  # Django MongoDB连接器
+pymongo==3.12.3  # MongoDB Python驱动
+dnspython==2.4.2  # MongoDB DNS支持

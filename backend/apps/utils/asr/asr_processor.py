@@ -14,6 +14,7 @@ import noisereduce as nr
 import numpy as np
 from pathlib import Path
 from dashscope import MultiModalConversation
+import concurrent.futures
 # from backend.config.settings import *  # 假设需要导入所有设置
 
 
@@ -91,18 +92,33 @@ class RequestApi(object):
 def reduce_noise(audio_path):
     """
     对音频文件进行降噪处理
+    动态调整窗口大小以适应不同长度的音频
     """
     try:
         data, rate = sf.read(audio_path)
         if data.dtype != np.float32:
             data = data.astype(np.float32)
+        
+        # 计算适当的窗口大小
+        # 确保窗口大小不大于音频长度，并且是2的幂次方
+        audio_length = len(data)
+        window_size = min(1024, audio_length)  # 默认窗口大小为1024
+        # 找到最接近音频长度的2的幂次方
+        while window_size > audio_length:
+            window_size //= 2
+        if window_size < 2:  # 确保窗口大小至少为2
+            window_size = 2
+            
         reduced_noise = nr.reduce_noise(
             y=data,
             sr=rate,
             prop_decrease=0.95,
-            win_length= 1024,
+            win_length=window_size,  # 使用动态计算的窗口大小
+            n_fft=window_size,  # FFT窗口大小也相应调整
+            n_std_thresh_stationary=1.5,
             stationary=True,
         )
+        
         output_path = str(Path(audio_path).parent / f"denoised_{Path(audio_path).name}")
         sf.write(output_path, reduced_noise, rate)
         return output_path
@@ -114,29 +130,88 @@ def reduce_noise(audio_path):
 def detect_emotion(audio_file_path):
     """
     使用通义的语音大模型 API 进行情感识别
+    返回格式: {'emotion_type': 'happy/sad/angry', 'emotion_intensity': 1-10}
     """
     messages = [
         {
             "role": "system", 
-            "content": [{"text": "You are a helpful assistant, and good at judging user emotions"}]},
+            "content": [{"text": "You are an emotion analysis assistant. Analyze the emotion in the audio and return only emotion type (happy/sad/angry) and intensity (1-10)."}]},
         {
             "role": "user",
-            "content": [{"audio": audio_file_path}, {"text": "What emotions does this audio clip express? You only need to judge the three emotions [happy, angry, sad] and only output the emotion label."}],
+            "content": [
+                {"audio": audio_file_path}, 
+                {"text": "What emotion is expressed in this audio? Choose only one from (happy, sad, angry) and rate intensity from 1-10. Output JSON format with keys 'emotion_type' and 'emotion_intensity'."}
+            ],
         }
     ]
 
-    response = MultiModalConversation.call(model="qwen-audio-turbo-latest", messages=messages,api_key=settings.AUDIO_TURBO_API_KEY)
-    if response['status_code'] == 200:
-        # 假设返回的情感信息在 response 中
-        emotion_info = response.get('output', {}).get('choices', [{}])[0].get('message', {}).get('content', [{}])
-        return emotion_info
-    else:
-        return {'error': '情感识别失败'}
+    try:
+        response = MultiModalConversation.call(
+            model="qwen-audio-turbo-latest", 
+            messages=messages,
+            api_key=settings.AUDIO_TURBO_API_KEY
+        )
+        
+        if response['status_code'] == 200:
+            # 从响应中提取文本内容
+            content_text = ""
+            for content in response.get('output', {}).get('choices', [{}])[0].get('message', {}).get('content', []):
+                if 'text' in content:
+                    content_text += content['text']
+            
+            # 尝试解析JSON或者从文本中提取情感信息
+            try:
+                import json
+                import re
+                
+                # 尝试直接解析JSON
+                try:
+                    result = json.loads(content_text)
+                    if 'emotion_type' in result and 'emotion_intensity' in result:
+                        # 确保情感类型是我们支持的类型
+                        if result['emotion_type'] not in ['happy', 'sad', 'angry']:
+                            result['emotion_type'] = 'neutral'
+                        # 确保情感强度在 1-10 范围内
+                        intensity = int(result['emotion_intensity'])
+                        result['emotion_intensity'] = max(1, min(10, intensity))
+                        return result
+                except:
+                    pass
+                
+                # 如果JSON解析失败，尝试从文本中提取
+                emotion_match = re.search(r'(happy|sad|angry)', content_text.lower())
+                emotion_type = emotion_match.group(1) if emotion_match else 'neutral'
+                
+                intensity_match = re.search(r'intensity.*?(\d+)', content_text.lower())
+                if not intensity_match:
+                    intensity_match = re.search(r'(\d+)/10', content_text.lower())
+                emotion_intensity = int(intensity_match.group(1)) if intensity_match else 5
+                
+                # 确保情感强度在 1-10 范围内
+                emotion_intensity = max(1, min(10, emotion_intensity))
+                
+                return {
+                    'emotion_type': emotion_type,
+                    'emotion_intensity': emotion_intensity
+                }
+            except Exception as e:
+                logger.error(f"解析情感分析结果失败: {str(e)}")
+                return {
+                    'emotion_type': 'neutral',
+                    'emotion_intensity': 5
+                }
+        else:
+            logger.error(f"情感识别API调用失败: {response.get('message', '未知错误')}")
+            return {'emotion_type': 'neutral', 'emotion_intensity': 5}
+    except Exception as e:
+        logger.error(f"情感识别过程出错: {str(e)}")
+        return {'emotion_type': 'neutral', 'emotion_intensity': 5}
 
 
 def transcribe_audio(audio_file_path):
     """
     使用讯飞长语音识别服务转写音频文件
+    返回格式: {'text': '识别的文本内容'}
     """
     denoised_path = None
     try:
@@ -158,9 +233,7 @@ def transcribe_audio(audio_file_path):
                     words = json_1best['st'].get('rt', [{}])[0].get('ws', [])
                     text = ''.join(word['cw'][0]['w'] for word in words if word.get('cw'))
                     final_text += text.strip()
-        # 调用情感识别函数
-        emotion_info = detect_emotion(denoised_path)
-        return {'text': final_text, 'emotion': emotion_info}
+        return {'text': final_text}
     except Exception as e:
         logger.error(f"语音识别过程出错: {str(e)}")
         return {'error': str(e)}
@@ -169,4 +242,49 @@ def transcribe_audio(audio_file_path):
             try:
                 os.remove(denoised_path)
             except Exception as e:
-                logger.error(f"清理降噪音频文件失败: {str(e)}") 
+                logger.error(f"清理降噪音频文件失败: {str(e)}")
+
+def process_audio(audio_file_path):
+    """
+    并行处理音频文件：同时进行语音转录和情感识别
+    返回格式: {'text': '文本内容', 'emotion_type': '情感类型', 'emotion_intensity': 情感强度}
+    """
+    denoised_path = None
+    try:
+        # 首先进行降噪处理（只需处理一次）
+        denoised_path = reduce_noise(audio_file_path)
+        
+        # 使用ThreadPoolExecutor并行执行转录和情感识别
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            # 提交两个任务
+            transcribe_future = executor.submit(transcribe_audio, denoised_path)
+            emotion_future = executor.submit(detect_emotion, denoised_path)
+            
+            # 获取结果
+            transcribe_result = transcribe_future.result()
+            emotion_result = emotion_future.result()
+            
+        # 合并结果
+        result = {}
+        
+        # 添加文本转录结果
+        if 'error' in transcribe_result:
+            result['error'] = transcribe_result['error']
+            return result
+        else:
+            result['text'] = transcribe_result['text']
+        
+        # 添加情感分析结果
+        result['emotion_type'] = emotion_result.get('emotion_type', 'neutral')
+        result['emotion_intensity'] = emotion_result.get('emotion_intensity', 5)
+        
+        return result
+    except Exception as e:
+        logger.error(f"处理音频文件出错: {str(e)}")
+        return {'error': str(e)}
+    finally:
+        if denoised_path and denoised_path != audio_file_path:
+            try:
+                os.remove(denoised_path)
+            except Exception as e:
+                logger.error(f"清理降噪音频文件失败: {str(e)}")

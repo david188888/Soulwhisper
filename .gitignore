@@ -12,3 +12,11 @@ backend/soul_bappsackend/__pycache__
 backend/apps/utils/__pycache__
 backend/apps/utils/asr/__pycache__
 backend/logs
+backend/apps/account/migrations/__pycache__
+backend/apps/chat/migrations/__pycache__
+backend/apps/community/migrations/__pycache__
+backend/apps/diary/migrations/__pycache__
+backend/apps/account/migrations
+backend/apps/diary/migrations/
+backend/apps/chat/migrations/0002_auto_20250315_0149.py
+backend/apps/community/migrations/0002_auto_20250315_0149.py

@@ -97,10 +97,35 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'soulwhisper',  # MongoDB 数据库名称
+        'ENFORCE_SCHEMA': False,  # MongoDB是无模式的，设置为False
+        'CLIENT': {
+            'host': 'localhost',
+            'port': 27017,
+            'username': '',       # 如果没有设置身份验证，保持为空
+            'password': '',       # 如果没有设置身份验证，保持为空
+            'authSource': 'admin' # 身份验证数据库，默认是admin
+        },
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propagate': False,
+                }
+            }
+        }
     }
 }
+
+# MongoDB连接优化设置
+MONGODB_CONNECT_TIMEOUT = 30000  # 毫秒
+MONGODB_SOCKET_TIMEOUT = 30000   # 毫秒
+MONGODB_SERVER_SELECTION_TIMEOUT = 30000  # 毫秒
+
+# 禁用事务支持，因为MongoDB不完全支持
+DATABASES['default']['ATOMIC_REQUESTS'] = False
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -141,7 +166,7 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'djongo.models.ObjectIdField'
 
 # CORS设置
 CORS_ALLOW_ALL_ORIGINS = True  # 开发环境中允许所有源
@@ -193,7 +218,7 @@ LOGGING = {
 os.makedirs(os.path.join(BASE_DIR, 'logs'), exist_ok=True)
 
 # 自定义用户模型
-AUTH_USER_MODEL = 'account.CustomUser'
+AUTH_USER_MODEL = 'account.User'
 
 # 临时文件目录配置
 TEMP_AUDIO_DIR = os.path.join(BASE_DIR, 'temp_audio')
@@ -205,3 +230,11 @@ XUNFEI_API_SECRET = 'c83e04b1c93da18f3bdd3757284ca1ea'
 
 # 科大讯飞 API 密钥配置
 AUDIO_TURBO_API_KEY = 'sk-ff7db6fe31d2451798d4e5a09dba2eb2'  # 请替换为实际的API密钥
+
+# 添加以下设置来禁用迁移检查
+MIGRATION_MODULES = {
+    'account': None,
+    'diary': None,
+    'chat': None,
+    'community': None,
+}
