@@ -20,3 +20,14 @@ backend/apps/account/migrations
 backend/apps/diary/migrations/
 backend/apps/chat/migrations/
 backend/apps/community/migrations/
+backend/apps/chat/migrations/0002_auto_20250315_0149.py
+backend/apps/community/migrations/0002_auto_20250315_0149.py
+
+# ignored files
+node_modules/
+uni_modules/
+.project
+unpackage/
+.Ds_store
+/dist/
+/dev/
