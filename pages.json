@@ -1,4 +1,10 @@
 {
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
@@ -21,7 +27,9 @@
 		},
 		{
 			"path": "frontend/pages/tabbar/tabbar-5/tabbar-5",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "Profile"
+			}
 		},
 		{
 			"path": "frontend/pages/home-3-detial/aichat/aichat",
@@ -34,6 +42,24 @@
 		{
 			"path": "frontend/pages/home-3-detial/record/record",
 			"style": {}
+		},
+		{
+			"path": "frontend/pages/profile/privacy/index",
+			"style": {
+				"navigationBarTitleText": "Privacy Settings"
+			}
+		},
+		{
+			"path": "frontend/pages/profile/help/index",
+			"style": {
+				"navigationBarTitleText": "Help Center"
+			}
+		},
+		{
+			"path": "frontend/pages/profile/about/index",
+			"style": {
+				"navigationBarTitleText": "About Us"
+			}
 		}
 	],
 	"globalStyle": {
