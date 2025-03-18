@@ -228,13 +228,7 @@ os.makedirs(TEMP_AUDIO_DIR, exist_ok=True)
 XUNFEI_APPID = '9302255e'
 XUNFEI_API_SECRET = 'c83e04b1c93da18f3bdd3757284ca1ea'
 
-# 科大讯飞 API 密钥配置
+# 阿里audio_turbo API 密钥配置
 AUDIO_TURBO_API_KEY = 'sk-ff7db6fe31d2451798d4e5a09dba2eb2'  # 请替换为实际的API密钥
-
-# 添加以下设置来禁用迁移检查
-MIGRATION_MODULES = {
-    'account': None,
-    'diary': None,
-    'chat': None,
-    'community': None,
-}
+# 智谱API密钥配置
+ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR'  # 请替换为实际的API密钥
