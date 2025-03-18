@@ -59,21 +59,3 @@ class DiaryChat:
             return response
         return "很抱歉，我现在无法回应，请稍后再试。"
 
-# 示例使用
-if __name__ == "__main__":
-    chat_session = DiaryChat()
-    
-    # 开始对话
-    diary_content = "今天工作很忙，感觉压力很大，晚上回家后感到很疲惫。"
-    print("用户日记:", diary_content)
-    response = chat_session.start_chat(diary_content)
-    print("助手:", response)
-    
-    # 模拟交互对话
-    while True:
-        user_input = input("\n用户: ")
-        if user_input.lower() in ['退出', 'quit', 'exit']:
-            break
-            
-        response = chat_session.chat(user_input)
-        print("助手:", response)

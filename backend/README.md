@@ -33,6 +33,9 @@ backend/
 │       │   ├── asr_processor.py   # ASR处理核心
 │       │   ├── whisper.py        # Whisper模型实现
 │       │   └── onnx_asr.py      # ONNX优化版实现
+│       ├── llm/          # 大语言模型工具
+│       │   ├── get_result.py    # LLM调用和聊天实现
+│       │   └── __init__.py      # 模块初始化
 │       └── middleware.py  # 中间件
 ├── ASR_model/            # ASR模型文件
 │   ├── model/           # 原始模型
@@ -56,10 +59,11 @@ backend/
 - 情感分析和标注
 - 日记管理和查询
 
-### Chat模块 (待实现)
-- 与AI助手对话
-- 情感倾诉和分析
-- 会话历史管理
+### Chat模块
+- 基于日记内容与AI助手对话
+- 情感倾诉和心理辅导功能
+- 会话状态管理
+- 支持多轮对话流程
 
 ### Community模块 (待实现)
 - 日记分享功能
@@ -72,6 +76,10 @@ backend/
   - 支持多种音频格式
   - 集成Whisper模型
   - ONNX优化支持
+- LLM大语言模型服务
+  - 集成智谱AI的GLM-4-Air模型
+  - DiaryChat类实现多轮对话功能
+  - 针对日记内容的个性化交互
 - 情感分析服务
 - 通用工具函数
 
@@ -90,5 +98,55 @@ python manage.py migrate
 ```
 Authorization: Token your_token_here
 ```
+
+## 4. API接口说明
+
+### 聊天接口
+
+#### 开始日记对话
+- **URL**: `/api/chat/start/`
+- **方法**: POST
+- **认证**: 需要Token认证
+- **请求参数**:
+  ```json
+  {
+    "diary_content": "用户的日记内容"
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "session_id": "会话ID",
+    "response": "AI的首次回复"
+  }
+  ```
+
+#### 发送聊天消息
+- **URL**: `/api/chat/message/`
+- **方法**: POST
+- **认证**: 需要Token认证
+- **请求参数**:
+  ```json
+  {
+    "message": "用户的消息内容"
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "response": "AI的回复内容"
+  }
+  ```
+
+#### 结束聊天会话
+- **URL**: `/api/chat/end/`
+- **方法**: POST
+- **认证**: 需要Token认证
+- **响应**:
+  ```json
+  {
+    "message": "聊天会话已结束"
+  }
+  ```
 
 
