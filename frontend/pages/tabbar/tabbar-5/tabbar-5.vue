@@ -1,10 +1,5 @@
 <template>
 	<view class="profile-container">
-		<!-- User Info Area -->
-		<view class="header">
-			<text class="title">SoulWhisper</text>
-		</view>
-		
 		<view class="user-info">
 			<view class="avatar-section">
 				<view class="avatar">
@@ -133,17 +128,7 @@ page {
 
 .profile-container {
 	min-height: 100%;
-	
-	.header {
-		padding: 20px;
-		text-align: center;
-		
-		.title {
-			font-size: 24px;
-			color: #8A2BE2;
-			font-weight: bold;
-		}
-	}
+	padding-top: 20px;
 	
 	.user-info {
 		padding: 20px;

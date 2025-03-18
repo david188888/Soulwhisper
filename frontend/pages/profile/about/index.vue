@@ -1,6 +1,6 @@
 <template>
   <view class="about-container">
-    <image class="logo" src="/static/logo.png" mode="aspectFit"></image>
+    <image class="logo" src="/frontend/static/img/logo.jpg" mode="aspectFit"></image>
     <view class="info">
       <text class="address">South China Normal University</text>
       <text class="email" @click="copyEmail">2873804973@qq.com</text>
@@ -38,8 +38,8 @@ page {
   align-items: center;
   
   .logo {
-    width: 240rpx;
-    height: 240rpx;
+    width: 400rpx;
+    height: 400rpx;
     margin-bottom: 40px;
   }
   
