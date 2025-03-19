@@ -10,7 +10,10 @@
     "选项卡"
   ],
   "dependencies": {
-    "@dcloudio/uni-ui": "^1.4.28"
+    "@dcloudio/uni-ui": "^1.4.28",
+    "@dcloudio/uni-app": "^2.0.1",
+    "@dcloudio/uni-h5": "^2.0.1",
+    "recorder-core": "^1.1.21"
   },
   "dcloudext": {
     "category": [

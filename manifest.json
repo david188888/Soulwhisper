@@ -29,10 +29,16 @@
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>"
                 ]
             },
-            "ios" : {},
+            "ios" : {
+                "privacyDescription": {
+                    "NSMicrophoneUsageDescription": "需要访问麦克风进行录音"
+                }
+            },
             "sdkConfigs" : {}
         }
     },
@@ -42,7 +48,8 @@
         "setting" : {
             "urlCheck" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "requiredPrivateInfos": ["getRecorderManager"]
     },
     "vueVersion" : "3"
 }
