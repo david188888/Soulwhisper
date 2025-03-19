@@ -34,3 +34,5 @@ unpackage/
 backend/apps/account/migrations/0001_initial.py
 backend/apps/account/migrations/0001_initial.py
 backend/apps/utils/llm/__pycache__/
+backend/.idea
+
