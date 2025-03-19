@@ -79,6 +79,11 @@
 				</view>
 			</view>
 		</view>
+		
+		<!-- Logout Button -->
+		<view class="logout-button" @click="handleLogout">
+			<text>Sign Out</text>
+		</view>
 	</view>
 </template>
 
@@ -194,6 +199,28 @@
 						icon: 'none'
 					})
 				}, 1000)
+			},
+			
+			handleLogout() {
+				uni.showModal({
+					title: 'Sign Out',
+					content: 'Are you sure you want to sign out?',
+					success: (res) => {
+						if (res.confirm) {
+							// TODO: Add logout logic here
+							uni.showToast({
+								title: 'Signed out successfully',
+								icon: 'success'
+							});
+							// Redirect to login page or home page
+							setTimeout(() => {
+								uni.reLaunch({
+									url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+								});
+							}, 1500);
+						}
+					}
+				});
 			}
 		}
 	}
@@ -208,33 +235,41 @@ page {
 .profile-container {
 	min-height: 100%;
 	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: flex-start;
+	position: relative;
 	
 	.user-card {
-		background: linear-gradient(135deg, #8A2BE2 0%, #9370DB 100%);
-		border-radius: 20px;
-		padding: 30px 20px;
-		margin-bottom: 20px;
-		box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2);
+		background: linear-gradient(135deg, #A18BFF 0%, #7B89F9 100%);
+		border-radius: 10px;
+		padding: 20px;
+		margin-bottom: 10px;
+		box-shadow: 0 4px 12px rgba(123, 137, 249, 0.15);
+		flex: 0.4;
 		
 		.user-info {
-			margin-bottom: 30px;
+			margin-bottom: 20px;
 			
 			.avatar-section {
 				display: flex;
 				align-items: center;
+				margin-bottom: 25px;
 				
 				.avatar {
-					width: 80rpx;
-					height: 80rpx;
+					width: 100rpx;
+					height: 100rpx;
 					background-color: rgba(255, 255, 255, 0.2);
-					border-radius: 12rpx;
+					border-radius: 8rpx;
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					margin-right: 20rpx;
+					margin-right: 15rpx;
 					
 					.uni-icons {
 						color: #fff !important;
+						font-size: 28px;
 					}
 				}
 				
@@ -244,25 +279,25 @@ page {
 					.user-name-container {
 						display: flex;
 						align-items: center;
-						margin-bottom: 4px;
+						margin-bottom: 10px;
 						
 						.user-name {
-							font-size: 24px;
+							font-size: 22px;
 							font-weight: bold;
 							color: #fff;
-							margin-right: 10px;
+							margin-right: 12px;
 						}
 						
 						.edit-name-btn {
-							font-size: 16px;
-							padding: 4px;
+							font-size: 14px;
+							padding: 2px;
 							cursor: pointer;
 						}
 					}
 					
 					.diary-count {
 						font-size: 14px;
-						color: rgba(255, 255, 255, 0.8);
+						color: rgba(255, 255, 255, 0.9);
 					}
 				}
 			}
@@ -270,7 +305,8 @@ page {
 		
 		.user-stats {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
+			padding: 0 20px;
 			padding-top: 20px;
 			border-top: 1px solid rgba(255, 255, 255, 0.1);
 			
@@ -280,27 +316,39 @@ page {
 				align-items: center;
 				
 				.stat-number {
-					font-size: 24px;
+					font-size: 20px;
 					font-weight: bold;
 					color: #fff;
-					margin-bottom: 4px;
+					margin-bottom: 8px;
 				}
 				
 				.stat-label {
-					font-size: 12px;
-					color: rgba(255, 255, 255, 0.8);
+					font-size: 13px;
+					color: rgba(255, 255, 255, 0.9);
 				}
 			}
 		}
 	}
 	
 	.function-list {
+		flex: none;
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		
 		.function-group {
 			background: #fff;
 			border-radius: 15px;
 			padding: 15px;
-			margin-bottom: 20px;
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+			
+			&:first-child {
+				height: 180px;
+			}
+			
+			&:last-child {
+				height: 120px;
+			}
 			
 			.group-title {
 				font-size: 16px;
@@ -341,6 +389,31 @@ page {
 					color: #999;
 				}
 			}
+		}
+	}
+	
+	.logout-button {
+		position: absolute;
+		bottom: 20%;
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 12px 40px;
+		text-align: center;
+		background: rgba(250, 6, 6, 0.1);
+		border-radius: 20px;
+		border: 1px solid rgba(240, 19, 19, 0.2);
+		width: auto;
+		transition: all 0.3s ease;
+		
+		text {
+			color: #FF4444;
+			font-size: 16px;
+			font-weight: 500;
+		}
+		
+		&:active {
+			background: rgba(245, 27, 27, 0.2);
+			transform: translateX(-50%) scale(0.98);
 		}
 	}
 }
