@@ -1,5 +1,10 @@
 <template>
   <view class="voice-recorder">
+    <!-- 返回按钮 -->
+    <view class="back-button" @tap="goBack">
+      <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
+    </view>
+    
     <!-- 录音按钮 -->
     <view class="record-button" @tap="startRecord" :class="{ recording: onlineConf.onlineStep === 2 }">
       <uni-icons :type="onlineConf.onlineStep === 2 ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>
@@ -66,6 +71,28 @@ export default {
   },
   
   methods: {
+    // 添加返回方法
+    goBack() {
+      if (this.onlineConf.onlineStep === 2) {
+        uni.showModal({
+          title: '提示',
+          content: '正在录音中，确定要返回吗？',
+          success: (res) => {
+            if (res.confirm) {
+              this.stopRecord();
+              uni.switchTab({
+                url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+              });
+            }
+          }
+        });
+      } else {
+        uni.switchTab({
+          url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+        });
+      }
+    },
+    
     // 请求录音权限
     requestPermission() {
       RecordApp.UniWebViewActivate(this); // App环境下必须先切换成当前页面WebView
@@ -219,6 +246,26 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-top: 100px;
+  position: relative;
+  
+  .back-button {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
   
   .record-button {
     width: 80px;

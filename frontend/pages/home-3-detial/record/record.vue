@@ -26,15 +26,6 @@
 	  VoiceRecorder
 	},
 	
-	onShow() {
-	  // 隐藏底部导航栏
-	  uni.hideTabBar();
-	},
-	
-	onHide() {
-	  // 离开页面时显示底部导航栏
-	  uni.showTabBar();
-	},
   
 	methods: {
 	  handleBack() {
