@@ -5,8 +5,7 @@ transformers~=4.49.0
 python-dotenv==1.0.1
 djongo~=1.3.7
 pymongo~=3.11.4
-dnspython==2.4.2  # MongoDB DNS支持
-
+dnspython==2.4.2
 numpy~=2.0.2
 requests~=2.32.3
 soundfile~=0.13.1
