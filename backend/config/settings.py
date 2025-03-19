@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'apps.account',
     'apps.diary',
     'apps.chat',
-    'apps.community',
+    # 'apps.community',
     'corsheaders',
 
 ]
