@@ -1,0 +1,116 @@
+<template>
+  <view class="detail-container">
+    <!-- 日记内容 -->
+    <view class="content">
+      <text>{{content}}</text>
+    </view>
+    
+    <!-- 媒体内容 -->
+    <view class="media" v-if="mediaUrl">
+      <image
+        v-if="mediaType === 'image'"
+        :src="mediaUrl"
+        mode="widthFix"
+        class="media-content"
+      />
+      <video
+        v-else-if="mediaType === 'video'"
+        :src="mediaUrl"
+        class="media-content"
+      />
+    </view>
+    
+    <!-- 心情指示器 -->
+    <view class="mood-indicator">
+      <view class="mood-type">
+        <text>{{getMoodEmoji}}</text>
+      </view>
+      <view class="mood-intensity">
+        <text>Intensity: {{(mood.intensity * 100).toFixed(0)}}%</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      content: '',
+      mediaUrl: '',
+      mediaType: '',
+      mood: {
+        type: '',
+        intensity: 0
+      }
+    }
+  },
+  
+  computed: {
+    getMoodEmoji() {
+      const moodEmojis = {
+        happy: '😊',
+        sad: '😢',
+        angry: '😠'
+      };
+      return moodEmojis[this.mood.type] || '😐';
+    }
+  },
+  
+  onLoad(options) {
+    if (options.content) {
+      this.content = decodeURIComponent(options.content);
+    }
+    if (options.mood) {
+      this.mood = JSON.parse(options.mood);
+    }
+    if (options.mediaUrl) {
+      this.mediaUrl = options.mediaUrl;
+      this.mediaType = options.mediaType;
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.detail-container {
+  min-height: 100vh;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  
+  .content {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .media {
+    margin-bottom: 20px;
+    
+    .media-content {
+      width: 100%;
+      border-radius: 8px;
+    }
+  }
+  
+  .mood-indicator {
+    position: fixed;
+    top: 44px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .mood-type {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+    
+    .mood-intensity {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+}
+</style> 

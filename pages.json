@@ -32,6 +32,18 @@
 			}
 		},
 		{
+			"path": "frontend/pages/diary/publish/index",
+			"style": {
+				"navigationBarTitleText": "写日记"
+			}
+		},
+		{
+			"path": "frontend/pages/diary/detail/index",
+			"style": {
+				"navigationBarTitleText": "日记详情"
+			}
+		},
+		{
 			"path": "frontend/pages/home-3-detial/aichat/aichat",
 			"style": {}
 		},
