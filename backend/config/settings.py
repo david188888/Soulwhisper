@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'apps.account',
     'apps.diary',
     'apps.chat',
-    # 'apps.community',
+    'apps.community',
     'corsheaders',
 
 ]
@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'soulwhisper',  # MongoDB 数据库名称
         'ENFORCE_SCHEMA': False,  # MongoDB是无模式的，设置为False
         'CLIENT': {
-            'host': 'localhost',
+            'host': 'mongodb://localhost:27017',
             'port': 27017,
             'username': '',       # 如果没有设置身份验证，保持为空
             'password': '',       # 如果没有设置身份验证，保持为空
@@ -104,6 +104,7 @@ DATABASES = {
                 }
             }
         }
+        
     }
 }
 

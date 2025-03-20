@@ -1,0 +1,175 @@
+{
+    "info": {
+        "name": "Soulwhisper Diary API",
+        "description": "日记模块API测试集合",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "ASR",
+            "item": [
+                {
+                    "name": "Speech Recognition",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "audio_file",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/asr/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "asr"]
+                        },
+                        "description": "语音识别并自动创建日记"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Diaries",
+            "item": [
+                {
+                    "name": "Get Diary List",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries"]
+                        },
+                        "description": "获取日记列表"
+                    }
+                },
+                {
+                    "name": "Create Diary",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"content\": \"今天的心情很好，天气也不错。\",\n    \"emotion_type\": \"happy\",\n    \"emotion_intensity\": 8\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "create"]
+                        },
+                        "description": "创建新日记"
+                    }
+                },
+                {
+                    "name": "Get Diary Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/{{diary_id}}/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "{{diary_id}}"]
+                        },
+                        "description": "获取日记详情"
+                    }
+                },
+                {
+                    "name": "Update Diary",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"content\": \"今天的心情很好，天气也不错。\",\n    \"emotion_type\": \"happy\",\n    \"emotion_intensity\": 8\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/{{diary_id}}/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "{{diary_id}}", "update"]
+                        },
+                        "description": "更新日记"
+                    }
+                },
+                {
+                    "name": "Delete Diary",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/{{diary_id}}/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "{{diary_id}}", "delete"]
+                        },
+                        "description": "删除日记"
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000"
+        },
+        {
+            "key": "token",
+            "value": "your_jwt_token_here"
+        },
+        {
+            "key": "diary_id",
+            "value": "your_diary_id_here"
+        }
+    ]
+} 
