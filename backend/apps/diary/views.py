@@ -160,8 +160,13 @@ class DiaryDetailView(APIView):
     - 返回日记详情
     """
 
-    def get(self, request, diary_id):
+    def get(self, request):
         try:
+            diary_id = request.data.get('diary_id')
+            if not diary_id:
+                return Response({'error': '日记ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             diary = get_object_or_404(Diary, _id=ObjectId(diary_id))
             data = {
                 'id': str(diary._id),
@@ -185,8 +190,13 @@ class DiaryUpdateView(APIView):
     - 支持更新内容和情感信息
     """
 
-    def put(self, request, diary_id):
+    def put(self, request):
         try:
+            diary_id = request.data.get('diary_id')
+            if not diary_id:
+                return Response({'error': '日记ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             diary = get_object_or_404(Diary, _id=ObjectId(diary_id))
 
             content = request.data.get('content')
@@ -222,8 +232,13 @@ class DiaryDeleteView(APIView):
     删除日记API
     """
 
-    def delete(self, request, diary_id):
+    def delete(self, request):
         try:
+            diary_id = request.data.get('diary_id')
+            if not diary_id:
+                return Response({'error': '日记ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             diary = get_object_or_404(Diary, _id=ObjectId(diary_id))
             diary.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)

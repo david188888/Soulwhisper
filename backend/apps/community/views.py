@@ -5,11 +5,14 @@ from django.utils import timezone
 from datetime import datetime
 import random
 from .models import DailyKeyword, HealingQuote, HealingActivity, Comment
+from apps.diary.models import Diary  # 添加 Diary 模型导入
+from django.contrib.auth import get_user_model  # 添加 User 模型导入
 from django.shortcuts import get_object_or_404
 from bson import ObjectId
 from bson.errors import InvalidId
 # from rest_framework.permissions import IsAuthenticated  # 注释掉权限导入
 
+User = get_user_model()  # 获取 User 模型
 
 class DailyContent(APIView):
     """获取每日内容（关键词、短句、活动）"""
@@ -94,8 +97,13 @@ class DailyKeywordCreateView(APIView):
 
 class DailyKeywordDetailView(APIView):
     """获取每日关键词详情"""
-    def get(self, request, keyword_id):
+    def get(self, request):
         try:
+            keyword_id = request.data.get('keyword_id')
+            if not keyword_id:
+                return Response({'error': '关键词ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             keyword = get_object_or_404(DailyKeyword, _id=ObjectId(keyword_id))
             data = {
                 'id': str(keyword._id),
@@ -113,8 +121,13 @@ class DailyKeywordDetailView(APIView):
 
 class DailyKeywordUpdateView(APIView):
     """更新每日关键词"""
-    def put(self, request, keyword_id):
+    def put(self, request):
         try:
+            keyword_id = request.data.get('keyword_id')
+            if not keyword_id:
+                return Response({'error': '关键词ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             keyword = get_object_or_404(DailyKeyword, _id=ObjectId(keyword_id))
             
             keyword_text = request.data.get('keyword')
@@ -145,8 +158,13 @@ class DailyKeywordUpdateView(APIView):
 
 class DailyKeywordDeleteView(APIView):
     """删除每日关键词"""
-    def delete(self, request, keyword_id):
+    def delete(self, request):
         try:
+            keyword_id = request.data.get('keyword_id')
+            if not keyword_id:
+                return Response({'error': '关键词ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             keyword = get_object_or_404(DailyKeyword, _id=ObjectId(keyword_id))
             keyword.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -201,8 +219,13 @@ class HealingQuoteCreateView(APIView):
 
 class HealingQuoteDetailView(APIView):
     """获取治愈短句详情"""
-    def get(self, request, quote_id):
+    def get(self, request):
         try:
+            quote_id = request.data.get('quote_id')
+            if not quote_id:
+                return Response({'error': '短句ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             quote = get_object_or_404(HealingQuote, _id=ObjectId(quote_id))
             data = {
                 'id': str(quote._id),
@@ -220,8 +243,13 @@ class HealingQuoteDetailView(APIView):
 
 class HealingQuoteUpdateView(APIView):
     """更新治愈短句"""
-    def put(self, request, quote_id):
+    def put(self, request):
         try:
+            quote_id = request.data.get('quote_id')
+            if not quote_id:
+                return Response({'error': '短句ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             quote = get_object_or_404(HealingQuote, _id=ObjectId(quote_id))
             
             content = request.data.get('content')
@@ -252,8 +280,13 @@ class HealingQuoteUpdateView(APIView):
 
 class HealingQuoteDeleteView(APIView):
     """删除治愈短句"""
-    def delete(self, request, quote_id):
+    def delete(self, request):
         try:
+            quote_id = request.data.get('quote_id')
+            if not quote_id:
+                return Response({'error': '短句ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             quote = get_object_or_404(HealingQuote, _id=ObjectId(quote_id))
             quote.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -291,7 +324,7 @@ class HealingActivityCreateView(APIView):
             duration = request.data.get('duration')
             difficulty = request.data.get('difficulty')
             
-            if not all([title, description, duration, difficulty]):
+            if not title or not description or not duration or not difficulty:
                 return Response({'error': '所有字段都不能为空'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
@@ -316,8 +349,13 @@ class HealingActivityCreateView(APIView):
 
 class HealingActivityDetailView(APIView):
     """获取治愈活动详情"""
-    def get(self, request, activity_id):
+    def get(self, request):
         try:
+            activity_id = request.data.get('activity_id')
+            if not activity_id:
+                return Response({'error': '活动ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             activity = get_object_or_404(HealingActivity, _id=ObjectId(activity_id))
             data = {
                 'id': str(activity._id),
@@ -337,8 +375,13 @@ class HealingActivityDetailView(APIView):
 
 class HealingActivityUpdateView(APIView):
     """更新治愈活动"""
-    def put(self, request, activity_id):
+    def put(self, request):
         try:
+            activity_id = request.data.get('activity_id')
+            if not activity_id:
+                return Response({'error': '活动ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             activity = get_object_or_404(HealingActivity, _id=ObjectId(activity_id))
             
             title = request.data.get('title')
@@ -377,8 +420,13 @@ class HealingActivityUpdateView(APIView):
 
 class HealingActivityDeleteView(APIView):
     """删除治愈活动"""
-    def delete(self, request, activity_id):
+    def delete(self, request):
         try:
+            activity_id = request.data.get('activity_id')
+            if not activity_id:
+                return Response({'error': '活动ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
             activity = get_object_or_404(HealingActivity, _id=ObjectId(activity_id))
             activity.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -388,91 +436,133 @@ class HealingActivityDeleteView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+# 评论CRUD
 class CommentListView(APIView):
-    """获取日记评论列表"""
-    # permission_classes = [IsAuthenticated]  # 注释掉权限验证
+    """获取评论列表"""
+    def get(self, request):
+        try:
+            diary_id = request.data.get('diary_id')
+            if not diary_id:
+                return Response({'error': '日记ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, diary_id):
-        comments = Comment.objects.filter(diary_id=diary_id)
-        data = [{
-            'id': str(comment.id),
-            'content': comment.content,
-            'user_id': str(comment.user.id),
-            'user_name': comment.user.username,
-            'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            'updated_at': comment.updated_at.strftime('%Y-%m-%d %H:%M:%S')
-        } for comment in comments]
-        return Response(data)
+            comments = Comment.objects.filter(diary_id=diary_id).order_by('-created_at')
+            data = [{
+                'id': str(comment._id),
+                'content': comment.content,
+                'user_id': str(comment.user._id),
+                'user_name': comment.user.name,
+                'created_at': comment.created_at
+            } for comment in comments]
+            return Response(data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentCreateView(APIView):
     """创建评论"""
-    # permission_classes = [IsAuthenticated]  # 注释掉权限验证
-
-    def post(self, request, diary_id):
+    def post(self, request):
         try:
+            diary_id = request.data.get('diary_id')
+            content = request.data.get('content')
+            user_id = request.data.get('user_id')  # 从请求中获取用户ID
+            
+            if not diary_id or not content or not user_id:
+                return Response({'error': '日记ID、评论内容和用户ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                diary = get_object_or_404(Diary, _id=ObjectId(diary_id))
+                user = get_object_or_404(User, _id=ObjectId(user_id))  # 修改这里，使用 _id 而不是 id
+            except InvalidId:
+                return Response({'error': '日记或用户不存在'}, 
+                              status=status.HTTP_404_NOT_FOUND)
+
             comment = Comment.objects.create(
-                content=request.data.get('content'),
-                diary_id=diary_id,
-                user=request.user  # 注意：这里可能还需要处理用户信息
+                diary=diary,
+                user=user,
+                content=content
             )
-            data = {
-                'id': str(comment.id),
+
+            return Response({
+                'id': str(comment._id),
+                'diary_id': str(comment.diary._id),
+                'user_id': str(comment.user._id),  # 修改这里，使用 _id 而不是 id
                 'content': comment.content,
-                'user_id': str(comment.user.id),
-                'user_name': comment.user.username,
-                'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                'updated_at': comment.updated_at.strftime('%Y-%m-%d %H:%M:%S')
-            }
-            return Response(data, status=status.HTTP_201_CREATED)
+                'created_at': comment.created_at
+            }, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentDetailView(APIView):
     """获取评论详情"""
-    # permission_classes = [IsAuthenticated]  # 注释掉权限验证
+    def get(self, request):
+        try:
+            comment_id = request.data.get('comment_id')
+            if not comment_id:
+                return Response({'error': '评论ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, comment_id):
-        comment = get_object_or_404(Comment, id=comment_id)
-        data = {
-            'id': str(comment.id),
-            'content': comment.content,
-            'user_id': str(comment.user.id),
-            'user_name': comment.user.username,
-            'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            'updated_at': comment.updated_at.strftime('%Y-%m-%d %H:%M:%S')
-        }
-        return Response(data)
+            comment = get_object_or_404(Comment, _id=ObjectId(comment_id))
+            data = {
+                'id': str(comment._id),
+                'content': comment.content,
+                'user_id': str(comment.user._id),
+                'user_name': comment.user.name,
+                'created_at': comment.created_at
+            }
+            return Response(data)
+        except InvalidId:
+            return Response({'error': '评论不存在'}, 
+                          status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentUpdateView(APIView):
     """更新评论"""
-    # permission_classes = [IsAuthenticated]  # 注释掉权限验证
+    def put(self, request):
+        try:
+            comment_id = request.data.get('comment_id')
+            if not comment_id:
+                return Response({'error': '评论ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, comment_id):
-        comment = get_object_or_404(Comment, id=comment_id)
-        # if comment.user != request.user:  # 注释掉用户验证
-        #     return Response({'error': '无权修改此评论'}, status=status.HTTP_403_FORBIDDEN)
-        
-        comment.content = request.data.get('content', comment.content)
-        comment.save()
-        
-        data = {
-            'id': str(comment.id),
-            'content': comment.content,
-            'user_id': str(comment.user.id),
-            'user_name': comment.user.username,
-            'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            'updated_at': comment.updated_at.strftime('%Y-%m-%d %H:%M:%S')
-        }
-        return Response(data)
+            comment = get_object_or_404(Comment, _id=ObjectId(comment_id))
+            
+            content = request.data.get('content')
+            if not content:
+                return Response({'error': '评论内容不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
+
+            comment.content = content
+            comment.save()
+
+            return Response({
+                'id': str(comment._id),
+                'content': comment.content,
+                'user_id': str(comment.user._id),
+                'user_name': comment.user.name,
+                'created_at': comment.created_at
+            })
+        except InvalidId:
+            return Response({'error': '评论不存在'}, 
+                          status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentDeleteView(APIView):
     """删除评论"""
-    # permission_classes = [IsAuthenticated]  # 注释掉权限验证
+    def delete(self, request):
+        try:
+            comment_id = request.data.get('comment_id')
+            if not comment_id:
+                return Response({'error': '评论ID不能为空'}, 
+                              status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, comment_id):
-        comment = get_object_or_404(Comment, id=comment_id)
-        # if comment.user != request.user:  # 注释掉用户验证
-        #     return Response({'error': '无权删除此评论'}, status=status.HTTP_403_FORBIDDEN)
-        
-        comment.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            comment = get_object_or_404(Comment, _id=ObjectId(comment_id))
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except InvalidId:
+            return Response({'error': '评论不存在'}, 
+                          status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
