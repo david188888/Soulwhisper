@@ -6,7 +6,7 @@
 		}
 	},
 	"pages": [
-		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
 		{
 			"path": "frontend/pages/tabbar/tabbar-1/tabbar-1",
 			"style": {
@@ -87,32 +87,33 @@
 		"list": [{
 				"pagePath": "frontend/pages/tabbar/tabbar-1/tabbar-1",
 				"iconPath": "frontend/static/img/tabbar/home.png",
-				"selectedIconPath": "",
+				"selectedIconPath": "frontend/static/img/tabbar/home.png",
 				"text": ""
 			},
 			{
 				"pagePath": "frontend/pages/tabbar/tabbar-2/tabbar-2",
 				"iconPath": "frontend/static/img/tabbar/information.png",
-				"selectedIconPath": "static/img/tabbar/information.png",
+				"selectedIconPath": "frontend/static/img/tabbar/information.png",
 				"text": ""
 			},
 			//#ifndef MP-WEIXIN
 			{
 				"pagePath": "frontend/pages/home-3-detial/record/record",
 				"iconPath": "frontend/static/img/tabbar/record.png",
-				"selectedIconPath": "static/img/tabbar/record.png"
+				"selectedIconPath": "frontend/static/img/tabbar/record.png",
+				"text": ""
 			},
 			//#endif
 			{
 				"pagePath": "frontend/pages/tabbar/tabbar-4/tabbar-4",
 				"iconPath": "frontend/static/img/tabbar/chat.png",
-				"selectedIconPath": "static/img/tabbar/chat.png",
+				"selectedIconPath": "frontend/static/img/tabbar/chat.png",
 				"text": ""
 			},
 			{
 				"pagePath": "frontend/pages/tabbar/tabbar-5/tabbar-5",
 				"iconPath": "frontend/static/img/tabbar/me.png",
-				"selectedIconPath": "",
+				"selectedIconPath": "frontend/static/img/tabbar/me.png",
 				"text": ""
 			}
 		]
