@@ -127,3 +127,47 @@ class Comment(models.Model):
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
+
+class Like(models.Model):
+    """
+    点赞模型
+    - 支持对多种内容类型的点赞
+    - 使用 MongoDB 的 ObjectId
+    """
+    _id = models.ObjectIdField(primary_key=True, default=ObjectId)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,  # 当用户被删除时，保留点赞记录
+        related_name='user_likes',  # 通过 user.user_likes 可以访问用户的所有点赞
+        help_text="点赞用户"
+    )
+    diary = models.ForeignKey(
+        Diary,
+        on_delete=models.DO_NOTHING,  # 当日记被删除时，删除相关点赞
+        related_name='diary_likes',  # 通过 diary.diary_likes 可以访问日记的所有点赞
+        help_text="被点赞的日记"
+    )
+    created_at = models.DateTimeField(
+        default=timezone.now,
+        help_text="创建时间"
+    )
+    updated_at = models.DateTimeField(
+        default=timezone.now,
+        help_text="更新时间"
+    )
+    is_active = models.BooleanField(
+        default=True,
+        help_text="是否有效"
+    )
+
+    class Meta:
+        db_table = 'likes'
+        ordering = ['-created_at']
+        unique_together = ['user', 'diary']  # 确保用户不能重复点赞同一篇日记
+
+    def __str__(self):
+        return f"{self.user.username} liked diary {self.diary._id}"
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super().save(*args, **kwargs)

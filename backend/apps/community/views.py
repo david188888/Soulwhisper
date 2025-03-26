@@ -4,13 +4,15 @@ from rest_framework import status
 from django.utils import timezone
 from datetime import datetime
 import random
-from .models import DailyKeyword, HealingQuote, HealingActivity, Comment
+from .models import DailyKeyword, HealingQuote, HealingActivity, Comment, Like
 from apps.diary.models import Diary  # 添加 Diary 模型导入
 from django.contrib.auth import get_user_model  # 添加 User 模型导入
 from django.shortcuts import get_object_or_404
 from bson import ObjectId
 from bson.errors import InvalidId
-# from rest_framework.permissions import IsAuthenticated  # 注释掉权限导入
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
 User = get_user_model()  # 获取 User 模型
 
@@ -566,3 +568,116 @@ class CommentDeleteView(APIView):
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class LikeCreateView(APIView):
+    """创建点赞"""
+    def post(self, request):
+        try:
+            # 获取参数
+            data = request.data
+            user_id = data.get('user_id')
+            diary_id = data.get('diary_id')
+
+            # 参数校验
+            if not all([user_id, diary_id]):
+                return Response({'message': '参数不完整'}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                user = User.objects.get(_id=ObjectId(user_id))
+                diary = Diary.objects.get(_id=ObjectId(diary_id))
+            except (InvalidId, User.DoesNotExist, Diary.DoesNotExist):
+                return Response({'message': 'ID不存在'}, status=status.HTTP_404_NOT_FOUND)
+
+            # 检查是否已点赞
+            if Like.objects.filter(user=user, diary=diary).exists():
+                return Response({'message': '已经点赞过了'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # 创建点赞
+            like = Like.objects.create(
+                user=user,
+                diary=diary
+            )
+
+            return Response({
+                'message': '点赞成功',
+                'data': {
+                    'id': str(like._id),
+                    'user_id': str(like.user._id),
+                    'diary_id': str(like.diary._id),
+                    'created_at': like.created_at
+                }
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class LikeDeleteView(APIView):
+    """取消点赞"""
+    def delete(self, request):
+        try:
+            # 获取参数
+            data = request.data
+            user_id = data.get('user_id')
+            diary_id = data.get('diary_id')
+
+            # 参数校验
+            if not all([user_id, diary_id]):
+                return Response({'message': '参数不完整'}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                user = User.objects.get(_id=ObjectId(user_id))
+                diary = Diary.objects.get(_id=ObjectId(diary_id))
+            except (InvalidId, User.DoesNotExist, Diary.DoesNotExist):
+                return Response({'message': 'ID不存在'}, status=status.HTTP_404_NOT_FOUND)
+
+            # 删除点赞
+            like = Like.objects.filter(user=user, diary=diary).first()
+            if not like:
+                return Response({'message': '点赞不存在'}, status=status.HTTP_404_NOT_FOUND)
+
+            like.delete()
+            return Response({'message': '取消点赞成功'}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class LikeListView(APIView):
+    """获取点赞列表"""
+    def get(self, request):
+        try:
+            # 获取参数
+            data = request.data
+            diary_id = data.get('diary_id')
+            user_id = data.get('user_id')
+
+            # 参数校验
+            if not diary_id:
+                return Response({'message': '参数不完整'}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                diary = Diary.objects.get(_id=ObjectId(diary_id))
+            except (InvalidId, Diary.DoesNotExist):
+                return Response({'message': '日记不存在'}, status=status.HTTP_404_NOT_FOUND)
+
+            # 获取点赞信息
+            likes = Like.objects.filter(diary=diary)
+            has_liked = False
+
+            if user_id:
+                try:
+                    user = User.objects.get(_id=ObjectId(user_id))
+                    has_liked = likes.filter(user=user).exists()
+                except (InvalidId, User.DoesNotExist):
+                    pass
+
+            return Response({
+                'message': '获取成功',
+                'data': {
+                    'count': likes.count(),
+                    'has_liked': has_liked
+                }
+            })
+
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

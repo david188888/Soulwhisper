@@ -8,7 +8,8 @@ from .views import (
     HealingActivityListView, HealingActivityCreateView, HealingActivityDetailView,
     HealingActivityUpdateView, HealingActivityDeleteView,
     CommentListView, CommentCreateView, CommentDetailView,
-    CommentUpdateView, CommentDeleteView
+    CommentUpdateView, CommentDeleteView,
+    LikeListView, LikeCreateView, LikeDeleteView
 )
 
 urlpatterns = [
@@ -36,10 +37,15 @@ urlpatterns = [
     path('activities/update/', HealingActivityUpdateView.as_view(), name='activity_update'),
     path('activities/delete/', HealingActivityDeleteView.as_view(), name='activity_delete'),
     
-    # Comments
+    # 评论
     path('comments/list/', CommentListView.as_view(), name='comment_list'),
     path('comments/create/', CommentCreateView.as_view(), name='comment_create'),
     path('comments/detail/', CommentDetailView.as_view(), name='comment_detail'),
     path('comments/update/', CommentUpdateView.as_view(), name='comment_update'),
     path('comments/delete/', CommentDeleteView.as_view(), name='comment_delete'),
+
+    # 点赞
+    path('likes/list/', LikeListView.as_view(), name='like_list'),
+    path('likes/create/', LikeCreateView.as_view(), name='like_create'),
+    path('likes/delete/', LikeDeleteView.as_view(), name='like_delete'),
 ] 
