@@ -143,9 +143,18 @@ export default {
       // 模拟发布过程
       setTimeout(() => {
         uni.hideLoading();
-        // 跳转到日记详情页
-        uni.navigateTo({
-          url: `/frontend/pages/diary/detail/index?content=${encodeURIComponent(this.content)}&mood=${JSON.stringify(this.mood)}`
+        // 发布成功后直接跳转到首页
+        uni.showToast({
+          title: '发布成功',
+          icon: 'success',
+          duration: 1500,
+          success: () => {
+            setTimeout(() => {
+              uni.switchTab({
+                url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+              });
+            }, 1500);
+          }
         });
       }, 1000);
     }

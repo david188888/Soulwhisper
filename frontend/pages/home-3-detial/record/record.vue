@@ -6,7 +6,7 @@
 		  <text class="iconfont icon-back">&#xe679;</text>
 		</view>
 		<view class="center-title">
-		  <text>录音日记</text>
+		  <text>recording diary</text>
 		</view>
 		<view class="right-btn"></view>
 	  </view>

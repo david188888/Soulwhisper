@@ -1,7 +1,7 @@
 from djongo import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils import timezone
-
+from bson import ObjectId
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, name, sex, password=None):
         if not username:
@@ -24,7 +24,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
-    _id = models.ObjectIdField(primary_key=True)  # MongoDB原生的_id字段
+    _id = models.ObjectIdField(primary_key=True,default=ObjectId)  # MongoDB原生的_id字段
     username = models.CharField(max_length=150, unique=True)
     name = models.CharField(max_length=150)
     sex = models.CharField(

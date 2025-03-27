@@ -91,4 +91,249 @@ python manage.py migrate
 Authorization: Token your_token_here
 ```
 
+## 4. API接口说明
+
+### 聊天接口
+
+#### 开始日记对话
+- **URL**: `/api/chat/start/`
+- **方法**: POST
+- **认证**: 需要Token认证
+- **请求参数**:
+  ```json
+  {
+    "diary_content": "用户的日记内容"
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "session_id": "会话ID",
+    "response": "AI的首次回复"
+  }
+  ```
+
+#### 发送聊天消息
+- **URL**: `/api/chat/message/`
+- **方法**: POST
+- **认证**: 需要Token认证
+- **请求参数**:
+  ```json
+  {
+    "message": "用户的消息内容"
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "response": "AI的回复内容"
+  }
+  ```
+
+#### 结束聊天会话
+- **URL**: `/api/chat/end/`
+- **方法**: POST
+- **认证**: 需要Token认证
+- **响应**:
+  ```json
+  {
+    "message": "聊天会话已结束"
+  }
+  ```
+
+### Community API
+
+#### 获取每日内容
+- **URL**: `/api/community/daily-content/`
+- **方法**: GET
+- **响应**:
+  ```json
+  {
+    "date": "2024-01-01",
+    "keyword": {
+      "id": "keyword_id",
+      "keyword": "Gratitude",
+      "description": "Being thankful for what you have"
+    },
+    "quote": {
+      "id": "quote_id",
+      "content": "Life is not about where you are, but where you're going.",
+      "author": "Holmes"
+    },
+    "activity": {
+      "id": "activity_id",
+      "title": "Mindful Meditation",
+      "description": "Practice mindfulness through meditation",
+      "duration": 15,
+      "difficulty": "easy"
+    }
+  }
+  ```
+
+#### 获取评论列表
+- **URL**: `/api/community/diaries/{diary_id}/comments/`
+- **方法**: GET
+- **响应**:
+  ```json
+  [
+    {
+      "id": "comment_id",
+      "content": "Great writing!",
+      "user_id": "user_id",
+      "user_name": "username",
+      "created_at": "2024-01-01 12:00:00",
+      "updated_at": "2024-01-01 12:00:00"
+    }
+  ]
+  ```
+
+#### 创建评论
+- **URL**: `/api/community/diaries/{diary_id}/comments/create/`
+- **方法**: POST
+- **请求体**:
+  ```json
+  {
+    "content": "Great writing!"
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "id": "comment_id",
+    "content": "Great writing!",
+    "user_id": "user_id",
+    "user_name": "username",
+    "created_at": "2024-01-01 12:00:00",
+    "updated_at": "2024-01-01 12:00:00"
+  }
+  ```
+
+#### 更新评论
+- **URL**: `/api/community/comments/{comment_id}/update/`
+- **方法**: PUT
+- **请求体**:
+  ```json
+  {
+    "content": "Updated comment"
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "id": "comment_id",
+    "content": "Updated comment",
+    "user_id": "user_id",
+    "user_name": "username",
+    "created_at": "2024-01-01 12:00:00",
+    "updated_at": "2024-01-01 12:00:00"
+  }
+  ```
+
+#### 删除评论
+- **URL**: `/api/community/comments/{comment_id}/delete/`
+- **方法**: DELETE
+- **响应**: 204 No Content
+
+### Diary API
+
+#### 语音识别创建日记
+- **URL**: `/api/diary/asr/`
+- **方法**: POST
+- **请求体**: FormData
+  - audio_file: 音频文件 (支持 .wav, .mp3, .m4a, .flac)
+- **响应**:
+  ```json
+  {
+    "text": "转写的文本内容",
+    "emotion_type": "happy",
+    "emotion_intensity": 8,
+    "diary_id": "diary_id"
+  }
+  ```
+
+#### 获取日记列表
+- **URL**: `/api/diary/diaries/`
+- **方法**: GET
+- **响应**:
+  ```json
+  {
+    "count": 10,
+    "next": "next_page_url",
+    "previous": "previous_page_url",
+    "results": [
+      {
+        "id": "diary_id",
+        "content": "日记内容",
+        "emotion_type": "happy",
+        "emotion_intensity": 8,
+        "created_at": "2024-01-01 12:00:00",
+        "comment_count": 5
+      }
+    ]
+  }
+  ```
+
+#### 创建日记
+- **URL**: `/api/diary/diaries/create/`
+- **方法**: POST
+- **请求体**:
+  ```json
+  {
+    "content": "日记内容",
+    "emotion_type": "happy",
+    "emotion_intensity": 8
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "id": "diary_id",
+    "content": "日记内容",
+    "emotion_type": "happy",
+    "emotion_intensity": 8,
+    "created_at": "2024-01-01 12:00:00"
+  }
+  ```
+
+#### 获取日记详情
+- **URL**: `/api/diary/diaries/{diary_id}/`
+- **方法**: GET
+- **响应**:
+  ```json
+  {
+    "id": "diary_id",
+    "content": "日记内容",
+    "emotion_type": "happy",
+    "emotion_intensity": 8,
+    "created_at": "2024-01-01 12:00:00"
+  }
+  ```
+
+#### 更新日记
+- **URL**: `/api/diary/diaries/{diary_id}/update/`
+- **方法**: PUT
+- **请求体**:
+  ```json
+  {
+    "content": "更新的日记内容",
+    "emotion_type": "happy",
+    "emotion_intensity": 8
+  }
+  ```
+- **响应**:
+  ```json
+  {
+    "id": "diary_id",
+    "content": "更新的日记内容",
+    "emotion_type": "happy",
+    "emotion_intensity": 8,
+    "created_at": "2024-01-01 12:00:00"
+  }
+  ```
+
+#### 删除日记
+- **URL**: `/api/diary/diaries/{diary_id}/delete/`
+- **方法**: DELETE
+- **响应**: 204 No Content
+
 
