@@ -5,7 +5,7 @@
 			<view class="user-info">
 				<view class="avatar-section">
 					<view class="avatar">
-						<uni-icons type="person" size="40" color="#8A2BE2"></uni-icons>
+						<text class="iconfont icon-yonghu" size="40" color="#8A2BE2"></text>
 					</view>
 					<view class="user-details">
 						<view class="user-name-container">
@@ -40,24 +40,24 @@
 				<view class="group-title">Account Settings</view>
 				<view class="function-item" @click="goToPrivacySettings">
 					<view class="item-left">
-						<uni-icons type="locked" size="20" color="#8A2BE2"></uni-icons>
+						<text class="iconfont icon-yinsi" size="20" color="#8A2BE2"></text>
 						<text>Privacy Settings</text>
 					</view>
-					<uni-icons type="right" size="16" color="#999"></uni-icons>
+					<text class="iconfont icon-you" size="16" color="#999"></text>
 				</view>
 				<view class="function-item" @click="goToHelpCenter">
 					<view class="item-left">
-						<uni-icons type="help" size="20" color="#8A2BE2"></uni-icons>
+						<text class="iconfont icon-bangzhu" size="20" color="#8A2BE2"></text>
 						<text>Help Center</text>
 					</view>
-					<uni-icons type="right" size="16" color="#999"></uni-icons>
+					<text class="iconfont icon-you" size="16" color="#999"></text>
 				</view>
 				<view class="function-item" @click="goToAboutUs">
 					<view class="item-left">
-						<uni-icons type="info" size="20" color="#8A2BE2"></uni-icons>
+						<text class="iconfont icon-guanyu" size="20" color="#8A2BE2"></text>
 						<text>About Us</text>
 					</view>
-					<uni-icons type="right" size="16" color="#999"></uni-icons>
+					<text class="iconfont icon-you" size="16" color="#999"></text>
 				</view>
 			</view>
 			
@@ -65,14 +65,14 @@
 				<view class="group-title">Other Features</view>
 				<view class="function-item" @click="clearCache">
 					<view class="item-left">
-						<uni-icons type="trash" size="20" color="#8A2BE2"></uni-icons>
+						<text class="iconfont icon-lajitong" size="20" color="#8A2BE2"></text>
 						<text>Clear Cache</text>
 					</view>
 					<text class="cache-size">{{cacheSize}}</text>
 				</view>
 				<view class="function-item" @click="checkUpdate">
 					<view class="item-left">
-						<uni-icons type="refresh" size="20" color="#8A2BE2"></uni-icons>
+						<text class="iconfont icon-jianchagengxin" size="20" color="#8A2BE2"></text>
 						<text>Check Update</text>
 					</view>
 					<text class="version">v{{version}}</text>
@@ -227,6 +227,7 @@
 </script>
 
 <style lang="scss">
+	@import '../../../common/css/icon.css';
 page {
 	background-color: #f8fafc;
 	height: 100%;
@@ -267,7 +268,7 @@ page {
 					justify-content: center;
 					margin-right: 15rpx;
 					
-					.uni-icons {
+					.iconfont {
 						color: #fff !important;
 						font-size: 28px;
 					}
