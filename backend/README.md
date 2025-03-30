@@ -33,6 +33,9 @@ backend/
 │       │   ├── asr_processor.py   # ASR处理核心
 │       │   ├── whisper.py        # Whisper模型实现
 │       │   └── onnx_asr.py      # ONNX优化版实现
+│       ├── llm/          # 大语言模型工具
+│       │   ├── get_result.py    # LLM调用和聊天实现
+│       │   └── __init__.py      # 模块初始化
 │       └── middleware.py  # 中间件
 ├── ASR_model/            # ASR模型文件
 │   ├── model/           # 原始模型
@@ -56,10 +59,11 @@ backend/
 - 情感分析和标注
 - 日记管理和查询
 
-### Chat模块 (待实现)
-- 与AI助手对话
-- 情感倾诉和分析
-- 会话历史管理
+### Chat模块
+- 基于日记内容与AI助手对话
+- 情感倾诉和心理辅导功能
+- 会话状态管理
+- 支持多轮对话流程
 
 ### Community模块 (待实现)
 - 日记分享功能
@@ -72,6 +76,10 @@ backend/
   - 支持多种音频格式
   - 集成Whisper模型
   - ONNX优化支持
+- LLM大语言模型服务
+  - 集成智谱AI的GLM-4-Air模型
+  - DiaryChat类实现多轮对话功能
+  - 针对日记内容的个性化交互
 - 情感分析服务
 - 通用工具函数
 

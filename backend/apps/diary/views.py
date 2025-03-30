@@ -111,7 +111,6 @@ class DiaryListView(APIView):
                 'emotion_type': diary.emotion_type,
                 'emotion_intensity': diary.emotion_intensity,
                 'created_at': diary.created_at,
-                'comment_count': diary.comments.count()
             } for diary in result]
             
             return page.get_paginated_response(data)

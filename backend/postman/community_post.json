@@ -1,0 +1,335 @@
+{
+    "info": {
+        "name": "Community Post API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Posts",
+            "item": [
+                {
+                    "name": "Get Post List",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"page\": 1,\n    \"page_size\": 10,\n    \"user_id\": \"{{user_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/list/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "list", ""]
+                        },
+                        "description": "获取帖子列表，支持分页"
+                    }
+                },
+                {
+                    "name": "Create Post",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"user_id\": \"{{user_id}}\",\n    \"title\": \"测试帖子\",\n    \"content\": \"这是一个测试帖子内容\",\n    \"image\": \"{{image_file}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "create", ""]
+                        },
+                        "description": "创建新帖子"
+                    }
+                },
+                {
+                    "name": "Get Post Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\",\n    \"user_id\": \"{{user_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/detail/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "detail", ""]
+                        },
+                        "description": "获取帖子详情"
+                    }
+                },
+                {
+                    "name": "Update Post",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\",\n    \"title\": \"更新后的标题\",\n    \"content\": \"更新后的内容\",\n    \"image\": \"{{new_image_file}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "update", ""]
+                        },
+                        "description": "更新帖子"
+                    }
+                },
+                {
+                    "name": "Delete Post",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "delete", ""]
+                        },
+                        "description": "删除帖子"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Post Comments",
+            "item": [
+                {
+                    "name": "Get Comment List",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/comments/list/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "comments", "list", ""]
+                        },
+                        "description": "获取帖子评论列表"
+                    }
+                },
+                {
+                    "name": "Create Comment",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\",\n    \"user_id\": \"{{user_id}}\",\n    \"content\": \"这是一条测试评论\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/comments/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "comments", "create", ""]
+                        },
+                        "description": "创建帖子评论"
+                    }
+                },
+                {
+                    "name": "Get Comment Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"comment_id\": \"{{comment_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/comments/detail/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "comments", "detail", ""]
+                        },
+                        "description": "获取评论详情"
+                    }
+                },
+                {
+                    "name": "Update Comment",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"comment_id\": \"{{comment_id}}\",\n    \"content\": \"更新后的评论内容\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/comments/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "comments", "update", ""]
+                        },
+                        "description": "更新评论"
+                    }
+                },
+                {
+                    "name": "Delete Comment",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"comment_id\": \"{{comment_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/comments/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "comments", "delete", ""]
+                        },
+                        "description": "删除评论"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Post Likes",
+            "item": [
+                {
+                    "name": "Get Like List",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\",\n    \"user_id\": \"{{user_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/likes/list/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "likes", "list", ""]
+                        },
+                        "description": "获取帖子点赞列表"
+                    }
+                },
+                {
+                    "name": "Create Like",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\",\n    \"user_id\": \"{{user_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/likes/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "likes", "create", ""]
+                        },
+                        "description": "创建帖子点赞"
+                    }
+                },
+                {
+                    "name": "Delete Like",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"post_id\": \"{{post_id}}\",\n    \"user_id\": \"{{user_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/posts/likes/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["posts", "likes", "delete", ""]
+                        },
+                        "description": "删除帖子点赞"
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000/api/community"
+        },
+        {
+            "key": "user_id",
+            "value": "your_user_id"
+        },
+        {
+            "key": "post_id",
+            "value": "your_post_id"
+        },
+        {
+            "key": "comment_id",
+            "value": "your_comment_id"
+        },
+        {
+            "key": "image_file",
+            "value": "your_image_file_path"
+        },
+        {
+            "key": "new_image_file",
+            "value": "your_new_image_file_path"
+        }
+    ]
+}

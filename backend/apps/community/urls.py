@@ -9,7 +9,9 @@ from .views import (
     HealingActivityUpdateView, HealingActivityDeleteView,
     CommentListView, CommentCreateView, CommentDetailView,
     CommentUpdateView, CommentDeleteView,
-    LikeListView, LikeCreateView, LikeDeleteView
+    LikeListView, LikeCreateView, LikeDeleteView,
+    PostListView, PostCreateView, PostDetailView,
+    PostUpdateView, PostDeleteView
 )
 
 urlpatterns = [
@@ -36,16 +38,23 @@ urlpatterns = [
     path('activities/detail/', HealingActivityDetailView.as_view(), name='activity_detail'),
     path('activities/update/', HealingActivityUpdateView.as_view(), name='activity_update'),
     path('activities/delete/', HealingActivityDeleteView.as_view(), name='activity_delete'),
-    
-    # 评论
-    path('comments/list/', CommentListView.as_view(), name='comment_list'),
-    path('comments/create/', CommentCreateView.as_view(), name='comment_create'),
-    path('comments/detail/', CommentDetailView.as_view(), name='comment_detail'),
-    path('comments/update/', CommentUpdateView.as_view(), name='comment_update'),
-    path('comments/delete/', CommentDeleteView.as_view(), name='comment_delete'),
 
-    # 点赞
-    path('likes/list/', LikeListView.as_view(), name='like_list'),
-    path('likes/create/', LikeCreateView.as_view(), name='like_create'),
-    path('likes/delete/', LikeDeleteView.as_view(), name='like_delete'),
-] 
+    # 帖子
+    path('posts/list/', PostListView.as_view(), name='post_list'),
+    path('posts/create/', PostCreateView.as_view(), name='post_create'),
+    path('posts/detail/', PostDetailView.as_view(), name='post_detail'),
+    path('posts/update/', PostUpdateView.as_view(), name='post_update'),
+    path('posts/delete/', PostDeleteView.as_view(), name='post_delete'),
+
+    # 帖子评论
+    path('posts/comments/list/', CommentListView.as_view(), name='post_comment_list'),
+    path('posts/comments/create/', CommentCreateView.as_view(), name='post_comment_create'),
+    path('posts/comments/detail/', CommentDetailView.as_view(), name='post_comment_detail'),
+    path('posts/comments/update/', CommentUpdateView.as_view(), name='post_comment_update'),
+    path('posts/comments/delete/', CommentDeleteView.as_view(), name='post_comment_delete'),
+
+    # 帖子点赞
+    path('posts/likes/list/', LikeListView.as_view(), name='post_like_list'),
+    path('posts/likes/create/', LikeCreateView.as_view(), name='post_like_create'),
+    path('posts/likes/delete/', LikeDeleteView.as_view(), name='post_like_delete'),
+]

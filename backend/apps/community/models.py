@@ -5,7 +5,7 @@
 from djongo import models
 from django.utils import timezone
 from bson import ObjectId
-from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, FileExtensionValidator
 from django.contrib.auth import get_user_model
 from apps.diary.models import Diary
 
@@ -98,18 +98,105 @@ class HealingActivity(models.Model):
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
+class Post(models.Model):
+    """社区帖子模型"""
+    _id = models.ObjectIdField(primary_key=True, default=ObjectId)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,  # 当用户被删除时，将 user 字段设为 null
+        null=True,  # 允许 user 字段为 null
+        related_name='user_posts'
+    )
+    title = models.CharField(
+        max_length=200,
+        validators=[MinLengthValidator(1, message="标题不能为空")]
+    )
+    content = models.TextField(
+        validators=[MinLengthValidator(1, message="内容不能为空")]
+    )
+    image = models.ImageField(
+        upload_to='community/posts/images/',
+        null=True,
+        blank=True,
+        help_text="帖子图片"
+    )
+    video = models.FileField(
+        upload_to='community/posts/videos/',
+        null=True,
+        blank=True,
+        help_text="帖子视频",
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=['mp4', 'avi', 'mov', 'wmv'],
+                message="只支持 mp4, avi, mov, wmv 格式的视频文件"
+            )
+        ]
+    )
+    video_thumbnail = models.ImageField(
+        upload_to='community/posts/video_thumbnails/',
+        null=True,
+        blank=True,
+        help_text="视频缩略图"
+    )
+    media_type = models.CharField(
+        max_length=10,
+        choices=[
+            ('none', '无媒体'),
+            ('image', '图片'),
+            ('video', '视频')
+        ],
+        default='none',
+        help_text="媒体类型"
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'posts'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.title[:50]}"
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        
+        # 更新媒体类型
+        if self.video:
+            self.media_type = 'video'
+        elif self.image:
+            self.media_type = 'image'
+        else:
+            self.media_type = 'none'
+            
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # 删除文件
+        if self.image:
+            self.image.delete(save=False)
+        if self.video:
+            self.video.delete(save=False)
+        if self.video_thumbnail:
+            self.video_thumbnail.delete(save=False)
+
+        super().delete(*args, **kwargs)
+
 class Comment(models.Model):
     """评论模型"""
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
-    diary = models.ForeignKey(
-        Diary,
-        on_delete=models.DO_NOTHING,  # 当日记被删除时，保留评论
-        related_name='comments',      # 通过 diary.comments 可以访问日记的所有评论
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.SET_NULL,  # 当帖子被删除时，将 post 字段设为 null
+        null=True,  # 允许 post 字段为 null
+        related_name='post_comments',
     )
     user = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING,  # 当用户被删除时，保留评论
-        related_name='user_comments', # 通过 user.user_comments 可以访问用户的所有评论
+        on_delete=models.SET_NULL,  # 当用户被删除时，将 user 字段设为 null
+        null=True,  # 允许 user 字段为 null
+        related_name='user_comments',
     )
     content = models.TextField(
         validators=[MinLengthValidator(1, message="评论内容不能为空")]
@@ -137,15 +224,17 @@ class Like(models.Model):
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     user = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING,  # 当用户被删除时，保留点赞记录
-        related_name='user_likes',  # 通过 user.user_likes 可以访问用户的所有点赞
+        on_delete=models.SET_NULL,  # 当用户被删除时，将 user 字段设为 null
+        null=True,  # 允许 user 字段为 null
+        related_name='user_likes',
         help_text="点赞用户"
     )
-    diary = models.ForeignKey(
-        Diary,
-        on_delete=models.DO_NOTHING,  # 当日记被删除时，删除相关点赞
-        related_name='diary_likes',  # 通过 diary.diary_likes 可以访问日记的所有点赞
-        help_text="被点赞的日记"
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.SET_NULL,  # 当帖子被删除时，将 post 字段设为 null
+        null=True,  # 允许 post 字段为 null
+        related_name='post_likes',
+        help_text="被点赞的帖子"
     )
     created_at = models.DateTimeField(
         default=timezone.now,
@@ -163,11 +252,12 @@ class Like(models.Model):
     class Meta:
         db_table = 'likes'
         ordering = ['-created_at']
-        unique_together = ['user', 'diary']  # 确保用户不能重复点赞同一篇日记
+        unique_together = ['user', 'post']  # 确保用户不能重复点赞同一帖子
 
     def __str__(self):
-        return f"{self.user.username} liked diary {self.diary._id}"
+        return f"{self.user.username} liked post {self.post._id}"
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
+
