@@ -85,18 +85,44 @@ backend/
 
 ## 3. 注意事项
 
-### 数据库迁移
-1. 修改数据库后需要进行迁移操作：
+### Django与MongoDB安装配置
+
+#### Django安装
+查看requirement
+#### MongoDB安装配置
+1. 安装MongoDB：
+   - 从[MongoDB官网](https://www.mongodb.com/try/download/community)下载安装包
+   - 按照安装向导完成安装
+
+2. 安装MongoDB与Django连接组件：
+查看requirement
+
+3. 在`config/settings.py`中配置MongoDB：
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'soulwhisper',  # 数据库名
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017',  # MongoDB地址
+        }
+    }
+}
+```
+
+
+
+5. 运行Django迁移：
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### API认证
-1. 用户登录成功后会返回token
-2. 后续所有需要认证的API请求都需要在Header中添加token：
-```
-Authorization: Token your_token_here
+### 数据库迁移
+1. 修改数据库后需要进行迁移操作：
+```bash
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 ## 4. API接口说明
