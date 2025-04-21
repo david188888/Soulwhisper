@@ -6,13 +6,6 @@
 		<!-- <tab></tab> -->
 		<!-- 卡片视图 -->
 		<listScroll>
-			<!-- <listCard mode="base"></listCard>
-			<listCard mode="image"></listCard>
-			<listCard mode="column"></listCard>
-			<listCard mode="image"></listCard>
-			<listCard mode="column"></listCard>
-			<listCard mode="base"></listCard>
-			<listCard mode="column"></listCard> -->
 			<listCard1></listCard1>
 			<listCard1></listCard1>
 			<listCard1></listCard1>
@@ -25,7 +18,6 @@
 
 <script>
 	import listScroll from '@/frontend/components/listScroll/listScroll.vue'
-	import listCard from '@/frontend/components/listCard/listCard.vue';
 	import listCard1 from '@/frontend/components/listCard/listCard1.vue';
 	// import navbar from '@/frontend/components/navbar/navbar.vue';
 	// import tab from '@/frontend/components/tab/tab.vue'
@@ -34,7 +26,6 @@
 			// navbar,
 			// tab
 			listScroll,
-			listCard,
 			listCard1
 		},
 		data() {
