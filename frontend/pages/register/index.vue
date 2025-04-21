@@ -2,7 +2,7 @@
   <view class="register-container">
     <view class="register-box">
       <view class="logo">
-        <image src="/static/logo.png" mode="aspectFit"></image>
+        <image src="\frontend\static\img\logo.jpg" mode="aspectFit"></image>
       </view>
       
       <view class="title">Create an Account</view>
@@ -44,15 +44,6 @@
           />
         </view>
 
-        <view class="input-group">
-          <uni-icons type="person" size="20" color="#8A2BE2"></uni-icons>
-          <input 
-            type="text" 
-            v-model="name" 
-            placeholder="Please enter your gender"
-            class="input"
-          />
-        </view>
         
         <view class="gender-group">
           <text class="gender-label">gender：</text>
@@ -179,6 +170,10 @@ export default {
         const response = await uni.request({
           url: 'http://localhost:8000/api/account/register/',
           method: 'POST',
+          header: {
+            'content-type': 'application/json',
+            'Accept': 'application/json'
+          },
           data: {
             username: this.username,
             password: this.password,
@@ -199,13 +194,19 @@ export default {
             })
           }, 1500)
         } else {
-          throw new Error(response.data.error || 'register failed')
+          const errorMsg = response.data?.detail || 'register failed, please try again';
+          console.error('register failed:', errorMsg);
+          uni.showToast({
+            title: errorMsg,
+            icon: 'none'
+          });
         }
       } catch (error) {
+        console.error('注册请求错误:', error);
         uni.showToast({
-          title: error.message || 'register failed, please try again',
+          title: '网络错误，请稍后重试',
           icon: 'none'
-        })
+        });
       }
     },
     
@@ -242,6 +243,7 @@ export default {
       image {
         width: 120px;
         height: 120px;
+        border-radius: 10px;
       }
     }
     

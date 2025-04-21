@@ -75,7 +75,7 @@ export default {
     async handleLogin() {
       if (!this.username || !this.password) {
         uni.showToast({
-          title: '请填写完整信息',
+          title: 'Please fill your whole information',
           icon: 'none'
         })
         return
@@ -100,7 +100,7 @@ export default {
           
           // 显示成功提示
           uni.showToast({
-            title: '登录成功',
+            title: 'Login success',
             icon: 'success'
           })
           // 跳转到首页
@@ -110,11 +110,11 @@ export default {
             })
           }, 1500)
         } else {
-          throw new Error(response.data.error || '登录失败')
+          throw new Error(response.data.error || 'Login failed')
         }
       } catch (error) {
         uni.showToast({
-          title: error.message || '登录失败，请重试',
+          title: error.message || 'Login failed, please try again',
           icon: 'none'
         })
       }
@@ -153,6 +153,7 @@ export default {
       image {
         width: 120px;
         height: 120px;
+        border-radius: 10px;
       }
     }
     
