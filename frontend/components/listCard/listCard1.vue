@@ -37,7 +37,22 @@
 			},
 		methods: {
 			open(){
-				console.log('打开详情页面')
+				const item = this.item
+				this.$emit('click',this.item)
+				console.log('打开详情页面',this.item);
+				//内容预渲染
+				// const params = {
+				// 	_id:item._id,
+				// 	title:item.title,
+				// 	create_time:item.create_time,
+				// 	thumbs_up_count:item.thumbs_up_count,
+				// 	browse_count:item.browse_count
+				// }
+				//传参数
+				uni.navigateTo({
+					url:'/frontend/pages/list-detail/list-detail',
+					// url:'/frontend/pages/list-detail/list-detail?params='+JSON.stringify(params)
+				})
 			}
 		}
 	}

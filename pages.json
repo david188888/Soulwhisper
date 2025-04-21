@@ -23,7 +23,9 @@
 		},
 		{
 			"path": "frontend/pages/tabbar/tabbar-4/tabbar-4",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "Moments"
+			}
 		},
 		{
 			"path": "frontend/pages/tabbar/tabbar-5/tabbar-5",
@@ -71,6 +73,13 @@
 			"path": "frontend/pages/profile/about/index",
 			"style": {
 				"navigationBarTitleText": "About Us"
+			}
+		},
+		{
+			"path" : "frontend/pages/list-detail/list-detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Detail"
 			}
 		}
 	],
