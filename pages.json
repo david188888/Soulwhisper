@@ -23,9 +23,7 @@
 		},
 		{
 			"path": "frontend/pages/tabbar/tabbar-4/tabbar-4",
-			"style": {
-				"navigationStyle": "custom"
-			}
+			"style": {}
 		},
 		{
 			"path": "frontend/pages/tabbar/tabbar-5/tabbar-5",
