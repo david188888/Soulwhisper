@@ -6,7 +6,26 @@
 		}
 	},
 	"pages": [
-
+		{
+			"path": "frontend/pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "frontend/pages/register/index",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
 		{
 			"path": "frontend/pages/tabbar/tabbar-1/tabbar-1",
 			"style": {
@@ -36,13 +55,13 @@
 		{
 			"path": "frontend/pages/diary/publish/index",
 			"style": {
-				"navigationBarTitleText": "写日记"
+				"navigationBarTitleText": "write a diary"
 			}
 		},
 		{
 			"path": "frontend/pages/diary/detail/index",
 			"style": {
-				"navigationBarTitleText": "日记详情"
+				"navigationBarTitleText": "details of diary"
 			}
 		},
 		{
@@ -77,12 +96,14 @@
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "#7755ee",
-		"navigationBarTitleText": "SoulWhisper",
-		"navigationBarBackgroundColor": "#f8fafc",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "Soulwhisper",
+		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#8A2BE2",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"color": "#8F8F94",
@@ -98,14 +119,12 @@
 				"selectedIconPath": "frontend/static/img/tabbar/information.png",
 				"text": ""
 			},
-			//#ifndef MP-WEIXIN
 			{
 				"pagePath": "frontend/pages/home-3-detial/record/record",
 				"iconPath": "frontend/static/img/tabbar/record.png",
 				"selectedIconPath": "frontend/static/img/tabbar/record.png",
 				"text": ""
 			},
-			//#endif
 			{
 				"pagePath": "frontend/pages/tabbar/tabbar-4/tabbar-4",
 				"iconPath": "frontend/static/img/tabbar/chat.png",
@@ -117,6 +136,19 @@
 				"iconPath": "frontend/static/img/tabbar/me.png",
 				"selectedIconPath": "frontend/static/img/tabbar/me.png",
 				"text": ""
+			}
+		]
+	},
+	"condition": {
+		"current": 0,
+		"list": [
+			{
+				"name": "login",
+				"path": "frontend/pages/login/index"
+			},
+			{
+				"name": "register",
+				"path": "frontend/pages/register/index"
 			}
 		]
 	}

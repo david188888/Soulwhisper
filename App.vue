@@ -3,6 +3,19 @@ export default {
 	onLaunch: function() {
 		console.log('App Launch');
 
+		// 检查登录状态
+		const token = uni.getStorageSync('token');
+		const currentPages = getCurrentPages();
+		const currentPage = currentPages.length > 0 ? currentPages[currentPages.length - 1] : null;
+		const isLoginPage = currentPage && currentPage.route === 'frontend/pages/login/index';
+		const isRegisterPage = currentPage && currentPage.route === 'frontend/pages/register/index';
+
+		if (!token && !isLoginPage && !isRegisterPage) {
+			uni.reLaunch({
+				url: '/frontend/pages/login/index'
+			});
+		}
+
 		setTimeout(() => {
 			uni.setTabBarBadge({
 				// index: 1,

@@ -94,7 +94,7 @@
 				totalDiaries: 28,
 				totalLikes: 156,
 				totalComments: 42,
-				username: 'Anonymous User',
+				username: '',
 				cacheSize: '2.5MB',
 				version: '1.0.0'
 			}
@@ -104,8 +104,12 @@
 		},
 		methods: {
 			getUserInfo() {
-				// TODO: Get user info from backend
-				this.username = 'Anonymous User'
+				const userInfo = uni.getStorageSync('userInfo')
+				if (userInfo) {
+					this.username = userInfo.name || userInfo.username
+				} else {
+					this.username = 'Anonymous User'
+				}
 				this.totalDiaries = 28
 				this.totalLikes = 156
 				this.totalComments = 42
@@ -215,7 +219,7 @@
 							// Redirect to login page or home page
 							setTimeout(() => {
 								uni.reLaunch({
-									url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+									url: '/pages/login/index'
 								});
 							}, 1500);
 						}
