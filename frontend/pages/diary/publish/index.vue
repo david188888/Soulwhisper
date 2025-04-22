@@ -51,35 +51,41 @@ export default {
       mood: {
         type: '', // 情绪类型
         intensity: 0 // 情绪强度
-      }
+      },
+      record: null // 语音识别结果
     }
   },
   
   onLoad(options) {
-    if (options.audioPath) {
-      this.audioPath = options.audioPath;
-      this.processAudio();
-    }
+    try {
+      this.record = JSON.parse(decodeURIComponent(options.data));
+      console.log('解析后的 record:',this.record); // 调试用
+      this.processAudio(this.record);
+  } catch (e) {
+    console.error('解析fail:', e);
+  }
   },
   
   methods: {
     // 处理音频文件
-    processAudio() {
+    processAudio(record) {
       uni.showLoading({
         title: 'Processing audio...',
-        mask: true
+        mask: true,
+        duration: 200
       });
       
       // 这里应该调用后端 API 进行音频处理
       // 模拟处理过程
-      setTimeout(() => {
-        this.content = "Today was a great day..."; // 这里应该是后端返回的转换文本
+    
+        this.content = record.text
+        console.log('当前 content:', this.content); 
         this.mood = {
-          type: 'happy',
-          intensity: 0.8
+          type: record.emotion_type,
+          intensity: record.emotion_intensity
         };
         uni.hideLoading();
-      }, 2000);
+      
     },
     
     // 选择媒体文件
@@ -141,7 +147,6 @@ export default {
       
       // 这里应该调用后端 API 发布日记
       // 模拟发布过程
-      setTimeout(() => {
         uni.hideLoading();
         // 发布成功后直接跳转到首页
         uni.showToast({
@@ -149,14 +154,11 @@ export default {
           icon: 'success',
           duration: 1500,
           success: () => {
-            setTimeout(() => {
-              uni.switchTab({
-                url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+              uni.navigateTo({
+                url: `/frontend/pages/diary/detail/index?data=${encodeURIComponent(JSON.stringify(this.record))}`
               });
-            }, 1500);
           }
         });
-      }, 1000);
     }
   }
 }

@@ -92,8 +92,8 @@ export default {
         })
         
         if (response.statusCode === 200) {
-          const { token, user } = response.data
-          
+          const { user } = response.data
+		      const { token } = user
           // 保存token和用户信息
           uni.setStorageSync('token', token)
           uni.setStorageSync('userInfo', user)
