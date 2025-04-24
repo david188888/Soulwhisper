@@ -155,7 +155,7 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'djongo.models.ObjectIdField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS设置
 CORS_ALLOW_ALL_ORIGINS = True  # 开发环境中允许所有源

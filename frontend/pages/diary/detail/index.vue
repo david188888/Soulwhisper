@@ -58,16 +58,16 @@ export default {
   },
   
   onLoad(options) {
-    if (options.content) {
-      this.content = decodeURIComponent(options.content);
-    }
-    if (options.mood) {
-      this.mood = JSON.parse(options.mood);
-    }
-    if (options.mediaUrl) {
-      this.mediaUrl = options.mediaUrl;
-      this.mediaType = options.mediaType;
-    }
+    
+      const record = JSON.parse(decodeURIComponent(options.data));
+      this.content = record.text;
+      console.log('6789',record);
+      this.mood.type = record.emotion_type;
+      this.mood.intensity = record.emotion_intensity;
+      if (options.mediaUrl) {
+        this.mediaUrl = options.mediaUrl;
+        this.mediaType = options.mediaType;
+      }
   }
 }
 </script>

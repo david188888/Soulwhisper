@@ -219,7 +219,7 @@
 							// Redirect to login page or home page
 							setTimeout(() => {
 								uni.reLaunch({
-									url: '/pages/login/index'
+									url: '/frontend/pages/login/index'
 								});
 							}, 1500);
 						}

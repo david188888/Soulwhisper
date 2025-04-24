@@ -1,3 +1,11 @@
+<!--
+ * @Author: mahaoxiang mahaoxiang@xiaomi.com
+ * @Date: 2025-04-20 21:36:47
+ * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
+ * @LastEditTime: 2025-04-22 17:18:08
+ * @FilePath: \Soulwhisper\frontend\components\VoiceRecorder.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <view class="voice-recorder">
     <!-- 返回按钮 -->
@@ -58,7 +66,7 @@ import 'recorder-core/src/engine/mp3'
 import 'recorder-core/src/engine/mp3-engine' //如果此格式有额外的编码引擎（*-engine.js）的话，必须要加上
 
 import 'recorder-core/src/extensions/waveview'
-
+import { api } from './api/apiPath';
 // #endif
 
 export default {
@@ -240,70 +248,68 @@ export default {
             mask: true
           });
 
-          // 设置超时定时器
-          const timeoutTimer = setTimeout(() => {
-            // 如果请求还在进行中，则取消请求
-            if (this.currentRequest) {
-              this.currentRequest.abort();
-            }
-            uni.hideLoading();
-            uni.showToast({
-              title: '语音转写超时，请重试',
-              icon: 'none',
-              duration: 2000
-            });
-            this.resetRecording();
-          }, 10000); // 10秒超时
-
-          // 将arrayBuffer转换为Blob对象
-          const blob = new Blob([arrayBuffer], { type: 'audio/mp3' });
-
-          // 创建FormData对象
-          const formData = new FormData();
-          formData.append('audio_file', blob, 'recording.mp3');
-
           // 上传到ASR接口
-          this.currentRequest = uni.request({
-            url: '/api/diary/asr/',
-            method: 'POST',
-            data: formData,
-            header: {
-              'content-type': 'multipart/form-data'
-            },
-            success: (res) => {
-              clearTimeout(timeoutTimer); // 清除超时定时器
-              if (res.statusCode === 201) {
-                const { text, emotion_type, emotion_intensity, diary_id } = res.data;
+          //使用multipart/form-data表单上传文件
+          const token = uni.getStorageSync('token')
 
-                // 隐藏加载提示
-                uni.hideLoading();
-                                // 直接跳转到日记页面
-                uni.navigateTo({
-                  url: `/frontend/pages/diary/publish/index?content=${encodeURIComponent(text)}&emotion_type=${emotion_type}&emotion_intensity=${emotion_intensity}&diary_id=${diary_id}`,
-                  success: () => {
-                    // 跳转成功后重置录音状态
-                    this.resetRecording();
-                  }
-                });
-              } else {
-                throw new Error(res.data.error || '处理失败');
-              }
-            },
-            fail: (err) => {
-              clearTimeout(timeoutTimer); // 清除超时定时器
-              console.error("语音转写失败", err);
-              uni.hideLoading();
-              uni.showToast({
-                title: err.data?.error || '语音转写失败，请重试',
-                icon: 'none',
-                duration: 2000
-              });
-              this.resetRecording();
-            },
-            complete: () => {
-              this.currentRequest = null;
-            }
-          });
+// #ifdef H5
+	//H5中直接使用浏览器提供的File接口构造一个文件
+	uni.uploadFile({
+		url: api.asr
+		,file: new File([arrayBuffer], "recorder.mp3")
+		,name: "audio_file"
+		,formData: {},
+    header: {
+    "Authorization": `Bearer ${token}`
+    },
+		success: (res) => {
+      console.log('======🚀',res);
+      res.data = JSON.parse(res.data);
+      uni.hideLoading();
+      uni.navigateTo({
+        url: `/frontend/pages/diary/publish/index?data=${encodeURIComponent(JSON.stringify(res.data))}`
+    });
+    }
+		,fail: (err)=>{ console.log('======😭',err); }
+	});
+// #endif
+
+// #ifdef APP
+	//App中直接将二进制数据保存到本地文件，然后再上传
+	RecordApp.UniSaveLocalFile("recorder.mp3",arrayBuffer,(savePath)=>{
+		uni.uploadFile({
+			url: api.asr
+			,filePath: savePath
+			,name: "audio_file"
+			,formData: {}
+			,success: (res) => { }
+			,fail: (err)=>{ }
+		});
+	},(err)=>{});
+// #endif
+
+// #ifdef MP-WEIXIN
+	//小程序中需要将二进制数据保存到本地文件，然后再上传
+	var savePath=wx.env.USER_DATA_PATH+"/recorder.mp3";
+	wx.getFileSystemManager().writeFile({
+		filePath:savePath
+		,data:arrayBuffer
+		,encoding:"binary"
+		,success:()=>{
+			wx.uploadFile({
+				url: api.asr
+				,filePath: savePath
+				,name: "audio_file"
+				,formData: {
+				}
+				,success: (res) => { }
+				,fail: (err)=>{ }
+			});
+		}
+		,fail:(e)=>{  }
+	});
+// #endif
+
         } else {
           uni.showToast({
             title: '录音内容为空',
