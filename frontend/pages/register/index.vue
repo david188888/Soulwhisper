@@ -90,6 +90,8 @@
 </template>
 
 <script>
+import { api } from '../../components/api/apiPath';
+
 export default {
   data() {
     return {
@@ -168,7 +170,7 @@ export default {
       
       try {
         const response = await uni.request({
-          url: 'http://localhost:8000/api/account/register/',
+          url: api.register,
           method: 'POST',
           header: {
             'content-type': 'application/json',

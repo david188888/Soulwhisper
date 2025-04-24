@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { api } from '../../../components/api/apiPath';
 export default {
   data() {
     return {
@@ -131,7 +132,7 @@ export default {
     },
     
     // 发布日记
-    publishDiary() {
+    async publishDiary() {
       if (!this.content.trim()) {
         uni.showToast({
           title: 'Please write something',
@@ -148,6 +149,7 @@ export default {
       // 这里应该调用后端 API 发布日记
       // 模拟发布过程
         uni.hideLoading();
+
         // 发布成功后直接跳转到首页
         uni.showToast({
           title: '发布成功',
@@ -175,7 +177,7 @@ export default {
     margin-bottom: 20px;
     
     textarea {
-      width: 100%;
+      width: 70%;
       min-height: 200px;
       font-size: 16px;
       line-height: 1.6;

@@ -26,7 +26,7 @@
         <text>{{getMoodEmoji}}</text>
       </view>
       <view class="mood-intensity">
-        <text>Intensity: {{(mood.intensity * 100).toFixed(0)}}%</text>
+        <text>Intensity: {{(mood.intensity * 10).toFixed(0)}}%</text>
       </view>
     </view>
   </view>

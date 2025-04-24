@@ -2,15 +2,27 @@
  * @Author: mahaoxiang mahaoxiang@xiaomi.com
  * @Date: 2025-04-20 21:36:47
  * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
- * @LastEditTime: 2025-04-22 17:18:08
+ * @LastEditTime: 2025-04-24 14:51:00
  * @FilePath: \Soulwhisper\frontend\components\VoiceRecorder.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
+  <view class="container-chat">
   <view class="voice-recorder">
     <!-- 返回按钮 -->
     <view class="back-button" @tap="goBack">
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
+    </view>
+
+    <!-- 文字描述 -->
+    <view class="description">
+      <text>Share about anything, anytime</text>
+      <text>Meet your AI friend</text>
+    </view>
+
+    <!-- 图片 -->
+    <view class="chat">
+      <image src="../static/img/chat.png" mode="aspectFit"></image>
     </view>
     
     <!-- 录音按钮 -->
@@ -44,6 +56,7 @@
       </view>
     </view>
   </view>
+</view>
 </template>
 
 <script>
@@ -387,6 +400,10 @@ export default {
 </script>
 
 <style lang="scss">
+.container-chat{
+  background-image: linear-gradient(135deg, #a559f7 0%, #62a3fa 100%);
+  height: 700px;
+}
 .voice-recorder {
   width: 100%;
   display: flex;
@@ -436,6 +453,19 @@ export default {
     &:not(.recording) {
       border-radius: 40px;
     }
+  }
+  .description {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .chat{
+    width:320px;
+    height: fit-content;
+    margin-bottom:60px;
   }
   
   .record-modal {
