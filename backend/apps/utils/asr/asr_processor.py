@@ -213,15 +213,16 @@ def transcribe_audio(audio_file_path):
     使用讯飞长语音识别服务转写音频文件
     返回格式: {'text': '识别的文本内容'}
     """
-    denoised_path = None
     try:
-        denoised_path = reduce_noise(audio_file_path)
+        # print(f"audio_path is {audio_file_path}")
         api = RequestApi(
             appid=settings.XUNFEI_APPID,
             secret_key=settings.XUNFEI_API_SECRET,
-            upload_file_path=denoised_path
+            upload_file_path=audio_file_path
         )
+        # print(1111111)
         result = api.get_result()
+        # print(f"result is {result}")
         if result.get('code') != '000000':
             raise Exception(f"讯飞ASR错误: {result.get('descInfo', '未知错误')}")
         order_result = json.loads(result['content']['orderResult'])
@@ -238,9 +239,9 @@ def transcribe_audio(audio_file_path):
         logger.error(f"语音识别过程出错: {str(e)}")
         return {'error': str(e)}
     finally:
-        if denoised_path and denoised_path != audio_file_path:
+        if audio_file_path and audio_file_path != audio_file_path:
             try:
-                os.remove(denoised_path)
+                os.remove(audio_file_path)
             except Exception as e:
                 logger.error(f"清理降噪音频文件失败: {str(e)}")
 
