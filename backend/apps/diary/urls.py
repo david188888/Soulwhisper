@@ -9,6 +9,9 @@ from .views import (
     DiaryDetailView,
     DiaryUpdateView,
     DiaryDeleteView,
+    EmotionAnalysisView,
+    WordCloudView,
+    DiaryStatisticsView,
 )
 
 urlpatterns = [
@@ -21,4 +24,11 @@ urlpatterns = [
     path('diaries/detail/', DiaryDetailView.as_view(), name='diary_detail'),
     path('diaries/update/', DiaryUpdateView.as_view(), name='diary_update'),
     path('diaries/delete/', DiaryDeleteView.as_view(), name='diary_delete'),
+    
+    # 情绪分析相关
+    path('emotion-analysis/', EmotionAnalysisView.as_view(), name='emotion_analysis'),
+    path('word-cloud/', WordCloudView.as_view(), name='word_cloud'),
+    
+    # 统计相关
+    path('statistics/', DiaryStatisticsView.as_view(), name='diary-statistics'),
 ]

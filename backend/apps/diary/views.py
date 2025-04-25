@@ -14,6 +14,18 @@ from .models import Diary
 from django.shortcuts import get_object_or_404
 from bson import ObjectId
 from bson.errors import InvalidId
+from rest_framework.permissions import IsAuthenticated
+from .emotion_analyzer import EmotionAnalyzer
+from django.db.models import Count
+from collections import Counter
+import jieba
+import base64
+from io import BytesIO
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import numpy as np
+from django.utils import timezone
+from datetime import timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -248,3 +260,126 @@ class DiaryDeleteView(APIView):
             logger.error(f"删除日记失败: {str(e)}")
             return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class EmotionAnalysisView(APIView):
+    """
+    获取用户情绪分析数据的API
+    - 分析最近7天的日记情绪分布
+    - 返回情绪统计和关键词
+    """
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            analyzer = EmotionAnalyzer(request.user)
+            analysis_result = analyzer.analyze_emotions()
+            return Response(analysis_result)
+        except Exception as e:
+            logger.error(f"获取情绪分析数据失败: {str(e)}")
+            return Response(
+                {'error': '获取情绪分析数据失败'}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class WordCloudView(APIView):
+    """
+    生成词云图的API
+    - 基于最近7天的日记内容
+    - 返回词云图的base64编码和关键词列表
+    """
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            analyzer = EmotionAnalyzer(request.user)
+            word_cloud, keywords = analyzer.generate_word_cloud()
+            if word_cloud:
+                return Response({
+                    'word_cloud': word_cloud,
+                    'keywords': keywords
+                })
+            return Response(
+                {'error': '没有足够的数据生成词云'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            logger.error(f"生成词云失败: {str(e)}")
+            return Response(
+                {'error': '生成词云失败'}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class DiaryStatisticsView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            user = request.user
+            # 获取最近7天的日记
+            seven_days_ago = timezone.now() - timedelta(days=7)
+            diaries = Diary.objects.filter(
+                user=user,
+                created_at__gte=seven_days_ago
+            )
+            
+            if not diaries.exists():
+                return Response({
+                    'error': '暂无数据'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            # 生成词云图
+            all_content = ' '.join([diary.content for diary in diaries])
+            words = jieba.cut(all_content)
+            word_count = Counter(words)
+            
+            # 过滤掉停用词和单字词
+            stop_words = {'的', '了', '和', '是', '就', '都', '而', '及', '与', '这', '那', '但是', '然后', '现在', '因为'}
+            word_count = {k: v for k, v in word_count.items() if k not in stop_words and len(k.strip()) > 1}
+            
+            if not word_count:
+                return Response({
+                    'error': '没有足够的数据生成词云'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            # 创建词云图
+            wc = WordCloud(
+                font_path='simhei.ttf',  # 使用中文字体
+                width=800,
+                height=400,
+                background_color='white',
+                max_words=50,  # 限制词云中的词数
+                min_font_size=12,
+                max_font_size=60,
+                prefer_horizontal=0.7  # 70%的词水平显示
+            )
+            wordcloud = wc.generate_from_frequencies(word_count)
+            
+            # 保存词云图到内存
+            wordcloud_buffer = BytesIO()
+            plt.figure(figsize=(10, 5))
+            plt.imshow(wordcloud, interpolation='bilinear')
+            plt.axis('off')
+            plt.savefig(wordcloud_buffer, format='png', bbox_inches='tight', pad_inches=0, dpi=300)
+            plt.close()
+            
+            # 转换为base64
+            wordcloud_base64 = base64.b64encode(wordcloud_buffer.getvalue()).decode()
+            
+            # 统计情绪分布
+            emotion_stats = diaries.values('emotion_type').annotate(count=Count('id'))
+            emotion_data = {item['emotion_type']: item['count'] for item in emotion_stats}
+            
+            # 确保所有情绪类型都有值
+            all_emotions = {'happy': 0, 'sad': 0, 'angry': 0, 'neutral': 0}
+            all_emotions.update(emotion_data)
+            
+            return Response({
+                'wordcloud': wordcloud_base64,
+                'emotion_stats': all_emotions
+            })
+            
+        except Exception as e:
+            logger.error(f"获取统计数据失败: {str(e)}")
+            return Response({
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
