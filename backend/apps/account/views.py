@@ -100,7 +100,7 @@ class LoginView(APIView):
             "sex": user.sex,
             "token": token.key
         }
-        return Response({"message": "登录成功", "user": user_info}, 
+        return Response({"message": "登录成功", "user": user_info},
                       status=status.HTTP_200_OK)
 
 class GetUserInfoView(APIView):

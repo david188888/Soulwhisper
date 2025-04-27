@@ -14,38 +14,52 @@
 
 		<view class="card">
 			<text class="subtitle">心情分布</text>
-			<view class="emotion-stats">
-				<view v-for="(emotion, index) in emotions" :key="index" class="emotion-item">
-					<view class="emotion-row">
-						<view class="emotion-icon-box" :style="{ backgroundColor: emotion.color }">
-							<text class="emotion-icon">{{emotion.icon}}</text>
-						</view>
-						<text class="emotion-name">{{emotion.label}}</text>
-						<text class="emotion-percentage">{{emotion.percentage}}%</text>
-					</view>
-					<view class="progress-bar" :style="{ width: emotion.percentage + '%', backgroundColor: emotion.color }"></view>
-				</view>
+			<view class="charts-box">
+				<qiun-data-charts 
+					type="pie"
+					:opts="opts"
+					:chartData="chartData"
+				/>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import { api } from '../../../components/api/apiPath';
+// 你需要确保已安装qiun-data-charts组件，并已在pages.json中全局注册
 	export default {
 		data() {
 			return {
 				wordcloudImage: '',
-				emotions: [],
-				emotionConfig: {
-					happy: { label: '乐', icon: '😊', color: '#FFB74D' },
-					angry: { label: '怒', icon: '😠', color: '#FF7043' },
-					sad: { label: '哀', icon: '😢', color: '#4FC3F7' },
-					neutral: { label: '乐', icon: '😊', color: '#81C784' }
+			chartData: {},
+			opts: {
+				color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
+				padding: [5,5,5,5],
+				enableScroll: false,
+				extra: {
+					pie: {
+						activeOpacity: 0.5,
+						activeRadius: 10,
+						offsetAngle: 0,
+						labelWidth: 15,
+						border: true,
+						borderWidth: 3,
+						borderColor: "#FFFFFF",
+						linearType: "custom"
+					}
+				}
+			},
+			emotionConfig: {
+				happy: { label: 'happy' },
+				angry: { label: 'angry' },
+				sad: { label: 'sad' },
+				neutral: { label: 'neutral' }
 				}
 			}
 		},
 		onShow() {
-			this.fetchStatistics()
+		this.fetchStatistics();
 		},
 		methods: {
 			async fetchStatistics() {
@@ -60,32 +74,32 @@
 					}
 
 					const response = await uni.request({
-						url: 'http://localhost:8000/api/diary/statistics/',
+						url: api.diaryStatistics,
 						method: 'GET',
 						header: {
-							'Authorization': `Token ${token}`
+							'Authorization': `Token ${token}`,
+							'content-type': `application/json`
 						}
 					});
 					
 					if (response.statusCode === 200 && response.data) {
 						const data = response.data;
 						this.wordcloudImage = data.wordcloud;
-						
-						// 处理情绪数据
 						const emotionStats = data.emotion_stats || {};
-						const total = Object.values(emotionStats).reduce((a, b) => a + b, 0);
-						
-						this.emotions = Object.entries(emotionStats).map(([type, count]) => {
+					// 组装饼图数据
+					this.chartData = {
+						series: [
+							{
+								data: Object.entries(emotionStats).map(([type, count]) => {
 							const config = this.emotionConfig[type] || {};
-							const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
 							return {
-								type,
-								label: config.label || type,
-								icon: config.icon || '😐',
-								color: config.color || '#999',
-								percentage
-							};
-						});
+										name: config.label || type,
+										value: count
+									}
+								})
+							}
+						]
+					};
 					} else {
 						throw new Error(response.data?.error || '获取数据失败');
 					}
@@ -151,54 +165,13 @@
 	object-fit: contain;
 }
 
-.emotion-stats {
-	margin-top: 20rpx;
-}
-
-.emotion-item {
-	margin-bottom: 30rpx;
-}
-
-.emotion-row {
-	display: flex;
-	align-items: center;
-	margin-bottom: 10rpx;
-}
-
-.emotion-icon-box {
-	width: 50rpx;
-	height: 50rpx;
-	border-radius: 25rpx;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-right: 20rpx;
-}
-
-.emotion-icon {
-	font-size: 28rpx;
-}
-
-.emotion-name {
-	flex: 1;
-	font-size: 28rpx;
-	color: #333;
-}
-
-.emotion-percentage {
-	font-size: 28rpx;
-	color: #666;
-	margin-left: 20rpx;
-}
-
-.progress-bar {
-	height: 6rpx;
-	border-radius: 3rpx;
-	transition: width 0.3s ease;
-}
-
 .loading {
 	color: #999;
 	font-size: 28rpx;
+}
+
+.charts-box {
+	width: 100%;
+	height: 300px;
 }
 </style>

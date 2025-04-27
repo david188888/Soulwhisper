@@ -3,59 +3,62 @@ from django.utils import timezone
 from datetime import timedelta
 from apps.diary.models import Diary
 from apps.account.models import User
+from bson import ObjectId
 
 class Command(BaseCommand):
-    help = '初始化日记数据到MongoDB'
+    help = '初始化日记数据到MongoDB，可指定用户名或用户token'
 
-    def handle(self, *args, **kwargs):
+    def add_arguments(self, parser):
+        parser.add_argument('--username', type=str, help='指定用户名')
+        parser.add_argument('--token', type=str, help='指定用户token(_id)')
+
+    def handle(self, *args, **options):
         try:
-            # 确保有一个测试用户
-            try:
-                user = User.objects.get(username='testuser')
-                self.stdout.write(self.style.SUCCESS(f'找到已存在的用户: {user.username}'))
-            except User.DoesNotExist:
-                user = User.objects.create_user(
-                    username='testuser',
-                    password='testpassword',
-                    name='测试用户',
-                    sex='M'
-                )
-                self.stdout.write(self.style.SUCCESS(f'创建新用户: {user.username}'))
+            user = None
+            if options['token']:
+                user = User.objects.get(_id=ObjectId(options['token']))
+                self.stdout.write(self.style.SUCCESS(f'通过token找到用户: {user.username}'))
+            elif options['username']:
+                user = User.objects.get(username=options['username'])
+                self.stdout.write(self.style.SUCCESS(f'通过用户名找到用户: {user.username}'))
+            else:
+                self.stdout.write(self.style.ERROR('请通过 --username 或 --token 指定用户'))
+                return
 
             # 示例日记内容
             diary_contents = [
                 {
-                    'content': '今天心情特别好，和朋友一起去公园散步，阳光明媚，感觉整个人都充满活力。看到小朋友们在玩耍，心情格外愉悦。',
+                    'content': 'Today was a wonderful day! I went for a walk in the park with friends, the sun was shining, and I felt full of energy. Watching children play made me especially happy.',
                     'emotion': 'happy',
                     'intensity': 8
                 },
                 {
-                    'content': '工作压力有点大，项目deadline快到了，感觉有些焦虑。需要调整一下心态，好好规划时间。',
+                    'content': 'Work pressure is a bit high, the project deadline is approaching, and I feel somewhat anxious. Need to adjust my mindset and plan my time better.',
                     'emotion': 'neutral',
                     'intensity': 6
                 },
                 {
-                    'content': '今天很平静，按部就班地完成了工作，午休时看了会书，感觉生活节奏刚刚好。',
+                    'content': 'Today was peaceful, I completed my work as usual, read a book during lunch break, and felt that the pace of life was just right.',
                     'emotion': 'neutral',
                     'intensity': 5
                 },
                 {
-                    'content': '和家人视频，听说奶奶身体不太好，心里有些难过。希望她能早日康复。',
+                    'content': 'Had a video call with family, heard that grandma is not feeling well, which made me a bit sad. Hope she recovers soon.',
                     'emotion': 'sad',
                     'intensity': 7
                 },
                 {
-                    'content': '收到了期待已久的offer！太开心了！这段时间的努力终于有了回报，感觉整个人都在发光！',
+                    'content': 'Received the long-awaited offer! So happy! All the hard work finally paid off, I feel like I\'m glowing!',
                     'emotion': 'happy',
                     'intensity': 9
                 },
                 {
-                    'content': '连续加班三天了，感觉身心俱疲。需要好好休息一下，调整状态。',
+                    'content': 'Been working overtime for three days straight, feeling physically and mentally exhausted. Need to rest and adjust my state.',
                     'emotion': 'neutral',
                     'intensity': 7
                 },
                 {
-                    'content': '地铁上遇到很不礼貌的人，故意加塞还瞪人，真是气死我了。深呼吸，不要跟这种人一般见识。',
+                    'content': 'Met a very rude person on the subway who cut in line and glared at me, it really made me angry. Deep breaths, don\'t let such people affect me.',
                     'emotion': 'angry',
                     'intensity': 6
                 }
@@ -80,4 +83,4 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f'成功为用户 {user.username} 创建示例日记数据'))
 
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f'初始化数据失败: {str(e)}')) 
+            self.stdout.write(self.style.ERROR(f'初始化数据失败: {str(e)}'))

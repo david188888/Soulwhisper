@@ -3,8 +3,6 @@ from datetime import datetime, timedelta
 from .models import Diary
 from django.db.models.functions import TruncDate
 from collections import defaultdict
-import jieba
-import jieba.analyse
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import io
@@ -15,19 +13,33 @@ import os
 import pymongo
 from django.conf import settings
 from bson import ObjectId
+import re
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import nltk
+
+# 下载必要的NLTK数据
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
 
 class EmotionAnalyzer:
     def __init__(self, user):
         self.user = user
         # 情绪映射表
         self.emotions = {
-            'happy': '开心',
-            'sad': '悲伤',
-            'angry': '愤怒',
-            'calm': '平静',
-            'anxious': '焦虑',
-            'excited': '兴奋',
-            'tired': '疲惫'
+            'happy': 'Happy',
+            'sad': 'Sad',
+            'angry': 'Angry',
+            'calm': 'Calm',
+            'anxious': 'Anxious',
+            'excited': 'Excited',
+            'tired': 'Tired'
         }
         # 情绪对应的颜色
         self.emotion_colors = {
@@ -64,17 +76,25 @@ class EmotionAnalyzer:
         """生成词云图"""
         diaries = self.get_recent_diaries()
         if not diaries:
-            return None, ["快记录心情，看看你都在想什么吧"]
+            return None, ["Start recording your thoughts to see what's on your mind"]
             
         # 合并所有日记内容
         text = ' '.join(diary['content'] for diary in diaries)
         
-        # 使用jieba进行分词和关键词提取
-        keywords = jieba.analyse.extract_tags(text, topK=20, withWeight=True)
+        # 使用NLTK进行分词
+        words = word_tokenize(text.lower())
+        
+        # 过滤停用词和短词
+        stop_words = set(stopwords.words('english'))
+        words = [word for word in words if word.isalnum() and word not in stop_words and len(word) > 2]
+        
+        # 统计词频
+        word_freq = {}
+        for word in words:
+            word_freq[word] = word_freq.get(word, 0) + 1
         
         # 创建词云对象
         wc = WordCloud(
-            font_path="C:/Windows/Fonts/simhei.ttf",  # Windows系统中文字体路径
             width=400,
             height=200,
             background_color='white',
@@ -83,7 +103,6 @@ class EmotionAnalyzer:
         )
         
         # 生成词云
-        word_freq = {word: weight for word, weight in keywords}
         wc.generate_from_frequencies(word_freq)
         
         # 将词云图转换为base64字符串
@@ -92,7 +111,8 @@ class EmotionAnalyzer:
         img_str = base64.b64encode(img.getvalue()).decode()
         
         # 返回词云图base64字符串和关键词列表
-        return img_str, [word for word, _ in keywords[:10]]
+        top_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:10]
+        return img_str, [word for word, _ in top_words]
 
     def analyze_emotions(self):
         """分析情绪分布"""
@@ -132,10 +152,6 @@ class EmotionAnalyzer:
         if not emotions:
             return None
             
-        # 设置中文显示
-        plt.rcParams['font.sans-serif'] = ['SimHei']
-        plt.rcParams['axes.unicode_minus'] = False
-        
         # 创建饼图
         plt.figure(figsize=(8, 8))
         labels = list(emotions.keys())
@@ -152,4 +168,4 @@ class EmotionAnalyzer:
         plt.close()
         img_str = base64.b64encode(img.getvalue()).decode()
         
-        return img_str 
+        return img_str
