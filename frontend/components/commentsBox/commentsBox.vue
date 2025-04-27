@@ -15,7 +15,7 @@
 				<view class="comments-button">Reply</view>
 			</view>
 			<view class="comments-reply" >
-				<!-- v-for="item in comments.replys" :key="item.comment_id" --!>
+				<!-- v-for="item in comments.replys" :key="item.comment_id" -->
 				<!-- <commentsBox></commentsBox> -->
 				
 				<view class="comments-header">
