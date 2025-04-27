@@ -35,6 +35,7 @@ class Diary(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
+        db_table = 'diary'  # 指定MongoDB中的集合名称
         verbose_name = 'Diary'
         verbose_name_plural = 'Diaries'
         # 移除索引定义，让MongoDB自动处理

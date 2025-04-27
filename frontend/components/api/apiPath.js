@@ -5,4 +5,5 @@ export const api = {
     login:`${baseUrl}api/account/login/`,
     asr:`${baseUrl}api/diary/asr/`,
     dairyCreate:`${baseUrl}api/diary/diaries/create/`,
+    diaryStatistics:`${baseUrl}api/diary/statistics/`,
 }

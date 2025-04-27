@@ -14,6 +14,20 @@ from .models import Diary
 from django.shortcuts import get_object_or_404
 from bson import ObjectId
 from bson.errors import InvalidId
+from rest_framework.permissions import IsAuthenticated
+from .emotion_analyzer import EmotionAnalyzer
+from django.db.models import Count
+from collections import Counter
+import jieba
+import base64
+from io import BytesIO
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import numpy as np
+from django.utils import timezone
+from datetime import timedelta
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 logger = logging.getLogger(__name__)
 
@@ -24,28 +38,21 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 class ASRView(APIView):
     """
-    语音识别API，处理上传的音频文件
-    - 并行执行语音转录和情感分析
-    - 自动将内容保存为日记
-    - 返回转录结果、情感分析和用户信息
+    API for speech recognition and automatic diary creation
     """
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
-            if 'audio_file' not in request.FILES:
-                return Response({"error": "没有上传音频文件"}, 
-                             status=status.HTTP_400_BAD_REQUEST)
-
-            audio_file = request.FILES['audio_file']
-            file_extension = os.path.splitext(audio_file.name)[1].lower()
-
-            if file_extension not in ['.wav', '.mp3', '.m4a', '.flac']:
-                return Response({"error": f"不支持的音频格式: {file_extension}"}, 
+            audio_file = request.FILES.get('audio')
+            if not audio_file:
+                return Response({'error': 'No audio file provided'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
-            TEMP_DIR = Path(settings.BASE_DIR) / 'temp_audio' / 'temp'
-            TEMP_DIR.mkdir(parents=True, exist_ok=True)
-            temp_file = TEMP_DIR / f"{uuid.uuid4()}{file_extension}"
+            # Create temporary file
+            temp_dir = Path(settings.MEDIA_ROOT) / 'temp'
+            temp_dir.mkdir(exist_ok=True)
+            temp_file = temp_dir / f'{uuid.uuid4()}.wav'
 
             try:
                 with open(temp_file, 'wb+') as destination:
@@ -62,6 +69,7 @@ class ASRView(APIView):
                 emotion_intensity = result['emotion_intensity']
                 
                 diary = Diary.objects.create(
+                    user=request.user,
                     content=text,
                     emotion_type=emotion_type,
                     emotion_intensity=emotion_intensity
@@ -75,7 +83,7 @@ class ASRView(APIView):
                 }, status=status.HTTP_201_CREATED)
 
             except Exception as e:
-                logger.error(f"处理语音转写时出错: {str(e)}")
+                logger.error(f"Error processing audio transcription: {str(e)}")
                 return Response({'error': str(e)}, 
                               status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             finally:
@@ -83,19 +91,19 @@ class ASRView(APIView):
                     try:
                         os.remove(temp_file)
                     except Exception as e:
-                        logger.warning(f"删除临时文件失败: {str(e)}")
+                        logger.warning(f"Failed to delete temporary file: {str(e)}")
 
         except Exception as e:
-            logger.error(f"ASR处理发生错误: {str(e)}")
+            logger.error(f"ASR processing error: {str(e)}")
             return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DiaryListView(APIView):
     """
-    日记列表API
-    - 支持分页
-    - 按创建时间倒序排列
-    - 返回日记列表和评论数量
+    API for diary list
+    - Supports pagination
+    - Sorted by creation time in descending order
+    - Returns diary list and comment count
     """
     pagination_class = StandardResultsSetPagination
 
@@ -115,14 +123,14 @@ class DiaryListView(APIView):
             
             return page.get_paginated_response(data)
         except Exception as e:
-            logger.error(f"获取日记列表失败: {str(e)}")
+            logger.error(f"Failed to get diary list: {str(e)}")
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DiaryCreateView(APIView):
     """
-    创建日记API
-    - 支持设置情感类型和强度
-    - 返回创建的日记信息
+    API for creating diary
+    - Supports setting emotion type and intensity
+    - Returns created diary information
     """
 
     def post(self, request):
@@ -132,10 +140,11 @@ class DiaryCreateView(APIView):
             emotion_intensity = request.data.get('emotion_intensity', 5)
 
             if not content:
-                return Response({'error': '内容不能为空'}, 
+                return Response({'error': 'Content cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             diary = Diary.objects.create(
+                user=request.user,
                 content=content,
                 emotion_type=emotion_type,
                 emotion_intensity=emotion_intensity
@@ -149,21 +158,21 @@ class DiaryCreateView(APIView):
                 'created_at': diary.created_at
             }, status=status.HTTP_201_CREATED)
         except Exception as e:
-            logger.error(f"创建日记失败: {str(e)}")
+            logger.error(f"Failed to create diary: {str(e)}")
             return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DiaryDetailView(APIView):
     """
-    获取日记详情API
-    - 返回日记详情
+    API for getting diary details
+    - Returns diary details
     """
 
     def get(self, request):
         try:
             diary_id = request.data.get('diary_id')
             if not diary_id:
-                return Response({'error': '日记ID不能为空'}, 
+                return Response({'error': 'Diary ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             diary = get_object_or_404(Diary, _id=ObjectId(diary_id))
@@ -176,24 +185,24 @@ class DiaryDetailView(APIView):
             }
             return Response(data)
         except InvalidId:
-            return Response({'error': '日记不存在'}, 
+            return Response({'error': 'Diary not found'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            logger.error(f"获取日记详情失败: {str(e)}")
+            logger.error(f"Failed to get diary details: {str(e)}")
             return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DiaryUpdateView(APIView):
     """
-    更新日记API
-    - 支持更新内容和情感信息
+    API for updating diary
+    - Supports updating content and emotion information
     """
 
     def put(self, request):
         try:
             diary_id = request.data.get('diary_id')
             if not diary_id:
-                return Response({'error': '日记ID不能为空'}, 
+                return Response({'error': 'Diary ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             diary = get_object_or_404(Diary, _id=ObjectId(diary_id))
@@ -219,32 +228,178 @@ class DiaryUpdateView(APIView):
                 'created_at': diary.created_at
             })
         except InvalidId:
-            return Response({'error': '日记不存在'}, 
+            return Response({'error': 'Diary not found'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            logger.error(f"更新日记失败: {str(e)}")
+            logger.error(f"Failed to update diary: {str(e)}")
             return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DiaryDeleteView(APIView):
     """
-    删除日记API
+    API for deleting diary
     """
 
     def delete(self, request):
         try:
             diary_id = request.data.get('diary_id')
             if not diary_id:
-                return Response({'error': '日记ID不能为空'}, 
+                return Response({'error': 'Diary ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             diary = get_object_or_404(Diary, _id=ObjectId(diary_id))
             diary.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except InvalidId:
-            return Response({'error': '日记不存在'}, 
+            return Response({'error': 'Diary not found'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            logger.error(f"删除日记失败: {str(e)}")
+            logger.error(f"Failed to delete diary: {str(e)}")
             return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class EmotionAnalysisView(APIView):
+    """
+    API for getting user emotion analysis data
+    - Analyzes emotion distribution of recent 7 days' diaries
+    - Returns emotion statistics and keywords
+    """
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            analyzer = EmotionAnalyzer(request.user)
+            analysis_result = analyzer.analyze_emotions()
+            return Response(analysis_result)
+        except Exception as e:
+            logger.error(f"Failed to get emotion analysis data: {str(e)}")
+            return Response(
+                {'error': 'Failed to get emotion analysis data'}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class WordCloudView(APIView):
+    """
+    API for generating word cloud
+    - Based on recent 7 days' diary content
+    - Returns word cloud image in base64 and keyword list
+    """
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            analyzer = EmotionAnalyzer(request.user)
+            word_cloud, keywords = analyzer.generate_word_cloud()
+            if word_cloud:
+                return Response({
+                    'word_cloud': word_cloud,
+                    'keywords': keywords
+                })
+            return Response(
+                {'error': 'Not enough data to generate word cloud'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            logger.error(f"Failed to generate word cloud: {str(e)}")
+            return Response(
+                {'error': 'Failed to generate word cloud'}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class DiaryStatisticsView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            user = request.user
+            # Get diaries from last 7 days
+            seven_days_ago = timezone.now() - timedelta(days=7)
+            diaries = Diary.objects.filter(
+                user=user,
+                created_at__gte=seven_days_ago
+            )
+            
+            if not diaries.exists():
+                return Response({
+                    'error': 'No data available'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            # Generate word cloud
+            all_content = ' '.join([diary.content for diary in diaries])
+            words = word_tokenize(all_content.lower())
+            
+            # Extended list of English stop words including conjunctions and articles
+            stop_words = set(stopwords.words('english')).union({
+                # Articles
+                'a', 'an', 'the',
+                # Conjunctions
+                'and', 'or', 'but', 'nor', 'for', 'yet', 'so',
+                'after', 'although', 'as', 'because', 'before', 'if', 'since', 'than', 'though', 'unless', 'until', 'when', 'where', 'while',
+                # Prepositions
+                'about', 'above', 'across', 'after', 'against', 'along', 'among', 'around', 'at', 'before', 'behind', 'below', 'beneath', 'beside', 'between', 'beyond', 'by', 'down', 'during', 'except', 'for', 'from', 'in', 'inside', 'into', 'like', 'near', 'of', 'off', 'on', 'onto', 'out', 'outside', 'over', 'past', 'since', 'through', 'throughout', 'till', 'to', 'toward', 'under', 'underneath', 'until', 'up', 'upon', 'with', 'within', 'without',
+                # Pronouns
+                'i', 'me', 'my', 'mine', 'myself',
+                'you', 'your', 'yours', 'yourself', 'yourselves',
+                'he', 'him', 'his', 'himself',
+                'she', 'her', 'hers', 'herself',
+                'it', 'its', 'itself',
+                'we', 'us', 'our', 'ours', 'ourselves',
+                'they', 'them', 'their', 'theirs', 'themselves',
+                # Common verbs
+                'is', 'am', 'are', 'was', 'were', 'be', 'been', 'being',
+                'have', 'has', 'had', 'having',
+                'do', 'does', 'did', 'doing',
+                'will', 'would', 'shall', 'should',
+                'may', 'might', 'must', 'can', 'could'
+            })
+            
+            # Filter out stop words and short words
+            word_count = Counter([word for word in words if word.isalnum() and word not in stop_words and len(word) > 2])
+            
+            if not word_count:
+                return Response({
+                    'error': 'Not enough data to generate word cloud'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            # Create word cloud
+            wc = WordCloud(
+                width=800,
+                height=400,
+                background_color='white',
+                max_words=50,
+                min_font_size=12,
+                max_font_size=60,
+                prefer_horizontal=0.7
+            )
+            wordcloud = wc.generate_from_frequencies(word_count)
+            
+            # Save word cloud to memory
+            wordcloud_buffer = BytesIO()
+            plt.figure(figsize=(10, 5))
+            plt.imshow(wordcloud, interpolation='bilinear')
+            plt.axis('off')
+            plt.savefig(wordcloud_buffer, format='png', bbox_inches='tight', pad_inches=0, dpi=300)
+            plt.close()
+            
+            # Convert to base64
+            wordcloud_base64 = base64.b64encode(wordcloud_buffer.getvalue()).decode()
+            
+            # Count emotion distribution
+            emotion_stats = diaries.values('emotion_type').annotate(count=Count('_id'))
+            emotion_data = {item['emotion_type']: item['count'] for item in emotion_stats}
+            
+            # Ensure all emotion types have values
+            all_emotions = {'happy': 0, 'sad': 0, 'angry': 0, 'neutral': 0}
+            all_emotions.update(emotion_data)
+            
+            return Response({
+                'wordcloud': wordcloud_base64,
+                'emotion_stats': all_emotions
+            })
+            
+        except Exception as e:
+            import traceback; traceback.print_exc()
+            logger.error(f"Failed to get statistics: {str(e)}")
+            return Response({
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

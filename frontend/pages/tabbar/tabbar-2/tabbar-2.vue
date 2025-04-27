@@ -1,29 +1,177 @@
 <template>
-	<view class="content">
-		情绪分析图表页
+	<view class="container">
+		<view class="header">
+			<text class="title">本周情绪报告</text>
+		</view>
+
+		<view class="card">
+			<text class="subtitle">情绪关键词云</text>
+			<view class="word-cloud-container">
+				<image v-if="wordcloudImage" :src="'data:image/png;base64,' + wordcloudImage" mode="aspectFit" class="word-cloud-image"/>
+				<view v-else class="loading">加载中...</view>
+			</view>
+		</view>
+
+		<view class="card">
+			<text class="subtitle">心情分布</text>
+			<view class="charts-box">
+				<qiun-data-charts 
+					type="pie"
+					:opts="opts"
+					:chartData="chartData"
+				/>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
+import { api } from '../../../components/api/apiPath';
+// 你需要确保已安装qiun-data-charts组件，并已在pages.json中全局注册
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				wordcloudImage: '',
+			chartData: {},
+			opts: {
+				color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
+				padding: [5,5,5,5],
+				enableScroll: false,
+				extra: {
+					pie: {
+						activeOpacity: 0.5,
+						activeRadius: 10,
+						offsetAngle: 0,
+						labelWidth: 15,
+						border: true,
+						borderWidth: 3,
+						borderColor: "#FFFFFF",
+						linearType: "custom"
+					}
+				}
+			},
+			emotionConfig: {
+				happy: { label: 'happy' },
+				angry: { label: 'angry' },
+				sad: { label: 'sad' },
+				neutral: { label: 'neutral' }
+				}
 			}
 		},
-		onLoad() {
-
+		onShow() {
+		this.fetchStatistics();
 		},
 		methods: {
+			async fetchStatistics() {
+				try {
+					const token = uni.getStorageSync('token')
+					if (!token) {
+						uni.showToast({
+							title: '请先登录',
+							icon: 'none'
+						})
+						return
+					}
 
+					const response = await uni.request({
+						url: api.diaryStatistics,
+						method: 'GET',
+						header: {
+							'Authorization': `Token ${token}`,
+							'content-type': `application/json`
+						}
+					});
+					
+					if (response.statusCode === 200 && response.data) {
+						const data = response.data;
+						this.wordcloudImage = data.wordcloud;
+						const emotionStats = data.emotion_stats || {};
+					// 组装饼图数据
+					this.chartData = {
+						series: [
+							{
+								data: Object.entries(emotionStats).map(([type, count]) => {
+							const config = this.emotionConfig[type] || {};
+							return {
+										name: config.label || type,
+										value: count
+									}
+								})
+							}
+						]
+					};
+					} else {
+						throw new Error(response.data?.error || '获取数据失败');
+					}
+				} catch (error) {
+					console.error('获取统计数据失败:', error);
+					uni.showToast({
+						title: error.message || '网络请求失败',
+						icon: 'none'
+					});
+				}
+			}
 		}
 	}
 </script>
 
 <style>
-	.content {
-		text-align: center;
-		background-color: #f8fafc;
-		height: 765px;
-	}
+.container {
+	padding: 30rpx;
+	background-color: #F8F9FD;
+	min-height: 100vh;
+}
+
+.header {
+	margin-bottom: 30rpx;
+}
+
+.title {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #333;
+}
+
+.card {
+	background-color: #FFFFFF;
+	border-radius: 20rpx;
+	padding: 30rpx;
+	margin-bottom: 30rpx;
+	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.subtitle {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 20rpx;
+	display: block;
+}
+
+.word-cloud-container {
+	width: 100%;
+	height: 300rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #FFFFFF;
+	border-radius: 12rpx;
+	overflow: hidden;
+}
+
+.word-cloud-image {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.loading {
+	color: #999;
+	font-size: 28rpx;
+}
+
+.charts-box {
+	width: 100%;
+	height: 300px;
+}
 </style>
