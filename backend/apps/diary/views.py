@@ -28,6 +28,7 @@ from django.utils import timezone
 from datetime import timedelta
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from django.utils.dateparse import parse_date
 
 logger = logging.getLogger(__name__)
 
@@ -132,23 +133,57 @@ class DiaryCreateView(APIView):
     - Supports setting emotion type and intensity
     - Returns created diary information
     """
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
+            # 获取并验证参数
             content = request.data.get('content')
             emotion_type = request.data.get('emotion_type', 'neutral')
             emotion_intensity = request.data.get('emotion_intensity', 5)
 
-            if not content:
-                return Response({'error': 'Content cannot be empty'}, 
-                              status=status.HTTP_400_BAD_REQUEST)
+            # 验证内容
+            if not content or not content.strip():
+                logger.error(f"用户 {request.user.username} 尝试创建空日记")
+                return Response({
+                    'error': '日记内容不能为空'
+                }, status=status.HTTP_400_BAD_REQUEST)
 
+            # 验证情感类型
+            valid_emotion_types = ['neutral', 'happy', 'sad', 'angry']
+            if emotion_type not in valid_emotion_types:
+                logger.error(f"用户 {request.user.username} 提供了无效的情感类型: {emotion_type}")
+                return Response({
+                    'error': f'无效的情感类型。有效类型为: {", ".join(valid_emotion_types)}'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # 验证情感强度
+            try:
+                emotion_intensity = int(emotion_intensity)
+                if not 1 <= emotion_intensity <= 10:
+                    logger.error(f"用户 {request.user.username} 提供了无效的情感强度: {emotion_intensity}")
+                    return Response({
+                        'error': '情感强度必须在1到10之间'
+                    }, status=status.HTTP_400_BAD_REQUEST)
+            except (TypeError, ValueError):
+                logger.error(f"用户 {request.user.username} 提供了无效的情感强度格式: {emotion_intensity}")
+                return Response({
+                    'error': '情感强度必须是1到10之间的整数'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # 记录创建操作
+            logger.info(f"用户 {request.user.username} 开始创建新日记")
+
+            # 创建日记
             diary = Diary.objects.create(
                 user=request.user,
                 content=content,
                 emotion_type=emotion_type,
                 emotion_intensity=emotion_intensity
             )
+
+            # 记录创建成功
+            logger.info(f"用户 {request.user.username} 成功创建日记 (ID: {diary._id})")
 
             return Response({
                 'id': str(diary._id),
@@ -157,10 +192,13 @@ class DiaryCreateView(APIView):
                 'emotion_intensity': diary.emotion_intensity,
                 'created_at': diary.created_at
             }, status=status.HTTP_201_CREATED)
+
         except Exception as e:
-            logger.error(f"Failed to create diary: {str(e)}")
-            return Response({'error': str(e)}, 
-                          status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # 记录详细错误信息
+            logger.error(f"用户 {request.user.username} 创建日记失败: {str(e)}", exc_info=True)
+            return Response({
+                'error': '创建日记失败，请稍后重试'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DiaryDetailView(APIView):
     """
@@ -403,3 +441,79 @@ class DiaryStatisticsView(APIView):
             return Response({
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class DiaryDaysView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        year = int(request.GET.get('year'))
+        month = int(request.GET.get('month'))
+        user = request.user
+        diaries = Diary.objects.filter(
+            user=user,
+            created_at__year=year,
+            created_at__month=month
+        )
+        # 获取完整的created_at日期
+        days = diaries.values_list('created_at', flat=True).distinct()
+        days_list = sorted(list(days))  # 排序后的日期列表
+        return Response(days_list)
+
+class DiaryDayDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            date_str = request.GET.get('date')
+            if not date_str:
+                logger.error("缺少日期参数")
+                return Response(
+                    {'error': '日期参数不能为空'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            try:
+                # 解析日期字符串
+                target_date = parse_date(date_str)
+                if not target_date:
+                    raise ValueError("Invalid date format")
+            except ValueError as e:
+                logger.error(f"日期格式无效: {date_str}")
+                return Response(
+                    {'error': '日期格式无效，请使用YYYY-MM-DD格式'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            user = request.user
+            logger.info(f"正在获取用户 {user.username} 在 {date_str} 的日记")
+            
+            # 使用日期范围查询
+            start_date = timezone.make_aware(timezone.datetime.combine(target_date, timezone.datetime.min.time()))
+            end_date = timezone.make_aware(timezone.datetime.combine(target_date, timezone.datetime.max.time()))
+            
+            diaries = Diary.objects.filter(
+                user=user,
+                created_at__gte=start_date,
+                created_at__lte=end_date
+            ).order_by('-created_at')
+            
+            if diaries.exists():
+                diary = diaries.first()
+                response_data = {
+                    'content': diary.content,
+                    'emotion_type': diary.emotion_type,
+                    'emotion_intensity': diary.emotion_intensity,
+                    'created_at': diary.created_at
+                }
+                logger.info(f"成功获取 {date_str} 的日记")
+                return Response(response_data, status=status.HTTP_200_OK)
+            else:
+                logger.info(f"未找到 {date_str} 的日记记录")
+                return Response(None, status=status.HTTP_200_OK)
+                
+        except Exception as e:
+            logger.error(f"获取日记详情时发生错误: {str(e)}", exc_info=True)
+            return Response(
+                {'error': '获取日记详情失败，请稍后重试'}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

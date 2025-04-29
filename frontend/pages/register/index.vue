@@ -192,7 +192,7 @@ export default {
           
           setTimeout(() => {
             uni.redirectTo({
-              url: '/pages/login/index'
+              url: '/frontend/pages/login/index'
             })
           }, 1500)
         } else {

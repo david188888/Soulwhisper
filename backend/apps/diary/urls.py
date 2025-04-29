@@ -12,6 +12,8 @@ from .views import (
     EmotionAnalysisView,
     WordCloudView,
     DiaryStatisticsView,
+    DiaryDaysView,
+    DiaryDayDetailView,
 )
 
 urlpatterns = [
@@ -31,4 +33,6 @@ urlpatterns = [
     
     # 统计相关
     path('statistics/', DiaryStatisticsView.as_view(), name='diary-statistics'),
+    path('days/', DiaryDaysView.as_view(), name='diary_days'),
+    path('day_detail/', DiaryDayDetailView.as_view(), name='diary_day_detail'),
 ]

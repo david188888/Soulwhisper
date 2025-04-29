@@ -28,35 +28,202 @@
 		<!-- 情绪日历 -->
 		<view class="calendar">
 			<text class="month">Mood Calendar</text>
-			
 			<uni-calendar
-			:start-date="'2025-1-1'"
-			:end-date="'2025-5-31'"
-			 :month-names="enLocale.monthNames"
-			  :week-days="enLocale.weekDays"
-			@change="change"
-			 />
-			
+				:start-date="'2025-01-01'"
+				:end-date="'2025-05-31'"
+				:selected="highlightDays"
+				@change="onCalendarChange"
+				@monthSwitch="onMonthSwitch"
+			/>
 		</view>
-		
+
+		<!-- 日记内容弹出框 -->
+		<uni-popup ref="diaryPopup" type="center">
+			<view class="popup-content" v-if="selectedDiary">
+				<view class="popup-header">
+					<text class="popup-title">Diary Content</text>
+					<text class="popup-date">{{ formatDate(selectedDiary.created_at) }}</text>
+				</view>
+				<view class="popup-emotion">
+					<text class="emotion-text">Mood: {{ getEmotionEmoji(selectedDiary.emotion_type) }}</text>
+					<text class="emotion-intensity">(Level: {{ selectedDiary.emotion_intensity }})</text>
+				</view>
+				<view class="popup-body">
+					<text class="diary-content">{{ selectedDiary.content }}</text>
+				</view>
+			</view>
+			<view class="popup-content" v-else>
+				<text>No diary for this day.</text>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
+import { api } from '../../../components/api/apiPath.js';
 export default {
 	data() {
 		return {
-			enLocale: {
-			  monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-			  weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			},
+			highlightDays: [],
+			selectedDiary: null,
+			currentYear: new Date().getFullYear(),
+			currentMonth: new Date().getMonth() + 1,
+			emotionEmojis: {
+				happy: '😊',
+				sad: '😢',
+				angry: '😠',
+				neutral: '😐'
+			}
 		};
+	},
+	onShow() {
+		this.highlightDays = [];
+		this.fetchHighlightDays(this.currentYear, this.currentMonth);
+	},
+	mounted() {
+		this.highlightDays = [];
+		this.fetchHighlightDays(this.currentYear, this.currentMonth);
 	},
 	methods: {
 		navigate(page) {
 			uni.navigateTo({
 				url: `/pages/home-3-detial/${page}/${page}`
 			});
+		},
+		async fetchHighlightDays(year, month) {
+			try {
+				const userInfo = uni.getStorageSync('userInfo');
+				if (!userInfo || !userInfo.token) {
+					console.error('No token found');
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					});
+					return;
+				}
+
+				const res = await uni.request({
+					url: api.diaryDays + `?year=${year}&month=${month}`,
+					header: {
+						'Authorization': `Token ${userInfo.token}`,
+						'Content-Type': 'application/json'
+					},
+					method: 'GET'
+				});
+
+				if (res.statusCode === 200 && Array.isArray(res.data)) {
+					this.highlightDays = res.data.map(dateStr => {
+						const date = new Date(dateStr);
+						return {
+							date: `${year}-${month}-${date.getUTCDate()}`
+						};
+					});
+				} else {
+					console.error('获取日期失败:', res);
+					uni.showToast({
+						title: '获取日期失败',
+						icon: 'none'
+					});
+				}
+			} catch (error) {
+				console.error('请求错误:', error);
+				console.error('错误详情:', error.message);
+				uni.showToast({
+					title: '网络请求失败',
+					icon: 'none'
+				});
+				this.highlightDays = [];
+			}
+		},
+		onCalendarChange(e) {
+			const date = e.fulldate;
+			this.fetchDiaryDetail(date);
+		},
+		onMonthSwitch(e) {
+			const [year, month] = e.yearMonth.split('-');
+			this.currentYear = parseInt(year);
+			this.currentMonth = parseInt(month);
+			this.highlightDays = [];
+			this.fetchHighlightDays(this.currentYear, this.currentMonth);
+		},
+		async fetchDiaryDetail(date) {
+			try {
+				const userInfo = uni.getStorageSync('userInfo');
+				if (!userInfo || !userInfo.token) {
+					console.error('未找到用户token');
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					});
+					return;
+				}
+
+				console.log('请求日记详情，日期:', date);
+
+				const requestUrl = api.diaryDayDetail + `?date=${date}`;
+				console.log('请求URL:', requestUrl);
+
+				const res = await uni.request({
+					url: requestUrl,
+					header: { 
+						'Authorization': `Token ${userInfo.token}`,
+						'Content-Type': 'application/json'
+					},
+					method: 'GET'
+				});
+
+				console.log('服务器响应:', res);
+
+				// 检查响应状态码和数据
+				if (res.statusCode === 200) {
+					// 如果响应成功且有数据
+					if (res.data && !res.data.error) {
+						this.selectedDiary = res.data;
+						this.$refs.diaryPopup.open();
+						console.log('获取到的日记内容:', this.selectedDiary);
+					} else {
+						// 如果响应成功但没有数据
+						console.log('该日期没有日记');
+						this.selectedDiary = null;
+						uni.showToast({
+							title: '该日期没有日记',
+							icon: 'none'
+						});
+					}
+				} else if (res.statusCode === 400) {
+					// 处理参数错误
+					console.error('请求参数错误:', res.data?.error || '参数错误');
+					this.selectedDiary = null;
+					uni.showToast({
+						title: res.data?.error || '请求参数错误',
+						icon: 'none'
+					});
+				} else {
+					// 处理其他错误
+					console.error('服务器响应错误:', res.statusCode, res.data?.error);
+					this.selectedDiary = null;
+					uni.showToast({
+						title: res.data?.error || '获取日记失败',
+						icon: 'none'
+					});
+				}
+			} catch (error) {
+				console.error('获取日记详情失败:', error);
+				this.selectedDiary = null;
+				uni.showToast({
+					title: '网络请求失败',
+					icon: 'none'
+				});
+			}
+		},
+		// 格式化日期
+		formatDate(dateStr) {
+			const date = new Date(dateStr);
+			return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+		},
+		// 获取情绪对应的表情
+		getEmotionEmoji(emotion) {
+			return this.emotionEmojis[emotion] || '😐';
 		}
 	}
 };
@@ -137,4 +304,52 @@ export default {
 	  font-weight: 500;
 	  text-shadow: 0 1px 2px rgba(0,0,0,0.05);
 	}
+.popup-content {
+	background: white;
+	border-radius: 15px;
+	padding: 20px;
+	width: 80vw;
+	max-width: 500px;
+}
+.popup-header {
+	margin-bottom: 15px;
+}
+.popup-title {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	display: block;
+}
+.popup-date {
+	font-size: 14px;
+	color: #666;
+	margin-top: 5px;
+	display: block;
+}
+.popup-emotion {
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
+	padding: 8px;
+	background: #f8f9fa;
+	border-radius: 8px;
+}
+.emotion-text {
+	font-size: 16px;
+	margin-right: 10px;
+}
+.emotion-intensity {
+	font-size: 14px;
+	color: #666;
+}
+.popup-body {
+	padding: 15px;
+	background: #f8f9fa;
+	border-radius: 8px;
+}
+.diary-content {
+	font-size: 16px;
+	line-height: 1.6;
+	color: #333;
+}
 </style>

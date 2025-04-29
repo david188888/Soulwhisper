@@ -62,18 +62,15 @@ export default {
       showPassword: false
     }
   },
-  
   computed: {
     isFormValid() {
       return this.username && this.password
     }
   },
-  
   methods: {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword
     },
-    
     async handleLogin() {
       if (!this.username || !this.password) {
         uni.showToast({
@@ -82,7 +79,6 @@ export default {
         })
         return
       }
-      
       try {
         const response = await uni.request({
           url: api.login,
@@ -92,14 +88,12 @@ export default {
             password: this.password
           }
         })
-        
         if (response.statusCode === 200) {
           const { user } = response.data
 		      const { token } = user
           // 保存token和用户信息
           uni.setStorageSync('token', token)
           uni.setStorageSync('userInfo', user)
-          
           // 显示成功提示
           uni.showToast({
             title: 'Login success',
