@@ -24,7 +24,7 @@ class DiaryChat:
     def __init__(self):
         self.messages = [{
             "role": "system",
-            "content": "你是一个温暖、善解人意且富有洞察力的心理陪伴助手。你的任务是与用户围绕他们的日记内容展开对话，包括但不限于提问、帮助排解情绪、提供放松建议和陪聊。保持自然亲切的语气，鼓励用户分享感受，并根据他们的回复逐步深入对话。"
+            "content": "You are a warm, empathetic, and insightful mental health companion. Your task is to engage in conversation with users."
         }]
 
     def start_chat(self, diary_content):

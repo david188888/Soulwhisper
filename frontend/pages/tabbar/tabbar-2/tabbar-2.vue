@@ -1,19 +1,19 @@
 <template>
 	<view class="container">
 		<view class="header">
-			<text class="title">本周情绪报告</text>
+			<text class="title">This Week's Emotion Report</text>
 		</view>
 
 		<view class="card">
-			<text class="subtitle">情绪关键词云</text>
+			<text class="subtitle">Emotional Keyword Cloud</text>
 			<view class="word-cloud-container">
 				<image v-if="wordcloudImage" :src="'data:image/png;base64,' + wordcloudImage" mode="aspectFit" class="word-cloud-image"/>
-				<view v-else class="loading">加载中...</view>
+				<view v-else class="loading">Loading...</view>
 			</view>
 		</view>
 
 		<view class="card">
-			<text class="subtitle">心情分布</text>
+			<text class="subtitle">Mood Distribution</text>
 			<view class="charts-box">
 				<qiun-data-charts 
 					type="pie"
@@ -67,7 +67,7 @@ import { api } from '../../../components/api/apiPath';
 					const token = uni.getStorageSync('token')
 					if (!token) {
 						uni.showToast({
-							title: '请先登录',
+							title: 'Please log in first',
 							icon: 'none'
 						})
 						return
@@ -101,12 +101,12 @@ import { api } from '../../../components/api/apiPath';
 						]
 					};
 					} else {
-						throw new Error(response.data?.error || '获取数据失败');
+						throw new Error(response.data?.error || 'fail to fetch data');
 					}
 				} catch (error) {
-					console.error('获取统计数据失败:', error);
+					console.error('fail to fetch statistics:', error);
 					uni.showToast({
-						title: error.message || '网络请求失败',
+						title: error.message || 'network error',
 						icon: 'none'
 					});
 				}

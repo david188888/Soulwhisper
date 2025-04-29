@@ -12,7 +12,7 @@
 		<!-- 顶部小部件 -->
 		<view class="nav-bar">
 			<button class="nav-btn" @click="navigate('record')">
-					<span>🎤</span>
+				<span>🎤</span>
 				<text class="nav-text"> New Record</text>
 			</button>
 			<button class="nav-btn" @click="navigate('bottle')">
@@ -86,9 +86,21 @@ export default {
 	},
 	methods: {
 		navigate(page) {
-			uni.navigateTo({
-				url: `/pages/home-3-detial/${page}/${page}`
-			});
+			let url = '';
+			switch(page) {
+				case 'record':
+					url = '/frontend/pages/home-3-detial/record/record';
+					break;
+				case 'bottle':
+					url = '/frontend/pages/home-3-detial/bottle/bottle';
+					break;
+				case 'aichat':
+					url = '/frontend/pages/home-3-detial/aichat/aichat';
+					break;
+				default:
+					url = '/';
+			}
+			uni.navigateTo({ url });
 		},
 		async fetchHighlightDays(year, month) {
 			try {

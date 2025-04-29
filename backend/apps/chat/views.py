@@ -107,7 +107,7 @@ class EndChatView(APIView):
         # 删除会话
         if session_id in active_chat_sessions:
             del active_chat_sessions[session_id]
-            
+
         return Response({
             "message": "聊天会话已结束"
         })
