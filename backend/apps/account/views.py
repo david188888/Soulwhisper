@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 
 @method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(APIView):
-    """用户注册"""
+    """User Registration"""
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -22,29 +22,29 @@ class RegisterView(APIView):
             sex = data.get('sex', '').strip()
             name = data.get('name', '').strip() or username
             
-            # 加强验证条件
+            # Enhanced validation conditions
             if not username:
-                return Response({"error": "用户名不能为空"}, 
+                return Response({"error": "Username cannot be empty"}, 
                             status=status.HTTP_400_BAD_REQUEST)
             
             if not password:
-                return Response({"error": "密码不能为空"}, 
+                return Response({"error": "Password cannot be empty"}, 
                             status=status.HTTP_400_BAD_REQUEST)
                 
             if not sex:
-                return Response({"error": "性别不能为空"}, 
+                return Response({"error": "Gender cannot be empty"}, 
                             status=status.HTTP_400_BAD_REQUEST)
                 
             if sex not in ['male', 'female', 'other']:
-                return Response({"error": "性别只能是 male、female 或 other"}, 
+                return Response({"error": "Gender must be 'male', 'female', or 'other'"}, 
                             status=status.HTTP_400_BAD_REQUEST)
 
-            # 验证用户名是否已存在
+            # Verify if username already exists
             if User.objects.filter(username=username).exists():
-                return Response({"error": "用户名已存在"}, 
+                return Response({"error": "Username already exists"}, 
                             status=status.HTTP_400_BAD_REQUEST)
             
-            # 使用 create_user 创建用户
+            # Create user with create_user method
             user = User.objects.create_user(
                 username=username,
                 name=name,
@@ -52,7 +52,7 @@ class RegisterView(APIView):
                 password=password
             )
             return Response({
-                "message": "用户注册成功",
+                "message": "User registration successful",
                 "user": {
                     "username": user.username,
                     "name": user.name,
@@ -61,16 +61,16 @@ class RegisterView(APIView):
             }, status=status.HTTP_201_CREATED)
             
         except ValueError as ve:
-            # 捕获 create_user 中的 ValueError 异常
+            # Catch ValueError exceptions from create_user
             return Response({"error": str(ve)}, 
                         status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response({"error": f"注册失败: {str(e)}"}, 
+            return Response({"error": f"Registration failed: {str(e)}"}, 
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
-    """用户登录"""
+    """User Login"""
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -78,17 +78,17 @@ class LoginView(APIView):
         password = request.data.get('password')
 
         if not username or not password:
-            return Response({"error": "用户名和密码必填"}, 
+            return Response({"error": "Username and password are required"}, 
                           status=status.HTTP_400_BAD_REQUEST)
 
         user = authenticate(username=username, password=password)
         
         if user is None:
-            return Response({"error": "用户名或密码错误"}, 
+            return Response({"error": "Invalid username or password"}, 
                           status=status.HTTP_401_UNAUTHORIZED)
 
         if not user.is_active:
-            return Response({"error": "用户未激活"}, 
+            return Response({"error": "User is not active"}, 
                           status=status.HTTP_401_UNAUTHORIZED)
 
         login(request, user)
@@ -100,11 +100,11 @@ class LoginView(APIView):
             "sex": user.sex,
             "token": token.key
         }
-        return Response({"message": "登录成功", "user": user_info},
+        return Response({"message": "Login successful", "user": user_info},
                       status=status.HTTP_200_OK)
 
 class GetUserInfoView(APIView):
-    """获取用户信息"""
+    """Get user information"""
     permission_classes = [IsAuthenticated]
     
     def get(self, request):

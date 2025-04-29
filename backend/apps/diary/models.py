@@ -29,7 +29,7 @@ class Diary(models.Model):
 
     emotion_intensity = models.IntegerField(
         default=5,
-        help_text=_('范围1-10，表示情感强度')
+        help_text=_('Range 1-10, indicating the intensity of emotions.'),
     )
 
     created_at = models.DateTimeField(default=timezone.now)

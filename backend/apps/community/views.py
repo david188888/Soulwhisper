@@ -20,8 +20,8 @@ from rest_framework.permissions import IsAuthenticated
 User = get_user_model()  # 获取 User 模型
 
 class DailyContent(APIView):
-    """获取每日内容（关键词、短句、活动）"""
-    # permission_classes = [IsAuthenticated]  # 注释掉权限验证
+    """Get daily content (keywords, quotes, activities)"""
+    # permission_classes = [IsAuthenticated]  # Permission check commented out
 
     def get(self, request):
         try:
@@ -57,9 +57,9 @@ class DailyContent(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# 每日关键词CRUD
+# Daily keyword CRUD
 class DailyKeywordListView(APIView):
-    """获取每日关键词列表"""
+    """Get the list of daily keywords"""
     def get(self, request):
         try:
             keywords = DailyKeyword.objects.all().order_by('-created_at')
@@ -75,14 +75,14 @@ class DailyKeywordListView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DailyKeywordCreateView(APIView):
-    """创建每日关键词"""
+    """Create a daily keyword"""
     def post(self, request):
         try:
             keyword = request.data.get('keyword')
             description = request.data.get('description')
             
             if not keyword or not description:
-                return Response({'error': '关键词和描述不能为空'}, 
+                return Response({'error': 'Keyword and description cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             daily_keyword = DailyKeyword.objects.create(
@@ -101,12 +101,12 @@ class DailyKeywordCreateView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DailyKeywordDetailView(APIView):
-    """获取每日关键词详情"""
+    """Get daily keyword details"""
     def get(self, request):
         try:
             keyword_id = request.data.get('keyword_id')
             if not keyword_id:
-                return Response({'error': '关键词ID不能为空'}, 
+                return Response({'error': 'Keyword ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             keyword = get_object_or_404(DailyKeyword, _id=ObjectId(keyword_id))
@@ -119,18 +119,18 @@ class DailyKeywordDetailView(APIView):
             }
             return Response(data)
         except InvalidId:
-            return Response({'error': '关键词不存在'}, 
+            return Response({'error': 'Keyword does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DailyKeywordUpdateView(APIView):
-    """更新每日关键词"""
+    """Update a daily keyword"""
     def put(self, request):
         try:
             keyword_id = request.data.get('keyword_id')
             if not keyword_id:
-                return Response({'error': '关键词ID不能为空'}, 
+                return Response({'error': 'Keyword ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             keyword = get_object_or_404(DailyKeyword, _id=ObjectId(keyword_id))
@@ -156,32 +156,32 @@ class DailyKeywordUpdateView(APIView):
                 'created_at': keyword.created_at
             })
         except InvalidId:
-            return Response({'error': '关键词不存在'}, 
+            return Response({'error': 'Keyword does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DailyKeywordDeleteView(APIView):
-    """删除每日关键词"""
+    """Delete a daily keyword"""
     def delete(self, request):
         try:
             keyword_id = request.data.get('keyword_id')
             if not keyword_id:
-                return Response({'error': '关键词ID不能为空'}, 
+                return Response({'error': 'Keyword ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             keyword = get_object_or_404(DailyKeyword, _id=ObjectId(keyword_id))
             keyword.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except InvalidId:
-            return Response({'error': '关键词不存在'}, 
+            return Response({'error': 'Keyword does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# 治愈短句CRUD
+# Healing quotes CRUD
 class HealingQuoteListView(APIView):
-    """获取治愈短句列表"""
+    """Get the list of healing quotes"""
     def get(self, request):
         try:
             quotes = HealingQuote.objects.all().order_by('-created_at')
@@ -197,14 +197,14 @@ class HealingQuoteListView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingQuoteCreateView(APIView):
-    """创建治愈短句"""
+    """Create a healing quote"""
     def post(self, request):
         try:
             content = request.data.get('content')
             author = request.data.get('author')
             
             if not content:
-                return Response({'error': '内容不能为空'}, 
+                return Response({'error': 'Content cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             quote = HealingQuote.objects.create(
@@ -223,12 +223,12 @@ class HealingQuoteCreateView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingQuoteDetailView(APIView):
-    """获取治愈短句详情"""
+    """Get healing quote details"""
     def get(self, request):
         try:
             quote_id = request.data.get('quote_id')
             if not quote_id:
-                return Response({'error': '短句ID不能为空'}, 
+                return Response({'error': 'Quote ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             quote = get_object_or_404(HealingQuote, _id=ObjectId(quote_id))
@@ -241,18 +241,18 @@ class HealingQuoteDetailView(APIView):
             }
             return Response(data)
         except InvalidId:
-            return Response({'error': '短句不存在'}, 
+            return Response({'error': 'Quote does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingQuoteUpdateView(APIView):
-    """更新治愈短句"""
+    """Update a healing quote"""
     def put(self, request):
         try:
             quote_id = request.data.get('quote_id')
             if not quote_id:
-                return Response({'error': '短句ID不能为空'}, 
+                return Response({'error': 'Quote ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             quote = get_object_or_404(HealingQuote, _id=ObjectId(quote_id))
@@ -278,32 +278,32 @@ class HealingQuoteUpdateView(APIView):
                 'created_at': quote.created_at
             })
         except InvalidId:
-            return Response({'error': '短句不存在'}, 
+            return Response({'error': 'Quote does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingQuoteDeleteView(APIView):
-    """删除治愈短句"""
+    """Delete a healing quote"""
     def delete(self, request):
         try:
             quote_id = request.data.get('quote_id')
             if not quote_id:
-                return Response({'error': '短句ID不能为空'}, 
+                return Response({'error': 'Quote ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             quote = get_object_or_404(HealingQuote, _id=ObjectId(quote_id))
             quote.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except InvalidId:
-            return Response({'error': '短句不存在'}, 
+            return Response({'error': 'Quote does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# 治愈活动CRUD
+# Healing activities CRUD
 class HealingActivityListView(APIView):
-    """获取治愈活动列表"""
+    """Get the list of healing activities"""
     def get(self, request):
         try:
             activities = HealingActivity.objects.all().order_by('-created_at')
@@ -321,7 +321,7 @@ class HealingActivityListView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingActivityCreateView(APIView):
-    """创建治愈活动"""
+    """Create a healing activity"""
     def post(self, request):
         try:
             title = request.data.get('title')
@@ -330,7 +330,7 @@ class HealingActivityCreateView(APIView):
             difficulty = request.data.get('difficulty')
             
             if not title or not description or not duration or not difficulty:
-                return Response({'error': '所有字段都不能为空'}, 
+                return Response({'error': 'All fields are required'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             activity = HealingActivity.objects.create(
@@ -353,12 +353,12 @@ class HealingActivityCreateView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingActivityDetailView(APIView):
-    """获取治愈活动详情"""
+    """Get healing activity details"""
     def get(self, request):
         try:
             activity_id = request.data.get('activity_id')
             if not activity_id:
-                return Response({'error': '活动ID不能为空'}, 
+                return Response({'error': 'Activity ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             activity = get_object_or_404(HealingActivity, _id=ObjectId(activity_id))
@@ -373,18 +373,18 @@ class HealingActivityDetailView(APIView):
             }
             return Response(data)
         except InvalidId:
-            return Response({'error': '活动不存在'}, 
+            return Response({'error': 'Activity does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingActivityUpdateView(APIView):
-    """更新治愈活动"""
+    """Update a healing activity"""
     def put(self, request):
         try:
             activity_id = request.data.get('activity_id')
             if not activity_id:
-                return Response({'error': '活动ID不能为空'}, 
+                return Response({'error': 'Activity ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             activity = get_object_or_404(HealingActivity, _id=ObjectId(activity_id))
@@ -415,52 +415,53 @@ class HealingActivityUpdateView(APIView):
                 'duration': activity.duration,
                 'difficulty': activity.difficulty,
                 'is_active': activity.is_active,
-                'created_at': activity.created_at
+                'created_at': activity.created_at,
+                'updated_at': activity.updated_at
             })
         except InvalidId:
-            return Response({'error': '活动不存在'}, 
+            return Response({'error': 'Activity does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class HealingActivityDeleteView(APIView):
-    """删除治愈活动"""
+    """Delete a healing activity"""
     def delete(self, request):
         try:
             activity_id = request.data.get('activity_id')
             if not activity_id:
-                return Response({'error': '活动ID不能为空'}, 
+                return Response({'error': 'Activity ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             activity = get_object_or_404(HealingActivity, _id=ObjectId(activity_id))
             activity.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except InvalidId:
-            return Response({'error': '活动不存在'}, 
+            return Response({'error': 'Activity does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# 评论CRUD
+# Comment CRUD
 class CommentListView(APIView):
-    """获取评论列表"""
+    """Get list of comments for a post"""
     def get(self, request):
         try:
             post_id = request.data.get('post_id')
             if not post_id:
-                return Response({'message': '参数不完整'}, 
+                return Response({'error': 'Incomplete parameters. Post ID is required'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
-            # 先获取 post 对象
+            # Get post object first
             try:
                 post = Post.objects.get(_id=ObjectId(post_id))
             except (InvalidId, Post.DoesNotExist):
-                return Response({'message': '帖子不存在'}, 
+                return Response({'error': 'Post does not exist'}, 
                               status=status.HTTP_404_NOT_FOUND)
 
-            # 使用 all() 获取所有评论，然后手动筛选和排序
+            # Get all comments, then filter and sort manually
             all_comments = list(Comment.objects.all())
-            # 直接用 post 对象比较
+            # Compare with post object directly
             comments = sorted(
                 [comment for comment in all_comments if comment.post == post],
                 key=lambda x: x.created_at,
@@ -479,22 +480,22 @@ class CommentListView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentCreateView(APIView):
-    """创建评论"""
+    """Create a comment on a post"""
     def post(self, request):
         try:
             post_id = request.data.get('post_id')
             content = request.data.get('content')
-            user_id = request.data.get('user_id')  # 从请求中获取用户ID
+            user_id = request.data.get('user_id')
             
             if not post_id or not content or not user_id:
-                return Response({'error': '帖子ID、评论内容和用户ID不能为空'}, 
+                return Response({'error': 'Post ID, comment content, and user ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 post = get_object_or_404(Post, _id=ObjectId(post_id))
-                user = get_object_or_404(User, _id=ObjectId(user_id))  # 修改这里，使用 _id 而不是 id
+                user = get_object_or_404(User, _id=ObjectId(user_id))
             except InvalidId:
-                return Response({'error': '帖子或用户不存在'}, 
+                return Response({'error': 'Post or user does not exist'}, 
                               status=status.HTTP_404_NOT_FOUND)
 
             comment = Comment.objects.create(
@@ -506,7 +507,7 @@ class CommentCreateView(APIView):
             return Response({
                 'id': str(comment._id),
                 'post_id': str(comment.post._id),
-                'user_id': str(comment.user._id),  # 修改这里，使用 _id 而不是 id
+                'user_id': str(comment.user._id),
                 'content': comment.content,
                 'created_at': comment.created_at
             }, status=status.HTTP_201_CREATED)
@@ -514,12 +515,12 @@ class CommentCreateView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentDetailView(APIView):
-    """获取评论详情"""
+    """Get comment details"""
     def get(self, request):
         try:
             comment_id = request.data.get('comment_id')
             if not comment_id:
-                return Response({'error': '评论ID不能为空'}, 
+                return Response({'error': 'Comment ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             comment = get_object_or_404(Comment, _id=ObjectId(comment_id))
@@ -533,25 +534,25 @@ class CommentDetailView(APIView):
             }
             return Response(data)
         except InvalidId:
-            return Response({'error': '评论不存在'}, 
+            return Response({'error': 'Comment does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentUpdateView(APIView):
-    """更新评论"""
+    """Update a comment"""
     def put(self, request):
         try:
             comment_id = request.data.get('comment_id')
             if not comment_id:
-                return Response({'error': '评论ID不能为空'}, 
+                return Response({'error': 'Comment ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             comment = get_object_or_404(Comment, _id=ObjectId(comment_id))
             
             content = request.data.get('content')
             if not content:
-                return Response({'error': '评论内容不能为空'}, 
+                return Response({'error': 'Comment content cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             comment.content = content
@@ -566,60 +567,60 @@ class CommentUpdateView(APIView):
                 'created_at': comment.created_at
             })
         except InvalidId:
-            return Response({'error': '评论不存在'}, 
+            return Response({'error': 'Comment does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CommentDeleteView(APIView):
-    """删除评论"""
+    """Delete a comment"""
     def delete(self, request):
         try:
             comment_id = request.data.get('comment_id')
             if not comment_id:
-                return Response({'error': '评论ID不能为空'}, 
+                return Response({'error': 'Comment ID cannot be empty'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             comment = get_object_or_404(Comment, _id=ObjectId(comment_id))
             comment.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except InvalidId:
-            return Response({'error': '评论不存在'}, 
+            return Response({'error': 'Comment does not exist'}, 
                           status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class LikeCreateView(APIView):
-    """创建点赞"""
+    """Create a like on a post"""
     def post(self, request):
         try:
-            # 获取参数
+            # Get parameters
             data = request.data
             user_id = data.get('user_id')
             post_id = data.get('post_id')
 
-            # 参数校验
+            # Validate parameters
             if not all([user_id, post_id]):
-                return Response({'message': '参数不完整'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Incomplete parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 user = User.objects.get(_id=ObjectId(user_id))
                 post = Post.objects.get(_id=ObjectId(post_id))
             except (InvalidId, User.DoesNotExist, Post.DoesNotExist):
-                return Response({'message': 'ID不存在'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'error': 'ID does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-            # 检查是否已点赞
+            # Check if already liked
             if Like.objects.filter(user=user, post=post).exists():
-                return Response({'message': '已经点赞过了'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Already liked'}, status=status.HTTP_400_BAD_REQUEST)
 
-            # 创建点赞
+            # Create like
             like = Like.objects.create(
                 user=user,
                 post=post
             )
 
             return Response({
-                'message': '点赞成功',
+                'message': 'Like created successfully',
                 'data': {
                     'id': str(like._id),
                     'user_id': str(like.user._id),
@@ -629,57 +630,57 @@ class LikeCreateView(APIView):
             }, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class LikeDeleteView(APIView):
-    """取消点赞"""
+    """Delete a like from a post"""
     def delete(self, request):
         try:
-            # 获取参数
+            # Get parameters
             data = request.data
             user_id = data.get('user_id')
             post_id = data.get('post_id')
 
-            # 参数校验
+            # Validate parameters
             if not all([user_id, post_id]):
-                return Response({'message': '参数不完整'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Incomplete parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 user = User.objects.get(_id=ObjectId(user_id))
                 post = Post.objects.get(_id=ObjectId(post_id))
             except (InvalidId, User.DoesNotExist, Post.DoesNotExist):
-                return Response({'message': 'ID不存在'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'error': 'ID does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-            # 删除点赞
+            # Delete like
             like = Like.objects.filter(user=user, post=post).first()
             if not like:
-                return Response({'message': '点赞不存在'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'error': 'Like does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
             like.delete()
-            return Response({'message': '取消点赞成功'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Like deleted successfully'}, status=status.HTTP_200_OK)
 
         except Exception as e:
-            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class LikeListView(APIView):
-    """获取点赞列表"""
+    """Get list of likes for a post"""
     def get(self, request):
         try:
-            # 获取参数
+            # Get parameters
             data = request.data
             post_id = data.get('post_id')
             user_id = data.get('user_id')
 
-            # 参数校验
+            # Validate parameters
             if not post_id:
-                return Response({'message': '参数不完整'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Incomplete parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 post = Post.objects.get(_id=ObjectId(post_id))
             except (InvalidId, Post.DoesNotExist):
-                return Response({'message': '帖子不存在'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'error': 'Post does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-            # 获取点赞信息
+            # Get like information
             likes = Like.objects.filter(post=post)
             has_liked = False
 
@@ -691,7 +692,7 @@ class LikeListView(APIView):
                     pass
 
             return Response({
-                'message': '获取成功',
+                'message': 'Success',
                 'data': {
                     'count': likes.count(),
                     'has_liked': has_liked
@@ -699,22 +700,22 @@ class LikeListView(APIView):
             })
 
         except Exception as e:
-            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class PostListView(APIView):
-    """获取帖子列表"""
+    """Get the list of posts"""
     def get(self, request):
         try:
-            # 获取分页参数
+            # Get pagination parameters
             page = int(request.data.get('page', 1))
             page_size = int(request.data.get('page_size', 10))
-            user_id = request.data.get('user_id')  # 可选，用于判断当前用户是否点赞
+            user_id = request.data.get('user_id')  # Optional, used to determine if the current user has liked
             
-            # 获取帖子列表，按创建时间倒序排序
+            # Get post list, sort by creation time in descending order
             try:
-                # 使用 all() 方法获取所有帖子，然后过滤和排序
+                # Use all() method to get all posts, then filter and sort
                 all_posts = list(Post.objects.all())
-                # 过滤活跃帖子并按创建时间倒序排序
+                # Filter active posts and sort by creation time in descending order
                 posts = sorted(
                     [post for post in all_posts if post.is_active],
                     key=lambda x: x.created_at,
@@ -722,25 +723,25 @@ class PostListView(APIView):
                 )
                 total = len(posts)
                 
-                # 分页
+                # Pagination
                 start = (page - 1) * page_size
                 end = start + page_size
                 posts = posts[start:end]
             except Exception as e:
                 print(f"Error getting posts: {str(e)}")
                 return Response({
-                    'message': '获取帖子列表失败',
-                    'error': '数据库查询错误',
+                    'message': 'Failed to get post list',
+                    'error': 'Database query error',
                     'details': str(e)
                 }, status=500)
             
-            # 构建返回数据
+            # Build response data
             post_list = []
             for post in posts:
                 try:
-                    # 获取点赞信息
+                    # Get like information
                     try:
-                        # 使用 all() 获取所有点赞，然后手动筛选
+                        # Use all() to get all likes, then manually filter
                         all_likes = list(Like.objects.all())
                         likes = [like for like in all_likes if like.post == post and like.is_active]
                         like_count = len(likes)
@@ -752,7 +753,7 @@ class PostListView(APIView):
                             except (InvalidId, User.DoesNotExist):
                                 pass
 
-                        # 获取点赞用户列表
+                        # Get list of users who liked
                         like_users = []
                         for like in likes:
                             try:
@@ -770,9 +771,9 @@ class PostListView(APIView):
                         has_liked = False
                         like_users = []
 
-                    # 获取评论列表
+                    # Get comment list
                     try:
-                        # 使用 all() 获取所有评论，然后手动筛选和排序
+                        # Use all() to get all comments, then manually filter and sort
                         all_comments = list(Comment.objects.all())
                         comments = sorted(
                             [comment for comment in all_comments if comment.post == post],
@@ -820,7 +821,7 @@ class PostListView(APIView):
                     continue
             
             return Response({
-                'message': '获取帖子列表成功',
+                'message': 'Successfully retrieved post list',
                 'data': {
                     'total': total,
                     'page': page,
@@ -833,35 +834,35 @@ class PostListView(APIView):
         except Exception as e:
             import traceback
             return Response({
-                'message': '获取帖子列表失败',
+                'message': 'Failed to get post list',
                 'error': str(e),
                 'traceback': traceback.format_exc()
             }, status=500)
 
 class PostCreateView(APIView):
-    """创建帖子"""
+    """Create a post"""
     def post(self, request):
         try:
-            # 获取参数
+            # Get parameters
             title = request.data.get('title')
             content = request.data.get('content')
             user_id = request.data.get('user_id')
-            image = request.FILES.get('image')  # 可选
-            video = request.FILES.get('video')  # 可选
-            video_thumbnail = request.FILES.get('video_thumbnail')  # 可选
+            image = request.FILES.get('image')  # Optional
+            video = request.FILES.get('video')  # Optional
+            video_thumbnail = request.FILES.get('video_thumbnail')  # Optional
 
-            # 参数校验
+            # Parameter validation
             if not all([title, content, user_id]):
-                return Response({'message': '参数不完整'}, 
+                return Response({'error': 'Incomplete parameters'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 user = User.objects.get(_id=ObjectId(user_id))
             except (InvalidId, User.DoesNotExist):
-                return Response({'message': '用户不存在'}, 
+                return Response({'error': 'User does not exist'}, 
                               status=status.HTTP_404_NOT_FOUND)
 
-            # 创建帖子
+            # Create post
             post = Post.objects.create(
                 title=title,
                 content=content,
@@ -872,7 +873,7 @@ class PostCreateView(APIView):
             )
 
             return Response({
-                'message': '创建成功',
+                'message': 'Post created successfully',
                 'data': {
                     'id': str(post._id),
                     'title': post.title,
@@ -890,29 +891,29 @@ class PostCreateView(APIView):
             }, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            return Response({'message': str(e)}, 
+            return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class PostDetailView(APIView):
-    """获取帖子详情"""
+    """Get post details"""
     def get(self, request):
         try:
             post_id = request.data.get('post_id')
-            user_id = request.data.get('user_id')  # 可选，用于判断当前用户是否点赞
+            user_id = request.data.get('user_id')  # Optional, to determine if current user has liked
 
             if not post_id:
-                return Response({'message': '参数不完整'}, 
+                return Response({'error': 'Incomplete parameters'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 post = Post.objects.get(_id=ObjectId(post_id))
             except (InvalidId, Post.DoesNotExist):
-                return Response({'message': '帖子不存在'}, 
+                return Response({'error': 'Post does not exist'}, 
                               status=status.HTTP_404_NOT_FOUND)
 
-            # 获取点赞信息
+            # Get like information
             try:
-                # 使用 all() 获取所有点赞，然后手动筛选
+                # Use all() to get all likes, then manually filter
                 all_likes = list(Like.objects.all())
                 likes = [like for like in all_likes if like.post == post and like.is_active]
                 like_count = len(likes)
@@ -924,7 +925,7 @@ class PostDetailView(APIView):
                     except (InvalidId, User.DoesNotExist):
                         pass
 
-                # 获取点赞用户列表
+                # Get list of users who liked
                 like_users = []
                 for like in likes:
                     try:
@@ -942,9 +943,9 @@ class PostDetailView(APIView):
                 has_liked = False
                 like_users = []
 
-            # 获取评论列表
+            # Get comment list
             try:
-                # 使用 all() 获取所有评论，然后手动筛选和排序
+                # Use all() to get all comments, then manually filter and sort
                 all_comments = list(Comment.objects.all())
                 comments = sorted(
                     [comment for comment in all_comments if str(comment.post._id) == post_id],
@@ -968,7 +969,7 @@ class PostDetailView(APIView):
                 print(f"Error getting comments: {str(e)}")
                 comment_list = []
 
-            # 构建返回数据
+            # Build response data
             post_data = {
                 'post_id': str(post._id),
                 'title': post.title,
@@ -990,56 +991,56 @@ class PostDetailView(APIView):
             }
 
             return Response({
-                'message': '获取帖子详情成功',
+                'message': 'Post details retrieved successfully',
                 'data': post_data
             })
 
         except Exception as e:
             import traceback
             return Response({
-                'message': '获取帖子详情失败',
-                'error': str(e),
+                'error': 'Failed to get post details',
+                'message': str(e),
                 'traceback': traceback.format_exc()
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class PostUpdateView(APIView):
-    """更新帖子"""
+    """Update a post"""
     def put(self, request):
         try:
             post_id = request.data.get('post_id')
             title = request.data.get('title')
             content = request.data.get('content')
-            image = request.FILES.get('image')  # 可选
-            video = request.FILES.get('video')  # 可选
-            video_thumbnail = request.FILES.get('video_thumbnail')  # 可选
+            image = request.FILES.get('image')  # Optional
+            video = request.FILES.get('video')  # Optional
+            video_thumbnail = request.FILES.get('video_thumbnail')  # Optional
 
             if not post_id:
-                return Response({'message': '参数不完整'}, 
+                return Response({'error': 'Incomplete parameters'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 post = Post.objects.get(_id=ObjectId(post_id))
             except (InvalidId, Post.DoesNotExist):
-                return Response({'message': '帖子不存在'}, 
+                return Response({'error': 'Post does not exist'}, 
                               status=status.HTTP_404_NOT_FOUND)
 
-            # 更新帖子
+            # Update post
             if title:
                 post.title = title
             if content:
                 post.content = content
             if image:
-                # 删除旧图片
+                # Delete old image
                 if post.image:
                     post.image.delete(save=False)
                 post.image = image
             if video:
-                # 删除旧视频
+                # Delete old video
                 if post.video:
                     post.video.delete(save=False)
                 post.video = video
             if video_thumbnail:
-                # 删除旧缩略图
+                # Delete old thumbnail
                 if post.video_thumbnail:
                     post.video_thumbnail.delete(save=False)
                 post.video_thumbnail = video_thumbnail
@@ -1047,7 +1048,7 @@ class PostUpdateView(APIView):
             post.save()
 
             return Response({
-                'message': '更新成功',
+                'message': 'Post updated successfully',
                 'data': {
                     'id': str(post._id),
                     'title': post.title,
@@ -1066,28 +1067,28 @@ class PostUpdateView(APIView):
             })
 
         except Exception as e:
-            return Response({'message': str(e)}, 
+            return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class PostDeleteView(APIView):
-    """删除帖子"""
+    """Delete a post"""
     def delete(self, request):
         try:
             post_id = request.data.get('post_id')
 
             if not post_id:
-                return Response({'message': '参数不完整'}, 
+                return Response({'error': 'Incomplete parameters'}, 
                               status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 post = Post.objects.get(_id=ObjectId(post_id))
             except (InvalidId, Post.DoesNotExist):
-                return Response({'message': '帖子不存在'}, 
+                return Response({'error': 'Post does not exist'}, 
                               status=status.HTTP_404_NOT_FOUND)
 
-            # 删除关联的点赞
+            # Delete associated likes
             try:
-                # 使用 all() 获取所有点赞，然后手动筛选
+                # Use all() to get all likes, then manually filter
                 all_likes = list(Like.objects.all())
                 likes_to_delete = [like for like in all_likes if like.post == post]
                 for like in likes_to_delete:
@@ -1095,9 +1096,9 @@ class PostDeleteView(APIView):
             except Exception as e:
                 print(f"Error deleting likes: {str(e)}")
 
-            # 删除关联的评论
+            # Delete associated comments
             try:
-                # 使用 all() 获取所有评论，然后手动筛选
+                # Use all() to get all comments, then manually filter
                 all_comments = list(Comment.objects.all())
                 comments_to_delete = [comment for comment in all_comments if comment.post == post]
                 for comment in comments_to_delete:
@@ -1105,7 +1106,7 @@ class PostDeleteView(APIView):
             except Exception as e:
                 print(f"Error deleting comments: {str(e)}")
 
-            # 删除关联的媒体文件
+            # Delete associated media files
             if post.image:
                 post.image.delete(save=False)
             if post.video:
@@ -1113,12 +1114,12 @@ class PostDeleteView(APIView):
             if post.video_thumbnail:
                 post.video_thumbnail.delete(save=False)
 
-            # 删除帖子
+            # Delete post
             post.delete()
 
-            return Response({'message': '删除成功'})
+            return Response({'message': 'Post deleted successfully'})
 
         except Exception as e:
-            return Response({'message': str(e)}, 
+            return Response({'error': str(e)}, 
                           status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

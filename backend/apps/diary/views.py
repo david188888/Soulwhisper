@@ -137,44 +137,44 @@ class DiaryCreateView(APIView):
 
     def post(self, request):
         try:
-            # 获取并验证参数
+            # Get and validate parameters
             content = request.data.get('content')
             emotion_type = request.data.get('emotion_type', 'neutral')
             emotion_intensity = request.data.get('emotion_intensity', 5)
 
-            # 验证内容
+            # Validate content
             if not content or not content.strip():
-                logger.error(f"用户 {request.user.username} 尝试创建空日记")
+                logger.error(f"User {request.user.username} attempted to create an empty diary")
                 return Response({
-                    'error': '日记内容不能为空'
+                    'error': 'Diary content cannot be empty'
                 }, status=status.HTTP_400_BAD_REQUEST)
 
-            # 验证情感类型
+            # Validate emotion type
             valid_emotion_types = ['neutral', 'happy', 'sad', 'angry']
             if emotion_type not in valid_emotion_types:
-                logger.error(f"用户 {request.user.username} 提供了无效的情感类型: {emotion_type}")
+                logger.error(f"User {request.user.username} provided an invalid emotion type: {emotion_type}")
                 return Response({
-                    'error': f'无效的情感类型。有效类型为: {", ".join(valid_emotion_types)}'
+                    'error': f'Invalid emotion type. Valid types are: {", ".join(valid_emotion_types)}'
                 }, status=status.HTTP_400_BAD_REQUEST)
 
-            # 验证情感强度
+            # Validate emotion intensity
             try:
                 emotion_intensity = int(emotion_intensity)
                 if not 1 <= emotion_intensity <= 10:
-                    logger.error(f"用户 {request.user.username} 提供了无效的情感强度: {emotion_intensity}")
+                    logger.error(f"User {request.user.username} provided an invalid emotion intensity: {emotion_intensity}")
                     return Response({
-                        'error': '情感强度必须在1到10之间'
+                        'error': 'Emotion intensity must be between 1 and 10'
                     }, status=status.HTTP_400_BAD_REQUEST)
             except (TypeError, ValueError):
-                logger.error(f"用户 {request.user.username} 提供了无效的情感强度格式: {emotion_intensity}")
+                logger.error(f"User {request.user.username} provided an invalid emotion intensity format: {emotion_intensity}")
                 return Response({
-                    'error': '情感强度必须是1到10之间的整数'
+                    'error': 'Emotion intensity must be an integer between 1 and 10'
                 }, status=status.HTTP_400_BAD_REQUEST)
 
-            # 记录创建操作
-            logger.info(f"用户 {request.user.username} 开始创建新日记")
+            # Log creation operation
+            logger.info(f"User {request.user.username} started creating a new diary")
 
-            # 创建日记
+            # Create diary
             diary = Diary.objects.create(
                 user=request.user,
                 content=content,
@@ -182,8 +182,8 @@ class DiaryCreateView(APIView):
                 emotion_intensity=emotion_intensity
             )
 
-            # 记录创建成功
-            logger.info(f"用户 {request.user.username} 成功创建日记 (ID: {diary._id})")
+            # Log successful creation
+            logger.info(f"User {request.user.username} successfully created diary (ID: {diary._id})")
 
             return Response({
                 'id': str(diary._id),
@@ -194,10 +194,10 @@ class DiaryCreateView(APIView):
             }, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            # 记录详细错误信息
-            logger.error(f"用户 {request.user.username} 创建日记失败: {str(e)}", exc_info=True)
+            # Log detailed error information
+            logger.error(f"User {request.user.username} failed to create diary: {str(e)}", exc_info=True)
             return Response({
-                'error': '创建日记失败，请稍后重试'
+                'error': 'Failed to create diary, please try again later'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DiaryDetailView(APIView):

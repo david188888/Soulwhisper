@@ -31,7 +31,7 @@ class DiaryChat:
         """开始新的对话"""
         self.messages.append({
             "role": "user",
-            "content": f"这是我今天的日记：{diary_content}"
+            "content": f"This is my diary content:{diary_content}"
         })
         
         response = call_llm_api(self.messages)
@@ -41,7 +41,7 @@ class DiaryChat:
                 "content": response
             })
             return response
-        return "很抱歉，我现在无法回应，请稍后再试。"
+        return "Sorry, I can't respond right now, please try again later."
 
     def chat(self, user_input):
         """继续对话"""
@@ -57,5 +57,5 @@ class DiaryChat:
                 "content": response
             })
             return response
-        return "很抱歉，我现在无法回应，请稍后再试。"
+        return "Sorry, I can't respond right now, please try again later."
 
