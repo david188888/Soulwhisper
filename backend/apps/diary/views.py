@@ -21,11 +21,13 @@ from collections import Counter
 import jieba
 import base64
 from io import BytesIO
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import numpy as np
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, datetime
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from django.utils.dateparse import parse_date
@@ -446,18 +448,40 @@ class DiaryDaysView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        year = int(request.GET.get('year'))
-        month = int(request.GET.get('month'))
-        user = request.user
-        diaries = Diary.objects.filter(
-            user=user,
-            created_at__year=year,
-            created_at__month=month
-        )
-        # 获取完整的created_at日期
-        days = diaries.values_list('created_at', flat=True).distinct()
-        days_list = sorted(list(days))  # 排序后的日期列表
-        return Response(days_list)
+        try:
+            year = int(request.GET.get('year'))
+            month = int(request.GET.get('month'))
+            user = request.user
+
+            # 固定为该年1月1日
+            start_date = timezone.make_aware(datetime(year, 1, 1))
+            # 结束为下月1日
+            if month == 12:
+                end_date = timezone.make_aware(datetime(year + 1, 1, 1))
+            else:
+                end_date = timezone.make_aware(datetime(year, month + 1, 1))
+
+            diaries = Diary.objects.filter(
+                user=user,
+                created_at__gte=start_date,
+                created_at__lt=end_date
+            )
+
+            days = diaries.dates('created_at', 'day').distinct()
+            days_list = [day.strftime('%Y-%m-%d') for day in days]
+
+            # print('start_date:', start_date)
+            # print('end_date:', end_date)
+            # print('days:', days_list)
+
+            return Response(days_list)
+
+        except Exception as e:
+            logger.error(f"获取日记日期失败: {str(e)}", exc_info=True)
+            return Response(
+                {'error': '获取日记日期失败'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class DiaryDayDetailView(APIView):
     permission_classes = [IsAuthenticated]
@@ -488,8 +512,8 @@ class DiaryDayDetailView(APIView):
             logger.info(f"正在获取用户 {user.username} 在 {date_str} 的日记")
             
             # 使用日期范围查询
-            start_date = timezone.make_aware(timezone.datetime.combine(target_date, timezone.datetime.min.time()))
-            end_date = timezone.make_aware(timezone.datetime.combine(target_date, timezone.datetime.max.time()))
+            start_date = timezone.make_aware(datetime.combine(target_date, datetime.min.time()))
+            end_date = timezone.make_aware(datetime.combine(target_date, datetime.max.time()))
             
             diaries = Diary.objects.filter(
                 user=user,

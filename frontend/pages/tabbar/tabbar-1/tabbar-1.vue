@@ -32,6 +32,9 @@
 				:start-date="'2025-01-01'"
 				:end-date="'2025-05-31'"
 				:selected="highlightDays"
+				:showMonth="false"
+				:lunar="false"
+				:insert="true"
 				@change="onCalendarChange"
 				@monthSwitch="onMonthSwitch"
 			/>
@@ -114,6 +117,8 @@ export default {
 					return;
 				}
 
+				console.log('请求高亮日期，年月:', year, month);
+
 				const res = await uni.request({
 					url: api.diaryDays + `?year=${year}&month=${month}`,
 					header: {
@@ -123,13 +128,19 @@ export default {
 					method: 'GET'
 				});
 
+				console.log('获取到的日期数据:', res.data);
+
 				if (res.statusCode === 200 && Array.isArray(res.data)) {
 					this.highlightDays = res.data.map(dateStr => {
-						const date = new Date(dateStr);
+						// 确保日期格式为 YYYY-MM-DD
+						const [y, m, d] = dateStr.split('-');
+						const formattedDate = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+						console.log('处理后的日期:', formattedDate);
 						return {
-							date: `${year}-${month}-${date.getUTCDate()}`
+							date: formattedDate
 						};
 					});
+					console.log('最终高亮日期数组:', this.highlightDays);
 				} else {
 					console.error('获取日期失败:', res);
 					uni.showToast({
@@ -170,10 +181,7 @@ export default {
 					return;
 				}
 
-				console.log('请求日记详情，日期:', date);
-
 				const requestUrl = api.diaryDayDetail + `?date=${date}`;
-				console.log('请求URL:', requestUrl);
 
 				const res = await uni.request({
 					url: requestUrl,
@@ -184,8 +192,6 @@ export default {
 					method: 'GET'
 				});
 
-				console.log('服务器响应:', res);
-
 				// 检查响应状态码和数据
 				if (res.statusCode === 200) {
 					// 如果响应成功且有数据
@@ -195,7 +201,6 @@ export default {
 						console.log('获取到的日记内容:', this.selectedDiary);
 					} else {
 						// 如果响应成功但没有数据
-						console.log('该日期没有日记');
 						this.selectedDiary = null;
 						uni.showToast({
 							title: '该日期没有日记',

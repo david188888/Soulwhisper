@@ -22,6 +22,10 @@
 				/>
 			</view>
 		</view>
+
+		<view class="ai-bubble" @click="goToAIChat">
+			<image src="/static/ai-bubble.png" mode="aspectFill" class="ai-bubble-icon"/>
+		</view>
 	</view>
 </template>
 
@@ -62,6 +66,7 @@ import { api } from '../../../components/api/apiPath';
 		this.fetchStatistics();
 		},
 		methods: {
+			
 			async fetchStatistics() {
 				try {
 					const token = uni.getStorageSync('token')
@@ -110,6 +115,11 @@ import { api } from '../../../components/api/apiPath';
 						icon: 'none'
 					});
 				}
+			},
+			goToAIChat() {
+				uni.navigateTo({
+					url: '/frontend/pages/home-3-detial/aichat/aichat'
+				});
 			}
 		}
 	}
@@ -173,5 +183,29 @@ import { api } from '../../../components/api/apiPath';
 .charts-box {
 	width: 100%;
 	height: 300px;
+}
+
+.ai-bubble {
+	position: fixed;
+	right: 20px;
+	bottom: 25%;
+	width: 56px;
+	height: 56px;
+	background: #fff;
+	border-radius: 50%;
+	box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
+	cursor: pointer;
+	transition: box-shadow 0.2s;
+}
+.ai-bubble:active {
+	box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.ai-bubble-icon {
+	width: 32px;
+	height: 32px;
 }
 </style>

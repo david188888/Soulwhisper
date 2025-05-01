@@ -211,7 +211,6 @@
 					content: 'Are you sure you want to sign out?',
 					success: (res) => {
 						if (res.confirm) {
-							// TODO: Add logout logic here
 							uni.showToast({
 								title: 'Signed out successfully',
 								icon: 'success'
