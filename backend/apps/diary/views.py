@@ -18,7 +18,6 @@ from rest_framework.permissions import IsAuthenticated
 from .emotion_analyzer import EmotionAnalyzer
 from django.db.models import Count
 from collections import Counter
-import jieba
 import base64
 from io import BytesIO
 import matplotlib
