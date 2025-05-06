@@ -61,13 +61,11 @@ export default {
     
       const record = JSON.parse(decodeURIComponent(options.data));
       this.content = record.text;
-      console.log('6789',record);
+      console.log('detail====',record);
       this.mood.type = record.emotion_type;
       this.mood.intensity = record.emotion_intensity;
-      if (options.mediaUrl) {
-        this.mediaUrl = options.mediaUrl;
-        this.mediaType = options.mediaType;
-      }
+      this.mediaUrl = record.mediaUrl;
+      this.mediaType = record.mediaType;
   }
 }
 </script>

@@ -1,3 +1,11 @@
+<!--
+ * @Author: mahaoxiang mahaoxiang@xiaomi.com
+ * @Date: 2025-03-27 19:42:54
+ * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
+ * @LastEditTime: 2025-05-06 23:32:53
+ * @FilePath: \Soulwhisper\frontend\pages\diary\publish\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <view class="publish-container">
     <!-- 日记内容区域 -->
@@ -75,9 +83,6 @@ export default {
         mask: true,
         duration: 200
       });
-      
-      // 这里应该调用后端 API 进行音频处理
-      // 模拟处理过程
     
         this.content = record.text
         console.log('当前 content:', this.content); 
@@ -133,35 +138,67 @@ export default {
     
     // 发布日记
     async publishDiary() {
-      if (!this.content.trim()) {
-        uni.showToast({
-          title: 'Please write something',
-          icon: 'none'
-        });
-        return;
-      }
-      
-      uni.showLoading({
-        title: 'Publishing...',
-        mask: true
-      });
-      
-      // 这里应该调用后端 API 发布日记
-      // 模拟发布过程
-        uni.hideLoading();
+  if (!this.content.trim()) {
+    uni.showToast({
+      title: 'Please write something',
+      icon: 'none'
+    });
+    return;
+  }
 
-        // 发布成功后直接跳转到首页
-        uni.showToast({
-          title: '发布成功',
-          icon: 'success',
-          duration: 1500,
-          success: () => {
-              uni.navigateTo({
-                url: `/frontend/pages/diary/detail/index?data=${encodeURIComponent(JSON.stringify(this.record))}`
-              });
-          }
-        });
+  uni.showLoading({
+    title: 'Publishing...',
+    mask: true
+  });
+
+  try {
+    // 构造请求数据
+    const requestData = {
+      content: this.content, // 日记内容
+      emotion_type: this.mood.type, // 情绪类型
+      emotion_intensity: this.mood.intensity, // 情绪强度
+      mediaType: this.mediaType, // 媒体类型
+      mediaUrl: this.mediaUrl, // 媒体文件路径
+    };
+    const token = uni.getStorageSync('token'); // 或从 Vuex 获取
+
+    // 发起请求
+    const res = await uni.request({
+      url: api.createDiary, // 替换为你的实际 API 地址
+      method: 'POST',
+      data: requestData,
+      header: {
+        'Content-Type': 'text/plain',
+        'Authorization': `Token ${token}` 
+      }
+    });
+
+    // 处理响应
+    if (res.statusCode === 200 || res.statusCode === 201) {
+      uni.hideLoading();
+      uni.showToast({
+        title: '发布成功',
+        icon: 'success',
+        duration: 1500,
+        success: () => {
+          // 跳转到日记详情页
+          uni.navigateTo({
+                url: `/frontend/pages/diary/detail/index?data=${encodeURIComponent(JSON.stringify(requestData))}`
+          });
+        }
+      });
+    } else {
+      throw new Error(res.data.message || '发布失败');
     }
+  } catch (err) {
+    uni.hideLoading();
+    uni.showToast({
+      title: err.message || '网络错误',
+      icon: 'none'
+    });
+    console.error('发布日记失败:', err);
+  }
+}
   }
 }
 </script>

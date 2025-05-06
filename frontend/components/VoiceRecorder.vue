@@ -2,7 +2,7 @@
  * @Author: mahaoxiang mahaoxiang@xiaomi.com
  * @Date: 2025-04-20 21:36:47
  * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
- * @LastEditTime: 2025-04-27 17:32:10
+ * @LastEditTime: 2025-05-06 23:21:08
  * @FilePath: \Soulwhisper\frontend\components\VoiceRecorder.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,17 +13,6 @@
     <view class="back-button" @tap="goBack">
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
     </view>
-
-    <!-- 文字描述 -->
-    <!-- <view class="description">
-      <text>Share about anything, anytime</text>
-      <text>Meet your AI friend</text>
-    </view> -->
-
-    <!-- 图片 -->
-    <!-- <view class="chat">
-      <image src="../static/img/chat.png" mode="aspectFit"></image>
-    </view> -->
     
     <!-- 录音按钮 -->
     <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }">
@@ -264,6 +253,7 @@ export default {
           // 上传到ASR接口
           //使用multipart/form-data表单上传文件
           const token = uni.getStorageSync('token')
+          console.log('token',token)
 
 // #ifdef H5
 	//H5中直接使用浏览器提供的File接口构造一个文件
@@ -273,7 +263,7 @@ export default {
 		,name: "audio_file"
 		,formData: {},
     header: {
-    "Authorization": `Bearer ${token}`
+    'Authorization': `Token ${token}`
     },
 		success: (res) => {
       console.log('======🚀',res);
@@ -283,7 +273,7 @@ export default {
         url: `/frontend/pages/diary/publish/index?data=${encodeURIComponent(JSON.stringify(res.data))}`
     });
     }
-		,fail: (err)=>{ console.log('======😭',err); }
+		,fail: (err)=>{ console.log('======😭',err) }
 	});
 // #endif
 

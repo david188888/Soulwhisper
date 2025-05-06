@@ -11,4 +11,5 @@ export const api = {
     chatStart: `${baseUrl}api/chat/start/`,
     chatMessage: `${baseUrl}api/chat/message/`,
     chatEnd: `${baseUrl}api/chat/end/`,
+    createDiary:`${baseUrl}api/diary/diaries/create/`
 }
