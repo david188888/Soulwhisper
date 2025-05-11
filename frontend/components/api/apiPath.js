@@ -10,6 +10,5 @@ export const api = {
     diaryDayDetail: `${baseUrl}api/diary/day_detail/`,
     chatStart: `${baseUrl}api/chat/start/`,
     chatMessage: `${baseUrl}api/chat/message/`,
-    chatEnd: `${baseUrl}api/chat/end/`,
-    createDiary:`${baseUrl}api/diary/diaries/create/`
+    chatEnd: `${baseUrl}api/chat/end/`
 }
