@@ -46,7 +46,7 @@ class ASRView(APIView):
 
     def post(self, request):
         try:
-            audio_file = request.FILES.get('audio')
+            audio_file = request.FILES.get('audio_file')
             if not audio_file:
                 return Response({'error': 'No audio file provided'}, 
                               status=status.HTTP_400_BAD_REQUEST)
