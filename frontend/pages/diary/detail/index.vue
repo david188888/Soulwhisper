@@ -80,6 +80,7 @@ export default {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 20px;
+    max-width: 280px;
   }
   
   .media {

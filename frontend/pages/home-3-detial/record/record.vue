@@ -1,7 +1,7 @@
 <template>
 	<view class="record-page">
 	  <!-- 导航栏 -->
-	  <view class="custom-nav">
+	  <!-- <view class="custom-nav">
 		<view class="left-btn" @tap="handleBack">
 		  <text class="iconfont icon-back">&#xe679;</text>
 		</view>
@@ -9,7 +9,7 @@
 		  <text>recording diary</text>
 		</view>
 		<view class="right-btn"></view>
-	  </view>
+	  </view> -->
 	  
 	  <!-- 录音组件 -->
 	  <view class="content">

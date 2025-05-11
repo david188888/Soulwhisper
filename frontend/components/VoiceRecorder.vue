@@ -2,7 +2,7 @@
  * @Author: mahaoxiang mahaoxiang@xiaomi.com
  * @Date: 2025-04-20 21:36:47
  * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
- * @LastEditTime: 2025-05-06 23:21:08
+ * @LastEditTime: 2025-05-11 21:46:37
  * @FilePath: \Soulwhisper\frontend\components\VoiceRecorder.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,7 +14,9 @@
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
     </view>
     
-    <!-- 录音按钮 -->
+    <img src="../static/img/recordBg.webp" style="margin-top: -40px;" width="100%" height="550px" />
+    
+     <!-- 录音按钮 -->
     <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }">
       <uni-icons :type="isRecording ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>
     </view>
@@ -400,13 +402,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 20px;
   position: relative;
   
   .back-button {
-    position: absolute;
-    left: 20px;
-    top: 20px;
+    position: relative;
+    left: -140px;
+    top: -80px;
     width: 40px;
     height: 40px;
     display: flex;
@@ -425,19 +427,23 @@ export default {
   .record-button {
     width: 50px;
     height: 50px;
-    background-color: #fff;
+    background-color: #7fd5ecd2;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    margin-top: -180px;
+    margin-left: 20px;
     
     &.recording {
       border-radius: 0;
-      background-color: #8A2BE2;
+      background-color: #e22b2b;
       border-radius: 20px;
       transform: scale(1.1);
-      margin-top:140px;
+      z-index: 100;
+      margin-top: 50px;
+      margin-left: 0px;
       .uni-icons {
         color: #fff !important;
       }
