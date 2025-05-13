@@ -14,7 +14,8 @@
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
     </view>
     
-    <img src="../static/img/recordBg.webp" style="margin-top: -40px;" width="100%" height="550px" />
+    <video src="../static/video/record.mp4" width="100%" height="220px" loop autoplay muted></video>
+
     
      <!-- 录音按钮 -->
     <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }">
