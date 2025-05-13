@@ -14,7 +14,7 @@
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
     </view>
     
-    <video src="../static/video/record.mp4" width="100%" height="220px" loop autoplay muted></video>
+    <video src="https://pic1.imgdb.cn/item/6823760458cb8da5c8f0bbd8.gif" width="100%" height="220px" loop autoplay muted></video>
 
     
      <!-- 录音按钮 -->
