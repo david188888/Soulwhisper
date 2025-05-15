@@ -3,51 +3,15 @@
 		<!-- 搜索栏-->
 		<!-- <navbar></navbar> -->
 		<!--选项卡-->
-<<<<<<< HEAD
-		<!-- <tab></tab> -->
-		<!-- 卡片视图 -->
-		<listScroll>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-		</listScroll>
-=======
 		<tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab>
 		<!-- 卡片视图 -->
 		<view class="home-list">
 			<list :tab="tabList" :activeIndex="activeIndex" @change="change"></list>
 		</view>
->>>>>>> master
 	</view>
 </template>
 
 <script>
-<<<<<<< HEAD
-	import listScroll from '@/frontend/components/listScroll/listScroll.vue'
-	import listCard1 from '@/frontend/components/listCard/listCard1.vue';
-	// import navbar from '@/frontend/components/navbar/navbar.vue';
-	// import tab from '@/frontend/components/tab/tab.vue'
-	export default {
-		components:{
-			// navbar,
-			// tab
-			listScroll,
-			listCard1
-		},
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-=======
 	import tab from '@/frontend/components/tab/tab.vue';
 	import list from '@/frontend/components/list/list.vue'
 	export default {
@@ -89,7 +53,6 @@
 					this.tabList = data
 				})
 			}
->>>>>>> master
 		}
 	}
 </script>
@@ -105,13 +68,10 @@
 		flex: 1;
 		// border: 1px red solid;
 		overflow: hidden;
-<<<<<<< HEAD
-=======
 		.home-list{
 			flex: 1;
 			box-sizing: border-box;
 			// border: 1px red solid;
 		}
->>>>>>> master
 	}
 </style>

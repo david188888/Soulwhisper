@@ -1,10 +1,6 @@
 <template>
 	<view class="scroll">
-<<<<<<< HEAD
-		<scroll-view class="list-scroll" scroll-y>
-=======
 		<scroll-view class="list-scroll" scroll-y @scrolltolower="loadmore">
->>>>>>> master
 			<view>
 				<slot></slot>
 			</view>
@@ -13,8 +9,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 	export default {
 		data(){
 			return{
@@ -27,7 +21,6 @@
 			}
 		}
 	}
->>>>>>> master
 </script>
 
 <style lang="scss">

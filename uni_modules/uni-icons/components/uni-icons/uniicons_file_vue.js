@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 
-=======
-
->>>>>>> master
 export const fontData = [
   {
     "font_class": "arrow-down",
@@ -648,11 +644,6 @@ export const fontData = [
     "font_class": "weixin",
     "unicode": "\ue691"
   }
-<<<<<<< HEAD
 ]
 
-=======
-]
-
->>>>>>> master
 // export const fontData = JSON.parse<IconsDataItem>(fontDataJson)

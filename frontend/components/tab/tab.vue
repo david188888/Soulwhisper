@@ -2,11 +2,7 @@
 	<view class="tab">
 		<scroll-view class="tab-scroll" scroll-x>
 			<view class="tab-scroll_box">
-<<<<<<< HEAD
-				<view v-for="(item,index) in list" :key="index" class="tab-scroll_item">
-=======
 				<view v-for="(item,index) in list" :key="index" class="tab-scroll_item" :class="{active:activeIndex === index}" @click="clickTab(item,index)">
->>>>>>> master
 					{{item.name}}
 				</view>
 			</view>
@@ -19,41 +15,6 @@
 
 <script>
 	export default{
-<<<<<<< HEAD
-		data(){
-			return{
-				list:[{
-					name:'幸福'
-				},
-				{
-					name:'悲伤'
-				},
-				{
-					name:'厌恶'
-				},
-				{
-					name:'恐惧'
-				},
-				{
-					name:'惊讶'
-				},
-				{
-					name:'愤怒'
-				},
-				{
-					name:'骄傲'
-				},
-				{
-					name:'羞耻'
-				},
-				{
-					name:'尴尬'
-				},
-				{
-					name:'兴奋'
-				},
-				]
-=======
 		props:{
 			list:{
 				type: Array,
@@ -85,7 +46,6 @@
 					data: item,
 					index: index
 				});
->>>>>>> master
 			}
 		}
 	}
@@ -102,10 +62,6 @@
 			flex: 1;
 			overflow: hidden;
 			box-sizing: border-box;
-<<<<<<< HEAD
-			
-=======
->>>>>>> master
 			.tab-scroll_box{
 				display: flex;
 				align-items: center;
@@ -117,12 +73,9 @@
 					padding: 0 10px;
 					color: #333;
 					font-size: 14px;
-<<<<<<< HEAD
-=======
 					&.active{
 						color: #8A2BE2;
 					}
->>>>>>> master
 				}
 			}
 		}
@@ -138,11 +91,7 @@
 				top: 12px;
 				bottom: 12px;
 				left: 0;
-<<<<<<< HEAD
-				width: 2px;
-=======
 				width: 1px;
->>>>>>> master
 				background-color: #ddd;
 			}
 		}

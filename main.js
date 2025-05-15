@@ -1,17 +1,11 @@
 import App from './App'
 import { createSSRApp } from 'vue'
-<<<<<<< HEAD
-=======
 import api from './frontend/common/api'
->>>>>>> master
 
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
-<<<<<<< HEAD
-=======
 Vue.prototype.$api = api
->>>>>>> master
 App.mpType = 'app'
 const app = new Vue({
 	...App
@@ -56,11 +50,7 @@ const routeInterceptor = {
 
 export function createApp() {
 	const app = createSSRApp(App)
-<<<<<<< HEAD
-	
-=======
 	app.config.globalProperties.$api = api
->>>>>>> master
 	// 添加全局路由拦截
 	uni.addInterceptor('navigateTo', routeInterceptor)
 	uni.addInterceptor('redirectTo', routeInterceptor)
