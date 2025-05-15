@@ -1,12 +1,23 @@
+<<<<<<< HEAD
 {
 	"uni-calender.ok": "確定",
 	"uni-calender.cancel": "取消",
 	"uni-calender.today": "今日",
+=======
+{
+	"uni-calender.ok": "確定",
+	"uni-calender.cancel": "取消",
+	"uni-calender.today": "今日",
+>>>>>>> master
 	"uni-calender.SUN": "日",
 	"uni-calender.MON": "一",
 	"uni-calender.TUE": "二",
 	"uni-calender.WED": "三",
 	"uni-calender.THU": "四",
 	"uni-calender.FRI": "五",
+<<<<<<< HEAD
 	"uni-calender.SAT": "六"
+=======
+	"uni-calender.SAT": "六"
+>>>>>>> master
 }

@@ -14,7 +14,11 @@
 		methods:{
 			likeTap(){
 				this.like = !this.like
+<<<<<<< HEAD
 				console.log('收藏成功');
+=======
+				console.log('�ղسɹ�');
+>>>>>>> master
 			}
 		}
 	}

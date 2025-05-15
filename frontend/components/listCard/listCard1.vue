@@ -2,6 +2,7 @@
 	<view @click="open">
 		<view class="list-card">
 			<view class="listcard-image">
+<<<<<<< HEAD
 				<image src="/frontend/static/img/logo.jpg" mode="aspectFill"></image>
 			</view>
 			<view class="listcard-content">
@@ -11,6 +12,22 @@
 				</view>
 				<view class="listcard-content_des">
 					<view class="listcard-content_des-browse">120浏览</view>
+=======
+				<image :src="item.cover[0]" mode="aspectFill"></image>
+			</view>
+			<view class="listcard-content">
+				<view class="listcard-content_title">
+					<text>{{item.title}}</text>
+					<likes></likes>
+				</view>
+				<view class="listcard-content_des">
+					<view class="listcard-content_des-label">
+						<view class="listcard-content_des-label-item">
+							{{item.classify}}
+						</view>
+					</view>
+					<view class="listcard-content_des-browse">{{item.browse_count}}浏览</view>
+>>>>>>> master
 				</view>
 			</view>
 		</view>
@@ -112,6 +129,19 @@
 				display: flex;
 				justify-content: space-between;
 				font-size: 12px;
+<<<<<<< HEAD
+=======
+				.listcard-content_des-label{
+					display: flex;
+					.listcard-content_des-label-item{
+						padding: 0 5px;
+						margin-right: 5px;
+						border-radius: 15px;
+						border: 1px #8A2BE2 solid;
+						color: #8A2BE2;
+					}
+				}
+>>>>>>> master
 				.listcard-content_des-browse{
 					color: #999;
 					line-height: 1.5;

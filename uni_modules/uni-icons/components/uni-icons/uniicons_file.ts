@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 export type IconsData = {
 	id : string
@@ -14,6 +15,24 @@ export type IconsDataItem = {
 }
 
 
+=======
+
+export type IconsData = {
+	id : string
+	name : string
+	font_family : string
+	css_prefix_text : string
+	description : string
+	glyphs : Array<IconsDataItem>
+}
+
+export type IconsDataItem = {
+	font_class : string
+	unicode : string
+}
+
+
+>>>>>>> master
 export const fontData = [
   {
     "font_class": "arrow-down",
@@ -659,6 +678,11 @@ export const fontData = [
     "font_class": "weixin",
     "unicode": "\ue691"
   }
+<<<<<<< HEAD
 ] as IconsDataItem[]
 
+=======
+] as IconsDataItem[]
+
+>>>>>>> master
 // export const fontData = JSON.parse<IconsDataItem>(fontDataJson)

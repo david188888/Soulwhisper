@@ -1,0 +1,97 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	 "schema": {
+	        "bsonType": "object",
+	        "required": [
+	            "id",
+	            "title",
+	            "browse_count",
+	            "collection_count",
+	            "comments_count",
+	            "author",
+	            "classify",
+	            "thumbs_up_count",
+	            "create_time",
+	            "content",
+	            "cover",
+	            "mode"
+	        ],
+	        "properties": {
+	            "id": {
+	                "bsonType": "string",
+	                "description": "帖子唯一标识"
+	            },
+	            "title": {
+	                "bsonType": "string",
+	                "description": "帖子标题"
+	            },
+	            "browse_count": {
+	                "bsonType": "int",
+	                "description": "浏览次数"
+	            },
+	            "collection_count": {
+	                "bsonType": "int",
+	                "description": "收藏次数"
+	            },
+	            "comments_count": {
+	                "bsonType": "int",
+	                "description": "评论次数"
+	            },
+	            "author": {
+	                "bsonType": "object",
+	                "description": "作者信息",
+	                "required": [
+	                    "id",
+	                    "author_name",
+	                    "avatar",
+	                    "status"
+	                ],
+	                "properties": {
+	                    "id": {
+	                        "bsonType": "string",
+	                        "description": "作者唯一标识"
+	                    },
+	                    "author_name": {
+	                        "bsonType": "string",
+	                        "description": "作者姓名"
+	                    },
+	                    "avatar": {
+	                        "bsonType": "string",
+	                        "description": "作者头像链接"
+	                    },
+	                    "status": {
+	                        "bsonType": "string",
+	                        "description": "作者状态"
+	                    }
+	                }
+	            },
+	            "classify": {
+	                "bsonType": "string",
+	                "description": "帖子分类"
+	            },
+	            "thumbs_up_count": {
+	                "bsonType": "int",
+	                "description": "点赞次数"
+	            },
+	            "create_time": {
+	                "bsonType": "string",
+	                "description": "帖子创建时间"
+	            },
+	            "content": {
+	                "bsonType": "string",
+	                "description": "帖子内容"
+	            },
+	            "cover": {
+	                "bsonType": "array",
+	                "description": "帖子封面图片链接数组",
+	                "items": {
+	                    "bsonType": "string"
+	                }
+	            },
+	            "mode": {
+	                "bsonType": "string",
+	                "description": "帖子模式"
+	            }
+	        }
+	    }
+}
