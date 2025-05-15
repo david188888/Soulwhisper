@@ -1,0 +1,494 @@
+{
+    "info": {
+        "name": "Community API",
+        "description": "API collection for the Community module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Daily Content",
+            "item": [
+                {
+                    "name": "Get Daily Content",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/community/daily-content/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "daily-content"]
+                        },
+                        "description": "Get random daily content including keyword, quote, and activity"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Daily Keywords",
+            "item": [
+                {
+                    "name": "Get Keyword List",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/community/keywords/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "keywords"]
+                        },
+                        "description": "Get list of all daily keywords"
+                    }
+                },
+                {
+                    "name": "Create Keyword",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"keyword\": \"Gratitude\",\n    \"description\": \"Being thankful for what you have\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/keywords/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "keywords", "create"]
+                        },
+                        "description": "Create a new daily keyword"
+                    }
+                },
+                {
+                    "name": "Get Keyword Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"keyword_id\": \"{{keyword_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/keywords/detail/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "keywords", "detail"]
+                        },
+                        "description": "Get details of a specific keyword"
+                    }
+                },
+                {
+                    "name": "Update Keyword",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"keyword_id\": \"{{keyword_id}}\",\n    \"keyword\": \"Updated Keyword\",\n    \"description\": \"Updated description\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/keywords/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "keywords", "update"]
+                        },
+                        "description": "Update a specific keyword"
+                    }
+                },
+                {
+                    "name": "Delete Keyword",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"keyword_id\": \"{{keyword_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/keywords/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "keywords", "delete"]
+                        },
+                        "description": "Delete a specific keyword"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Healing Quotes",
+            "item": [
+                {
+                    "name": "Get Quote List",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/community/quotes/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "quotes"]
+                        },
+                        "description": "Get list of all healing quotes"
+                    }
+                },
+                {
+                    "name": "Create Quote",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"content\": \"Life is not about where you are, but where you're going.\",\n    \"author\": \"Holmes\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/quotes/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "quotes", "create"]
+                        },
+                        "description": "Create a new healing quote"
+                    }
+                },
+                {
+                    "name": "Get Quote Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"quote_id\": \"{{quote_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/quotes/detail/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "quotes", "detail"]
+                        },
+                        "description": "Get details of a specific quote"
+                    }
+                },
+                {
+                    "name": "Update Quote",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"quote_id\": \"{{quote_id}}\",\n    \"content\": \"Updated quote content\",\n    \"author\": \"Updated Author\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/quotes/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "quotes", "update"]
+                        },
+                        "description": "Update a specific quote"
+                    }
+                },
+                {
+                    "name": "Delete Quote",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"quote_id\": \"{{quote_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/quotes/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "quotes", "delete"]
+                        },
+                        "description": "Delete a specific quote"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Healing Activities",
+            "item": [
+                {
+                    "name": "Get Activity List",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/community/activities/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "activities"]
+                        },
+                        "description": "Get list of all healing activities"
+                    }
+                },
+                {
+                    "name": "Create Activity",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Mindful Meditation\",\n    \"description\": \"Practice mindfulness through meditation\",\n    \"duration\": 15,\n    \"difficulty\": \"easy\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/activities/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "activities", "create"]
+                        },
+                        "description": "Create a new healing activity"
+                    }
+                },
+                {
+                    "name": "Get Activity Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"activity_id\": \"{{activity_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/activities/detail/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "activities", "detail"]
+                        },
+                        "description": "Get details of a specific activity"
+                    }
+                },
+                {
+                    "name": "Update Activity",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"activity_id\": \"{{activity_id}}\",\n    \"title\": \"Updated Activity\",\n    \"description\": \"Updated description\",\n    \"duration\": 20,\n    \"difficulty\": \"medium\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/activities/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "activities", "update"]
+                        },
+                        "description": "Update a specific activity"
+                    }
+                },
+                {
+                    "name": "Delete Activity",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"activity_id\": \"{{activity_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/activities/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "activities", "delete"]
+                        },
+                        "description": "Delete a specific activity"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Comments",
+            "item": [
+                {
+                    "name": "Get Comment List",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"diary_id\": \"{{diary_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/comments/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "comments"]
+                        },
+                        "description": "Get list of comments for a specific diary"
+                    }
+                },
+                {
+                    "name": "Create Comment",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"diary_id\": \"{{diary_id}}\",\n    \"content\": \"Great writing!\",\n    \"user_id\": \"{{user_id}}\",\n    \"user_name\": \"{{user_name}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/comments/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "comments", "create"]
+                        },
+                        "description": "Create a new comment on a diary"
+                    }
+                },
+                {
+                    "name": "Get Comment Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"comment_id\": \"{{comment_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/comments/detail/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "comments", "detail"]
+                        },
+                        "description": "Get details of a specific comment"
+                    }
+                },
+                {
+                    "name": "Update Comment",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"comment_id\": \"{{comment_id}}\",\n    \"content\": \"Updated comment content\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/comments/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "comments", "update"]
+                        },
+                        "description": "Update a specific comment"
+                    }
+                },
+                {
+                    "name": "Delete Comment",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"comment_id\": \"{{comment_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/community/comments/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "community", "comments", "delete"]
+                        },
+                        "description": "Delete a specific comment"
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000"
+        },
+        {
+            "key": "keyword_id",
+            "value": "your_keyword_id"
+        },
+        {
+            "key": "quote_id",
+            "value": "your_quote_id"
+        },
+        {
+            "key": "activity_id",
+            "value": "your_activity_id"
+        },
+        {
+            "key": "comment_id",
+            "value": "your_comment_id"
+        },
+        {
+            "key": "diary_id",
+            "value": "your_diary_id"
+        },
+        {
+            "key": "user_id",
+            "value": "your_user_id"
+        },
+        {
+            "key": "user_name",
+            "value": "your_user_name"
+        }
+    ]
+} 

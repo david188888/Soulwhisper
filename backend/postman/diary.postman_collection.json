@@ -1,0 +1,153 @@
+{
+    "info": {
+        "name": "Diary API",
+        "description": "API collection for the Diary module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "ASR",
+            "item": [
+                {
+                    "name": "Speech Recognition",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "audio_file",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/asr/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "asr"]
+                        },
+                        "description": "Create diary entry through speech recognition"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Diaries",
+            "item": [
+                {
+                    "name": "Get Diary List",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries"]
+                        },
+                        "description": "Get list of all diaries"
+                    }
+                },
+                {
+                    "name": "Create Diary",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"content\": \"Today was a good day...\",\n    \"emotion_type\": \"happy\",\n    \"emotion_intensity\": 8\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/create/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "create"]
+                        },
+                        "description": "Create a new diary entry"
+                    }
+                },
+                {
+                    "name": "Get Diary Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"diary_id\": \"{{diary_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/detail/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "detail"]
+                        },
+                        "description": "Get details of a specific diary"
+                    }
+                },
+                {
+                    "name": "Update Diary",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"diary_id\": \"{{diary_id}}\",\n    \"content\": \"Updated diary content...\",\n    \"emotion_type\": \"sad\",\n    \"emotion_intensity\": 3\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/update/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "update"]
+                        },
+                        "description": "Update a specific diary"
+                    }
+                },
+                {
+                    "name": "Delete Diary",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"diary_id\": \"{{diary_id}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/diary/diaries/delete/",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "diary", "diaries", "delete"]
+                        },
+                        "description": "Delete a specific diary"
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000"
+        },
+        {
+            "key": "diary_id",
+            "value": "your_diary_id"
+        }
+    ]
+} 

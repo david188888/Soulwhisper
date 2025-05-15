@@ -1,0 +1,105 @@
+ASR_model
+# backend/logs
+backend/temp_audio
+backend/soul_backend/migrations
+backend/config/__pycache__
+backend/db.sqlite3
+backend/apps/diary/__pycache__
+backend/apps/chat/__pycache__
+backend/apps/account/__pycache__
+backend/apps/community/__pycache__
+backend/soul_bappsackend/__pycache__
+backend/apps/utils/__pycache__
+backend/apps/utils/asr/__pycache__
+backend/logs
+backend/apps/account/migrations/__pycache__
+backend/apps/chat/migrations/__pycache__
+backend/apps/community/migrations/__pycache__
+backend/apps/diary/migrations/__pycache__
+backend/apps/account/migrations
+backend/apps/diary/migrations/
+backend/apps/chat/migrations/
+backend/apps/community/migrations/
+backend/apps/chat/migrations/
+backend/apps/community/migrations/
+
+# ignored files
+node_modules/
+.project
+unpackage/
+.Ds_store
+/dist/
+/dev/
+
+backend/apps/account/migrations/0001_initial.py
+backend/apps/account/migrations/0001_initial.py
+backend/apps/utils/llm/__pycache__/
+backend/.idea
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+static/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# 临时文件
+temp_audio/
+*.wav
+*.mp3
+*.m4a
+*.flac
+
+# 依赖管理
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 测试覆盖
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*.cover
+*.py,cover
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 构建输出
+dist/
+build/
+*.egg-info/
+
+# 其他
+*.bak
+*.tmp
+*.temp
+.DS_Store
+

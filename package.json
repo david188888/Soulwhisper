@@ -1,0 +1,92 @@
+{
+  "id": "uni-tabbar",
+  "name": "底部选项卡模板",
+  "displayName": "底部选项卡模板",
+  "version": "0.0.9",
+  "description": "中间带+号的底部选项卡",
+  "keywords": [
+    "tabbar",
+    "uni-tabbar",
+    "选项卡"
+  ],
+  "dependencies": {
+    "@dcloudio/uni-app": "^3.0.0-4050720250324001",
+    "@dcloudio/uni-h5": "^3.0.0-4050720250324001",
+    "@dcloudio/uni-ui": "^1.4.28",
+    "axios": "^1.9.0",
+    "django": "^1.0.0",
+    "recorder-core": "^1.3.25011100"
+  },
+  "dcloudext": {
+    "category": [
+      "前端页面模板",
+      "uni-app前端项目模板"
+    ],
+    "sale": {
+      "regular": {
+        "price": "0.00"
+      },
+      "sourcecode": {
+        "price": "0.00"
+      }
+    },
+    "contact": {
+      "qq": ""
+    },
+    "declaration": {
+      "ads": "无",
+      "data": "无",
+      "permissions": "无"
+    },
+    "npmurl": ""
+  },
+  "repository": "",
+  "uni_modules": {
+    "platforms": {
+      "cloud": {
+        "tcb": "y",
+        "aliyun": "y"
+      },
+      "client": {
+        "App": {
+          "app-vue": "u",
+          "app-nvue": "u"
+        },
+        "H5-mobile": {
+          "Safari": "u",
+          "Android Browser": "u",
+          "微信浏览器(Android)": "u",
+          "QQ浏览器(Android)": "u"
+        },
+        "H5-pc": {
+          "Chrome": "u",
+          "IE": "u",
+          "Edge": "u",
+          "Firefox": "u",
+          "Safari": "u"
+        },
+        "小程序": {
+          "微信": "u",
+          "阿里": "u",
+          "百度": "u",
+          "字节跳动": "u",
+          "QQ": "u",
+          "京东": "u"
+        },
+        "快应用": {
+          "华为": "u",
+          "联盟": "u"
+        },
+        "Vue": {
+          "vue2": "u",
+          "vue3": "u"
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "vite": "^6.3.5",
+    "vite-plugin-commonjs": "^0.10.4"
+  }
+}

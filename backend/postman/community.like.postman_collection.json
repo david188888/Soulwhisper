@@ -1,0 +1,92 @@
+{
+    "info": {
+        "name": "Community Like API",
+        "description": "API collection for testing like functionality in the Community module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Like",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"user_id\": \"{{user_id}}\",\n    \"diary_id\": \"{{diary_id}}\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/community/likes/create/",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "community", "likes", "create", ""]
+                },
+                "description": "Create a new like for a diary"
+            }
+        },
+        {
+            "name": "Delete Like",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"user_id\": \"{{user_id}}\",\n    \"diary_id\": \"{{diary_id}}\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/community/likes/delete/",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "community", "likes", "delete", ""]
+                },
+                "description": "Delete a like from a diary"
+            }
+        },
+        {
+            "name": "Get Like List",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"diary_id\": \"{{diary_id}}\",\n    \"user_id\": \"{{user_id}}\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/community/likes/list/",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "community", "likes", "list", ""]
+                },
+                "description": "Get like count and check if user has liked"
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000",
+            "type": "string"
+        },
+        {
+            "key": "user_id",
+            "value": "507f1f77bcf86cd799439011",
+            "type": "string"
+        },
+        {
+            "key": "diary_id",
+            "value": "507f1f77bcf86cd799439012",
+            "type": "string"
+        }
+    ]
+} 

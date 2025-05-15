@@ -1,0 +1,164 @@
+{
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
+	"pages": [
+		{
+			"path": "frontend/pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "frontend/pages/register/index",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "frontend/pages/tabbar/tabbar-1/tabbar-1",
+			"style": {
+				"navigationBarTitleText": "SoulWhisper"
+			}
+		},
+		{
+			"path": "frontend/pages/tabbar/tabbar-2/tabbar-2",
+			"style": {}
+		},
+		{
+			"path": "frontend/pages/tabbar/tabbar-3/tabbar-3",
+			"style": {}
+		},
+		{
+			"path": "frontend/pages/tabbar/tabbar-4/tabbar-4",
+			"style": {
+				"navigationBarTitleText": "Moments",
+				// "navigationStyle": "custom",
+				
+			}
+		},
+		{
+			"path": "frontend/pages/tabbar/tabbar-5/tabbar-5",
+			"style": {
+				"navigationBarTitleText": "Profile"
+			}
+		},
+		{
+			"path": "frontend/pages/diary/publish/index",
+			"style": {
+				"navigationBarTitleText": "write a diary"
+			}
+		},
+		{
+			"path": "frontend/pages/diary/detail/index",
+			"style": {
+				"navigationBarTitleText": "details of diary"
+			}
+		},
+		{
+			"path": "frontend/pages/home-3-detial/aichat/aichat",
+			"style": {}
+		},
+		{
+			"path": "frontend/pages/home-3-detial/bottle/bottle",
+			"style": {}
+		},
+		{
+			"path": "frontend/pages/home-3-detial/record/record",
+			"style": {}
+		},
+		{
+			"path": "frontend/pages/profile/privacy/index",
+			"style": {
+				"navigationBarTitleText": "Privacy Settings"
+			}
+		},
+		{
+			"path": "frontend/pages/profile/help/index",
+			"style": {
+				"navigationBarTitleText": "Help Center"
+			}
+		},
+		{
+			"path": "frontend/pages/profile/about/index",
+			"style": {
+				"navigationBarTitleText": "About Us"
+			}
+		},
+		{
+			"path" : "frontend/pages/list-detail/list-detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Detail"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "Soulwhisper",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#8A2BE2",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"color": "#8F8F94",
+		"list": [{
+				"pagePath": "frontend/pages/tabbar/tabbar-1/tabbar-1",
+				"iconPath": "frontend/static/img/tabbar/home.png",
+				"selectedIconPath": "frontend/static/img/tabbar/home.png",
+				"text": ""
+			},
+			{
+				"pagePath": "frontend/pages/tabbar/tabbar-2/tabbar-2",
+				"iconPath": "frontend/static/img/tabbar/information.png",
+				"selectedIconPath": "frontend/static/img/tabbar/information.png",
+				"text": ""
+			},
+			{
+				"pagePath": "frontend/pages/home-3-detial/record/record",
+				"iconPath": "frontend/static/img/tabbar/record.png",
+				"selectedIconPath": "frontend/static/img/tabbar/record.png",
+				"text": ""
+			},
+			{
+				"pagePath": "frontend/pages/tabbar/tabbar-4/tabbar-4",
+				"iconPath": "frontend/static/img/tabbar/chat.png",
+				"selectedIconPath": "frontend/static/img/tabbar/chat.png",
+				"text": ""
+			},
+			{
+				"pagePath": "frontend/pages/tabbar/tabbar-5/tabbar-5",
+				"iconPath": "frontend/static/img/tabbar/me.png",
+				"selectedIconPath": "frontend/static/img/tabbar/me.png",
+				"text": ""
+			}
+		]
+	},
+	"condition": {
+		"current": 0,
+		"list": [
+			{
+				"name": "login",
+				"path": "frontend/pages/login/index"
+			},
+			{
+				"name": "register",
+				"path": "frontend/pages/register/index"
+			}
+		]
+	}
+}
