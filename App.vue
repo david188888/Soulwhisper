@@ -37,6 +37,14 @@ export default {
 </script>
 
 <style>
+page {
+	font-family: "Futura";
+}
+
+text, view, button, input, textarea {
+	font-family: inherit;
+}
+
 .uni-tabbar {
 /*.uni-tabbar__item:nth-last-child(3) 修改倒数第三个 也就是中间的图标 我这边底部栏是五个*/
 		.uni-tabbar__item:nth-last-child(3) {

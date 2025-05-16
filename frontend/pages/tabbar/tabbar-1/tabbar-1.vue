@@ -30,7 +30,7 @@
 			<text class="month">Mood Calendar</text>
 			<uni-calendar
 				:start-date="'2025-01-01'"
-				:end-date="'2025-05-31'"
+				:end-date="'2025-12-31'"
 				:selected="highlightDays"
 				:showMonth="false"
 				:lunar="false"
@@ -92,18 +92,21 @@ export default {
 			let url = '';
 			switch(page) {
 				case 'record':
-					url = '/frontend/pages/home-3-detial/record/record';
+					url = '/frontend/pages/tabbar/tabbar-3/tabbar-3';
+					uni.switchTab({ url });
 					break;
 				case 'bottle':
-					url = '/frontend/pages/home-3-detial/bottle/bottle';
+					url = '/frontend/pages/tabbar/tabbar-4/tabbar-4';
+					uni.switchTab({ url });
 					break;
 				case 'aichat':
 					url = '/frontend/pages/home-3-detial/aichat/aichat';
+					uni.navigateTo({ url });
 					break;
 				default:
 					url = '/';
+					uni.navigateTo({ url });
 			}
-			uni.navigateTo({ url });
 		},
 		async fetchHighlightDays(year, month) {
 			try {
@@ -249,37 +252,49 @@ export default {
 <style scoped>
 .container {
 	padding: 20px;
-	background-color: #f8fafc;
+	background: #fff;
 	min-height: 100vh;
+	font-weight: 600;
+	border: 8px solid #fff;
+	border-radius: 36px;
+	box-sizing: border-box;
 }
 
 .header {
-	  background-image: linear-gradient(135deg, #a559f7 0%, #62a3fa 100%);
-	  padding: 20px;
-	  border-radius: 12px;
-	  margin-bottom: 30px;
+	background: url('frontend/static/img/tabbar/background.jpg') no-repeat center center;
+	background-size: cover;
+	background-color: rgba(255, 255, 255, 0.20);
+	backdrop-filter: blur(10px) saturate(180%);
+	-webkit-backdrop-filter: blur(10px) saturate(180%);
+	border-radius: 28px;
+	box-shadow: 0 0 12px rgba(0,0,0,0.08);
+	padding: 30px 38px;
+	margin-bottom: 30px;
+	position: relative;
+	overflow: hidden;
 }
 
 .keyword {
-	font-size: 18px;
-	color: #2c3e50;
-	font-weight: 600;
+	font-size: 22px;
+	color: #222;
+	font-weight: 700;
 	display: block;
-	margin-bottom: 15px;
-	color: white;
+	margin-bottom: 18px;
+	text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	letter-spacing: 1px;
 }
 
 .healing-section text {
 	display: block;
 	margin: 8px 0;
-	font-size: 14px;
-	color: white;;
+	font-size: 13px;
+	color: #222;
 }
 
 .calendar {
 	background: white;
-	border-radius: 12px;
-	padding: 10px;
+	border-radius: 24px;
+	padding: 16px;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
@@ -297,11 +312,12 @@ export default {
 	right: 0;
 	display: flex;
 	justify-content: space-around;
-	padding: 10px;
+	padding: 14px;
 	background: linear-gradient(145deg, #f8f9fa, #ffffff);
-	  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-	  backdrop-filter: blur(8px);
-	  border-radius: 20px;
+	box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+	backdrop-filter: blur(8px);
+	border-radius: 28px;
+	gap: 24px;
 }
 
 .nav-btn {
@@ -310,21 +326,24 @@ export default {
 	justify-content: center;
 	background: white;
 	border: none;
-	padding: 8px 15px;
-	font-size: 12px;
-	width:90px;
-	height:90px
+	padding: 12px 20px;
+	font-size: 14px;
+	width:100px;
+	height:100px;
+	border-radius: 24px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .nav-text {
-	  font-size: 11px;
-	  color: #4a5568;
-	  font-weight: 500;
-	  text-shadow: 0 1px 2px rgba(0,0,0,0.05);
-	}
+	font-size: 12px;
+	color: #222;
+	font-weight: 600;
+	text-shadow: 0 1px 4px rgba(0,0,0,0.06);
+	margin-top: 8px;
+}
 .popup-content {
 	background: white;
-	border-radius: 15px;
-	padding: 20px;
+	border-radius: 28px;
+	padding: 28px;
 	width: 80vw;
 	max-width: 500px;
 }
@@ -368,5 +387,12 @@ export default {
 	font-size: 16px;
 	line-height: 1.6;
 	color: #333;
+}
+
+.nav-btn span {
+	font-size: 20px;
+	display: block;
+	margin-bottom: 0px;
+	line-height: 1
 }
 </style>
