@@ -14,7 +14,18 @@
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
     </view>
     
-    <video src="https://pic1.imgdb.cn/item/6823760458cb8da5c8f0bbd8.gif" width="100%" height="220px" loop autoplay muted></video>
+    <view class="video-container">
+  <video 
+    src="https://pic1.imgdb.cn/item/6823760458cb8da5c8f0bbd8.gif" 
+    :controls="false"
+    :loop="true"
+    :autoplay="true"
+    :muted="true"
+    :show-play-btn="false"
+    :enable-progress-gesture="false"
+    class="content-video"
+  ></video>
+</view>
 
     
      <!-- 录音按钮 -->
@@ -405,6 +416,20 @@ export default {
   align-items: center;
   padding-top: 20px;
   position: relative;
+
+  .video-container {
+  width: 100%;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  
+  .content-video {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+}
   
   .back-button {
     position: relative;
