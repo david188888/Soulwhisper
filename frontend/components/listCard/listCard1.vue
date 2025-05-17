@@ -2,15 +2,20 @@
 	<view @click="open">
 		<view class="list-card">
 			<view class="listcard-image">
-				<image src="/frontend/static/img/logo.jpg" mode="aspectFill"></image>
+				<image :src="item.cover[0]" mode="aspectFill"></image>
 			</view>
 			<view class="listcard-content">
 				<view class="listcard-content_title">
-					<text>今天的心情今天的心情今天的心情今天的心情今天的心情今天的心情今天的心情</text>
+					<text>{{item.title}}</text>
 					<likes></likes>
 				</view>
 				<view class="listcard-content_des">
-					<view class="listcard-content_des-browse">120浏览</view>
+					<view class="listcard-content_des-label">
+						<view class="listcard-content_des-label-item">
+							{{item.classify}}
+						</view>
+					</view>
+					<view class="listcard-content_des-browse">{{item.browse_count}}浏览</view>
 				</view>
 			</view>
 		</view>
@@ -112,6 +117,16 @@
 				display: flex;
 				justify-content: space-between;
 				font-size: 12px;
+				.listcard-content_des-label{
+					display: flex;
+					.listcard-content_des-label-item{
+						padding: 0 5px;
+						margin-right: 5px;
+						border-radius: 15px;
+						border: 1px #8A2BE2 solid;
+						color: #8A2BE2;
+					}
+				}
 				.listcard-content_des-browse{
 					color: #999;
 					line-height: 1.5;

@@ -14,7 +14,7 @@
 		methods:{
 			likeTap(){
 				this.like = !this.like
-				console.log('收藏成功');
+				console.log('�ղسɹ�');
 			}
 		}
 	}

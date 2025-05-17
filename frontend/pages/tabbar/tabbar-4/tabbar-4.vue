@@ -3,41 +3,56 @@
 		<!-- 搜索栏-->
 		<!-- <navbar></navbar> -->
 		<!--选项卡-->
-		<!-- <tab></tab> -->
+		<tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab>
 		<!-- 卡片视图 -->
-		<listScroll>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-			<listCard1></listCard1>
-		</listScroll>
+		<view class="home-list">
+			<list :tab="tabList" :activeIndex="activeIndex" @change="change"></list>
+		</view>
 	</view>
 </template>
 
 <script>
-	import listScroll from '@/frontend/components/listScroll/listScroll.vue'
-	import listCard1 from '@/frontend/components/listCard/listCard1.vue';
-	// import navbar from '@/frontend/components/navbar/navbar.vue';
-	// import tab from '@/frontend/components/tab/tab.vue'
+	import tab from '@/frontend/components/tab/tab.vue';
+	import list from '@/frontend/components/list/list.vue'
 	export default {
 		components:{
-			// navbar,
-			// tab
-			listScroll,
-			listCard1
+			tab,
+			list
 		},
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				tabList:[],
+				tabIndex:0,
+				activeIndex:0,
 			}
 		},
 		onLoad() {
-
+			this.getLabel()
 		},
 		methods: {
-
+			change(current){
+				this.tabIndex = current;
+				// this.activeIndex = current
+				// console.log('now',current);
+			},
+			tab({data,index}){
+				console.log(data,index);
+				this.activeIndex = index;
+			},
+			getLabel(){
+				this.$api.get_label({
+					name:'get_label'
+				}).then((res)=>{
+					const{
+						data
+					}=res
+					data.unshift({
+						name:'全部'
+					})
+					this.tabList = data
+				})
+			}
 		}
 	}
 </script>
@@ -53,5 +68,10 @@
 		flex: 1;
 		// border: 1px red solid;
 		overflow: hidden;
+		.home-list{
+			flex: 1;
+			box-sizing: border-box;
+			// border: 1px red solid;
+		}
 	}
 </style>
