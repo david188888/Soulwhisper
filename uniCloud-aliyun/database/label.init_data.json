@@ -1,26 +1,26 @@
-[
-  {
-    "name": "情绪管理",
-    "user": []
-  },
-  {
-    "name": "情绪感悟",
-    "user": []
-  },
-  {
-    "name": "情绪疗愈",
-    "user": []
-  },
-  {
-    "name": "情绪记录",
-    "user": []
-  },
-  {
-    "name": "情绪社交",
-    "user": []
-  },
-  {
-    "name": "情绪成长",
-    "user": []
-  }
-]
+ [
+            {
+                "name": "Emotion Management",
+                "user": []
+            },
+            {
+                "name": "Emotional Insights",
+                "user": []
+            },
+            {
+                "name": "Emotional Healing",
+                "user": []
+            },
+            {
+                "name": "Emotional Recording",
+                "user": []
+            },
+            {
+                "name": "Emotional Social Interaction",
+                "user": []
+            },
+            {
+                "name": "Emotional Growth",
+                "user": []
+            }
+        ]

@@ -48,7 +48,7 @@
 						data
 					}=res
 					data.unshift({
-						name:'全部'
+						name:'All'
 					})
 					this.tabList = data
 				})

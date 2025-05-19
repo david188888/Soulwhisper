@@ -7,7 +7,7 @@
 			<view class="listcard-content">
 				<view class="listcard-content_title">
 					<text>{{item.title}}</text>
-					<likes></likes>
+					<likes :item="item"></likes>
 				</view>
 				<view class="listcard-content_des">
 					<view class="listcard-content_des-label">

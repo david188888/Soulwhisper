@@ -7,9 +7,9 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="tab-icons">
+		<!-- <view class="tab-icons">
 			<uni-icons type="gear" size="26" color="#666"></uni-icons>
-		</view>
+		</view> -->
 	</view>
 </template>
 

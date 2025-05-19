@@ -13,3 +13,10 @@ export const get_list = (data) =>{
 		data
 	})
 }
+
+export const update_like = (data) =>{
+	return $http({
+		url:'update_like',
+		data
+	})
+}

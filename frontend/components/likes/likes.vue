@@ -6,15 +6,48 @@
 
 <script>
 	export default{
+		props:{
+			item:{
+				type:Object,
+				default(){
+					return {}
+				}
+			}
+		},
 		data(){
 			return{
 				like:false
 			};
 		},
+		watch:{
+			item(newVal){
+				this.like = this.item.is_like
+			}
+		},
+		created() {
+			this.like = this.item.is_like
+		},
 		methods:{
 			likeTap(){
 				this.like = !this.like
-				console.log('ÊÕ²Ø³É¹¦');
+				this.setupdateLike()
+				console.log('Saved successfully');
+			},
+			setupdateLike(){
+				uni.showLoading()
+				this.$api.update_like({
+					user_id:'6826a345652341756209a423',
+					article_id: this.item._id
+				}).then(res=>{
+					uni.hideLoading()
+					uni.showToast({
+						title:this.like?'Saved Successfully':'Remove From Favorites',
+						icon:'none'
+					})
+					console.log(res);
+				}).catch(()=>{
+					uni.hideLoading()
+				})
 			}
 		}
 	}
