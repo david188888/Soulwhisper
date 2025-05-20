@@ -1,26 +1,26 @@
 <template>
 	<view class="detail">
 		<view class="detail-title">
-			Today's Tranquility and Reflection
+			{{fromData.title}}
 		</view>
 		<view class="detail-header">
 			<view class="detail-header-logo">
-				<image src="@/frontend/static/img/list-detaiil/Starry Voyager.png"></image>
+				<image src="@/frontend/static/img/list-detaiil/Starry Voyager.png" mode="aspectFill"></image>
 			</view>
 			<view class="detail-header-content">
 				<view class="detail-header-content-title">
-					Starry Voyager
+					{{fromData.author.author_name}}
 				</view>
 				<view class="detail-header-content-info">
-					<text>2024-04-21 12:21:28</text>
-					<text>1234 views</text>
-					<text>2345 likes</text>
+					<text>{{fromData.create_time}}</text>
+					<text>{{fromData.browse_count}} views</text>
+					<text>{{fromData.thumbs_up_count}} likes</text>
 				</view>
 			</view>
 		</view>
 		<view class="detail-content">
 			<view class="detail-html">
-				{{ content }}
+				<u-parse :content="fromData.content" :noData="noData"></u-parse>
 				<image src="/frontend/static/img/list-detaiil/forest_squirrel.png"></image>
 			</view>
 			<view class="detail-comment">
@@ -63,26 +63,41 @@
 </template>
 
 <script>
-	import commentsBox from '@/frontend/components/commentsBox/commentsBox.vue'
+	import uParse from '@/uni_modules/uv-parse/components/uv-parse/uv-parse.vue'
+	import commentsBox from '@/frontend/components/commentsBox/commentsBox.vue';
 	export default {
 		components:{
 			commentsBox,
+			uParse
 		},
 		data() {
 			return {
-				content: "Today's mood feels like a walk through an autumn forest.\nUnderfoot are thick layers of fallen leaves, and every step is accompanied by the soft rustling sound.\nQuiet yet full of poetry.",
+				fromData:{author: {}},
+				noData:'<p style="aligin:center;color:#666">On Loading...<p>',
+				// content: "Today's mood feels like a walk through an autumn forest.\nUnderfoot are thick layers of fallen leaves, and every step is accompanied by the soft rustling sound.\nQuiet yet full of poetry.",
 				//输入框的值
 				commentsValue:''
 			}
 		},
 		onLoad(query) {
+			this.fromData = JSON.parse(query.params),
+			this.getDetail(),
 			this.$refs.popup.open()
-			console.log(JSON.parse(query.params))
 		},
 		onReady(){
 			// this.$refs.popup.open()
 		},
 		methods: {
+			//获取详情信息
+			getDetail(){
+				this.$api.get_detail({
+					article_id:this.fromData._id,
+				}).then((res) =>{
+					const {data} = res
+					this.fromData = data
+					console.log(res);
+				})
+			},
 			//打开评论
 			openComment() {
 				this.$refs.popup.open()
