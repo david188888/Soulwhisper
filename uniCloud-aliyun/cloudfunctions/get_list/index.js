@@ -1,4 +1,5 @@
 'use strict';
+//获取数据库引用
 const db = uniCloud.database()
 const $ = db.command.aggregate
 exports.main = async (event, context) => {

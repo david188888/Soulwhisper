@@ -13,7 +13,7 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300001","300012","300017","300034"]
+                "article_ids": ["300001","300012","300020","300029"]
             },
             {
                 "id": "430002",
@@ -45,7 +45,7 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300003","300030","300033"]
+                "article_ids": ["300003","300025","300028"]
             },
             {
                 "id": "430004",
@@ -61,7 +61,7 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300004","300031","300032"]
+                "article_ids": ["300004","300026","300027"]
             },
             {
                 "id": "430005",
@@ -141,7 +141,7 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300013","300009"]
+                "article_ids": ["300009","300013"]
             },
             {
                 "id": "430015",
@@ -157,7 +157,7 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300020","300023"]
+                "article_ids": ["300015","300018"]
             },
             {
                 "id": "430016",
@@ -173,7 +173,7 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300021"]
+                "article_ids": ["300016"]
             },
             {
                 "id": "430017",
@@ -189,7 +189,7 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300022"]
+                "article_ids": ["300017"]
             },
             {
                 "id": "430019",
@@ -205,6 +205,6 @@
                 "article_likes_ids": [],
                 "author_likes_ids": [],
                 "thumbs_up_article_ids": [],
-                "article_ids": ["300024","300026","300027","300029"]
+                "article_ids": ["300019","300021","300022","300024"]
             }
         ]

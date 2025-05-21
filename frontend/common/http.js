@@ -4,7 +4,8 @@ export default function $http(options){
 		data
 	} = options
 	const dataObj = {
-		user_id:'6826a345652341756209a423',
+		//如果更新数据库，确保有这个user_id
+		user_id:'682d74b08a5c782a2b825fdd',
 		...data
 	}
 	return new Promise((reslove,reject)=>{

@@ -25,8 +25,8 @@
 			</view>
 			<view class="detail-comment">
 				<view class="comment-title">Latest comment</view>
-				<view class="comment-content" v-for="item in 5">
-				<commentsBox></commentsBox>
+				<view class="comment-content" v-for="item in commentsList" :key="item.comment_id">
+				<commentsBox :comments="item" @reply="reply"></commentsBox>
 				</view>
 			</view>
 		</view>
@@ -74,18 +74,15 @@
 			return {
 				fromData:{author: {}},
 				noData:'<p style="aligin:center;color:#666">On Loading...<p>',
-				// content: "Today's mood feels like a walk through an autumn forest.\nUnderfoot are thick layers of fallen leaves, and every step is accompanied by the soft rustling sound.\nQuiet yet full of poetry.",
-				//输入框的值
-				commentsValue:''
+				commentsValue:'',
+				commentsList:[],
+				replyFromData:{}
 			}
 		},
 		onLoad(query) {
 			this.fromData = JSON.parse(query.params),
 			this.getDetail(),
-			this.$refs.popup.open()
-		},
-		onReady(){
-			// this.$refs.popup.open()
+			this.getComments()
 		},
 		methods: {
 			//获取详情信息
@@ -109,7 +106,50 @@
 			//发布评论
 			submit(){
 				console.log('发布');
-				this.$refs.popup.close()
+				if(!this.commentsValue){
+					uni.showToast({
+						title:'please enter comment...',
+						icon:"none"
+					})
+					return
+				}
+				this.setUpdateComment({content:this.commentsValue,...this.replyFromData})
+			},
+			reply(e){
+				this.replyFromData = {
+					"comment_id":e.comments.comment_id,
+					"is_reply":e.is_reply
+				}
+				if(e.comments.reply_id){
+					this.replyFromData.reply_id = e.comments.reply_id
+				}
+				this.openComment()
+			},
+			setUpdateComment(content){
+				const fromdata ={
+					article_id:this.fromData._id,
+					...content
+				}
+				this.$api.update_comment(fromdata).then((res)=>{
+					console.log(res);
+					uni.hideLoading()
+					uni.showToast({
+						title:"Comment Posted Successfully"
+					})
+					this.getComments()
+					this.close()
+					this.replyFromData={}
+					this.commentsValue=''
+				})
+			},
+			getComments(){
+				this.$api.get_comments({
+					article_id:this.fromData._id,
+				}).then(res=>{
+					console.log(res);
+					const {data} = res
+					this.commentsList = data
+				})
 			}
 		}
 	}
