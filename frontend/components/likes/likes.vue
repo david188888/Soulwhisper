@@ -36,13 +36,13 @@
 			setupdateLike(){
 				uni.showLoading()
 				this.$api.update_like({
-					user_id:'6826a345652341756209a423',
+					user_id:'682d74b08a5c782a2b825fdd',
 					article_id: this.item._id
 				}).then(res=>{
 					uni.hideLoading()
 					uni.showToast({
-						title:this.like?'Saved Successfully':'Remove From Favorites',
-						icon:'none'
+						title:this.like?'Collection Successful':'Cancel Collection',
+						// icon:'none'
 					})
 					console.log(res);
 				}).catch(()=>{

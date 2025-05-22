@@ -5,7 +5,7 @@
 		</view>
 		<view class="detail-header">
 			<view class="detail-header-logo">
-				<image src="@/frontend/static/img/list-detaiil/Starry Voyager.png" mode="aspectFill"></image>
+				<image src="@/static/img/list-detaiil/touxiang.jpg" mode="aspectFill"></image>
 			</view>
 			<view class="detail-header-content">
 				<view class="detail-header-content-title">
@@ -17,6 +17,7 @@
 					<text>{{fromData.thumbs_up_count}} likes</text>
 				</view>
 			</view>
+			<!-- <button class="detail-header_button" type="default" @click="follow(fromData.author.id)">{{fromData.is_author_like?'Unfollow':'Follow'}}</button> -->
 		</view>
 		<view class="detail-content">
 			<view class="detail-html">
@@ -39,8 +40,8 @@
 				<view class="detail-bottom-icons-box">
 					<uni-icons type="chat" size="22px" color="#5D7DB3"></uni-icons>
 				</view>
-				<view class="detail-bottom-icons-box">
-					<uni-icons type="heart" size="22px" color="#F07373"></uni-icons>
+				<view class="detail-bottom-icons-box" @click="likeTap(fromData._id)">
+					<uni-icons :type="fromData.is_like?'heart-filled':'heart'" size="22px" color="#F07373"></uni-icons>
 				</view>
 				<view class="detail-bottom-icons-box">
 					<uni-icons type="hand-up" size="22px" color="#F4BB44"></uni-icons>
@@ -72,7 +73,11 @@
 		},
 		data() {
 			return {
-				fromData:{author: {}},
+				fromData:{
+					author: {
+						// id:''
+					
+				}},
 				noData:'<p style="aligin:center;color:#666">On Loading...<p>',
 				commentsValue:'',
 				commentsList:[],
@@ -85,6 +90,14 @@
 			this.getComments()
 		},
 		methods: {
+			follow(author_id){
+				console.log('follow')
+				this.setUpdateAuthor(author_id)
+			},
+			likeTap(article_id){
+				console.log('like');
+				this.setUpdateLike(article_id)
+			},
 			//获取详情信息
 			getDetail(){
 				this.$api.get_detail({
@@ -92,7 +105,7 @@
 				}).then((res) =>{
 					const {data} = res
 					this.fromData = data
-					console.log(res);
+					// console.log(res);
 				})
 			},
 			//打开评论
@@ -150,6 +163,33 @@
 					const {data} = res
 					this.commentsList = data
 				})
+			},
+			//关注作者
+			setUpdateAuthor(author_id){
+				uni.showLoading()
+				this.$api.update_author({
+					author_id
+				}).then(res=>{
+					uni.hideLoading()
+					this.fromData.is_author_like = !this.fromData.is_author_like
+					uni.showToast({
+						title:this.fromData.is_author_like?'Follow Success':'Unfollow success'
+					})
+				})
+			},
+			//收藏文章
+			setUpdateLike(article_id){
+				uni.showLoading()
+				this.$api.update_like({
+					article_id
+				}).then(res=>{
+					uni.hideLoading()
+					this.fromData.is_like = !this.fromData.is_like
+					uni.showToast({
+						title:this.fromData.is_like?'Collection Successful':'Cancel Collection'
+					})
+					console.log('like sucess')
+				})
 			}
 		}
 	}
@@ -188,7 +228,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			font-size: 12px;
+			font-size: 10px;
 			.detail-header-content-title{
 				font-size: 14px;
 				color: #333;
@@ -199,6 +239,13 @@
 					margin-right: 10px;
 				}
 			}
+		}
+		.detail-header_button{
+			flex-shrink: 0;
+			height: 30px;
+			font-size: 12px;
+			color: #fff;
+			background: linear-gradient(135deg, #A18BFF 0%, #7B89F9 100%) ;
 		}
 	}
 	.detail-content{
@@ -212,9 +259,10 @@
 			margin-top: 30px;
 			.comment-title{
 				padding: 10px 15px;
-				font-size: 14px;
-				color: #666;
-				border-bottom: 1px #f5f5ff solid;
+				font-size: 18px;
+				color: #000;
+				font-weight: 200px;
+				// border-bottom: 1px #f5f5ff solid;
 			}
 			.comment-content{
 				padding: 0 15px;

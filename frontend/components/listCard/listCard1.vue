@@ -11,11 +11,11 @@
 				</view>
 				<view class="listcard-content_des">
 					<view class="listcard-content_des-label">
-						<view class="listcard-content_des-label-item">
+						<!-- <view class="listcard-content_des-label-item">
 							{{item.classify}}
-						</view>
+						</view> -->
 					</view>
-					<view class="listcard-content_des-browse">{{item.browse_count}}浏览</view>
+					<!-- <view class="listcard-content_des-browse">{{item.browse_count}}浏览</view> -->
 				</view>
 			</view>
 		</view>

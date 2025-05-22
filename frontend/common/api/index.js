@@ -1,4 +1,4 @@
-import {get_label,get_list,update_like,get_detail,update_comment,get_comments} from './list.js'
+import {get_label,get_list,update_like,get_detail,update_comment,get_comments,update_author} from './list.js'
 
 export default{
 	get_label,
@@ -6,5 +6,6 @@ export default{
 	update_like,
 	get_detail,
 	update_comment,
-	get_comments
+	get_comments,
+	update_author
 }

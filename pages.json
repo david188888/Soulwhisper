@@ -43,8 +43,8 @@
 		{
 			"path": "frontend/pages/tabbar/tabbar-4/tabbar-4",
 			"style": {
-				"navigationBarTitleText": "Moments"
-				// "navigationStyle": "custom",
+				// "navigationBarTitleText": "Moments"
+				"navigationStyle": "custom",
 				
 			}
 		},
@@ -101,6 +101,13 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : "Detail"
+			}
+		},
+		{
+			"path" : "frontend/pages/create/create",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Create"
 			}
 		}
 	],

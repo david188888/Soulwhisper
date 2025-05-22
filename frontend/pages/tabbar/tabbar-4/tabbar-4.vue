@@ -1,5 +1,11 @@
 <template>
 	<view class="content">
+		<view class="header">
+			<view class="header-title">Moment</view>
+			<view class="add-btn" @click="create">
+				<uni-icons type="plus" size="30" color="#8A2BE2"></uni-icons>
+			</view>
+		</view>
 		<!-- 搜索栏-->
 		<!-- <navbar></navbar> -->
 		<!--选项卡-->
@@ -52,6 +58,11 @@
 					})
 					this.tabList = data
 				})
+			},
+			create(){
+				uni.navigateTo({
+					url:'/frontend/pages/create/create',
+				})
 			}
 		}
 	}
@@ -68,6 +79,28 @@
 		flex: 1;
 		// border: 1px red solid;
 		overflow: hidden;
+		.header{
+			display: flex;
+			background-color:#fff;
+			height: 40px;
+			width: 100%;
+			// 中间标题
+			.header-title {
+			    position: absolute;
+			    left: 50%;
+				margin: 10px 0;
+			    transform: translateX(-50%);
+			    font-size: 16px;
+			    font-weight: bold;
+			    color: #000;
+			    text-align: center;
+			  }
+			.add-btn {
+				position: absolute;
+				right: 0px;
+				margin: 5px 10px;
+			}
+		}
 		.home-list{
 			flex: 1;
 			box-sizing: border-box;
