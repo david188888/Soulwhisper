@@ -14,20 +14,7 @@
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
     </view>
     
-    <view class="video-container">
-  <video 
-    src="https://pic1.imgdb.cn/item/6823760458cb8da5c8f0bbd8.gif" 
-    :controls="false"
-    :loop="true"
-    :autoplay="true"
-    :muted="true"
-    :show-play-btn="false"
-    :enable-progress-gesture="false"
-    class="content-video"
-  ></video>
-</view>
-
-    
+    <img src="../static/img/recordBg.gif" style="margin-top: -40px;" width="100%" height="550px" />
      <!-- 录音按钮 -->
     <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }">
       <uni-icons :type="isRecording ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>
@@ -417,20 +404,6 @@ export default {
   padding-top: 20px;
   position: relative;
 
-  .video-container {
-  width: 100%;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  
-  .content-video {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-}
-  
   .back-button {
     position: relative;
     left: -140px;
