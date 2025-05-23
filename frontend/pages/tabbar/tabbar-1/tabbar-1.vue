@@ -120,8 +120,6 @@ export default {
 					return;
 				}
 
-				console.log('请求高亮日期，年月:', year, month);
-
 				const res = await uni.request({
 					url: api.diaryDays + `?year=${year}&month=${month}`,
 					header: {
@@ -131,19 +129,17 @@ export default {
 					method: 'GET'
 				});
 
-				console.log('获取到的日期数据:', res.data);
 
 				if (res.statusCode === 200 && Array.isArray(res.data)) {
 					this.highlightDays = res.data.map(dateStr => {
 						// 确保日期格式为 YYYY-MM-DD
 						const [y, m, d] = dateStr.split('-');
 						const formattedDate = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-						console.log('处理后的日期:', formattedDate);
 						return {
 							date: formattedDate
 						};
 					});
-					console.log('最终高亮日期数组:', this.highlightDays);
+
 				} else {
 					console.error('获取日期失败:', res);
 					uni.showToast({
@@ -188,7 +184,7 @@ export default {
 
 				const res = await uni.request({
 					url: requestUrl,
-					header: { 
+					header: {
 						'Authorization': `Token ${userInfo.token}`,
 						'Content-Type': 'application/json'
 					},

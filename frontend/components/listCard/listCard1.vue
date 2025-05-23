@@ -2,7 +2,7 @@
 	<view @click="open">
 		<view class="list-card">
 			<view class="listcard-image">
-				<image src="@/static/img/logo.jpg" mode="aspectFill"></image>
+				<image src="../../static/img/logo.jpg" mode="aspectFill"></image>
 			</view>
 			<view class="listcard-content">
 				<view class="listcard-content_title">

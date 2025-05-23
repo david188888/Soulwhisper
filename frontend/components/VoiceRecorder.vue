@@ -14,7 +14,7 @@
       <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
     </view>
     
-    <img src="../static/img/recordBg.png" style="margin-top: -40px;" width="100%" height="550px" />
+    <img src="../static/img/voice.gif" style="margin-top: -40px;" width="100%" height="550px" />
      <!-- 录音按钮 -->
     <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }">
       <uni-icons :type="isRecording ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>
