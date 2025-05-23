@@ -119,8 +119,8 @@ export default {
     goBack() {
       if (this.isRecording) {
         uni.showModal({
-          title: '提示',
-          content: '正在录音中，确定要返回吗？',
+          title: 'Tip',
+          content: 'You are recording, are you sure to return?',
           success: (res) => {
             if (res.confirm) {
               this.stopRecord();
@@ -145,8 +145,8 @@ export default {
       }, (msg, isUserNotAllow) => {
         if(isUserNotAllow) {
           uni.showModal({
-            title: '提示',
-            content: '需要麦克风权限才能录音，请在设置中允许使用麦克风',
+            title: 'Tip',
+            content: 'Microphone permission is required to record',
             showCancel: false
           });
         }
@@ -165,8 +165,8 @@ export default {
         }, (msg, isUserNotAllow) => {
           if(isUserNotAllow) {
             uni.showModal({
-              title: '提示',
-              content: '需要麦克风权限才能录音，请在设置中允许使用麦克风',
+              title: 'Tip',
+              content: 'Microphone permission is required to record',
               showCancel: false
             });
           }
@@ -212,7 +212,7 @@ export default {
         console.log("开始录音");
         this.isRecording = true;
         this.recordTime = 0;
-        this.recordTip = '正在录音...';
+        this.recordTip = 'Recording...';
         
         // 创建波形显示
         RecordApp.UniFindCanvas(this, [".recwave-WaveView"], `
@@ -231,7 +231,7 @@ export default {
       }, (msg) => {
         console.error("开始录音失败：" + msg);
         uni.showToast({
-          title: '录音失败',
+          title: 'Fail to record',
           icon: 'none'
         });
       });
@@ -247,7 +247,7 @@ export default {
         if(arrayBuffer && arrayBuffer.byteLength > 0) {
           // 显示处理中的加载提示
           uni.showLoading({
-            title: '语音转写中...',
+            title: 'Speech To Text...',
             mask: true
           });
 
@@ -316,7 +316,7 @@ export default {
 
         } else {
           uni.showToast({
-            title: '录音内容为空',
+            title: 'You speek nothing?',
             icon: 'none',
             duration: 2000
           });
@@ -324,7 +324,7 @@ export default {
         }
       }, (msg) => {
         uni.showToast({
-          title: '录音失败',
+          title: 'Fail to record',
           icon: 'none',
           duration: 2000
         });

@@ -176,7 +176,7 @@ export default {
     if (res.statusCode === 200 || res.statusCode === 201) {
       uni.hideLoading();
       uni.showToast({
-        title: '发布成功',
+        title: 'Publish success!😄',
         icon: 'success',
         duration: 1500,
         success: () => {
@@ -192,7 +192,7 @@ export default {
   } catch (err) {
     uni.hideLoading();
     uni.showToast({
-      title: err.message || '网络错误',
+      title: err.message || 'Network error',
       icon: 'none'
     });
     console.error('发布日记失败:', err);
