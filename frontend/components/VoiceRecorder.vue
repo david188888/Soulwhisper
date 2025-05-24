@@ -9,14 +9,9 @@
 <template>
   <view class="container-chat">
   <view class="voice-recorder">
-    <!-- 返回按钮 -->
-    <view class="back-button" @tap="goBack">
-      <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
-    </view>
-    
-    <img src="../static/img/voice.gif" style="margin-top: -40px;" width="100%" height="550px" />
+    <img src="../static/img/voice.gif" class="voice-gif" />
      <!-- 录音按钮 -->
-    <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }">
+    <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }" :style="isRecording ? 'position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); z-index: 200;' : ''">
       <uni-icons :type="isRecording ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>
     </view>
     
@@ -404,23 +399,18 @@ export default {
   padding-top: 20px;
   position: relative;
 
-  .back-button {
-    position: relative;
-    left: -140px;
-    top: -80px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-    
-    &:active {
-      transform: scale(0.95);
-    }
+  .voice-gif {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 80%;
+    max-width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(138, 43, 226, 0.12), 0 1.5px 6px rgba(0,0,0,0.08);
+    border: 2px solid #f3eaff;
+    background: #f8f6ff;
   }
   
   .record-button {
@@ -432,8 +422,9 @@ export default {
     justify-content: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    margin-top: -180px;
-    margin-left: 20px;
+    margin-top: 30px;
+    margin-left: 0;
+    align-self: center;
     
     &.recording {
       border-radius: 0;
@@ -441,7 +432,7 @@ export default {
       border-radius: 20px;
       transform: scale(1.1);
       z-index: 100;
-      margin-top: 50px;
+      margin-top: 80px;
       margin-left: 0px;
       .uni-icons {
         color: #fff !important;

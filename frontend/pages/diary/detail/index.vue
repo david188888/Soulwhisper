@@ -65,6 +65,13 @@ export default {
       this.mood.intensity = record.emotion_intensity;
       this.mediaUrl = record.mediaUrl;
       this.mediaType = record.mediaType;
+  },
+  
+  onBackPress() {
+    uni.switchTab({
+      url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+    });
+    return true;
   }
 }
 </script>
