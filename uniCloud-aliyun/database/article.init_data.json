@@ -1,0 +1,590 @@
+[
+            {
+                "id": "300001",
+                "title": "Stepping Out of the Emotional Valley: My Journey of Self-Healing",
+                "browse_count": 580,
+                "collection_count": 85,
+                "comments_count": [],
+                "author": {
+                    "id": "430001",
+                    "author_name": "Dawn Glow",
+                    "avatar": "//img1.example.com/avatar1.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion Management",
+                "thumbs_up_count": 88,
+                "create_time": "2024.08.15 14:20",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Emotional Valley Breakthrough</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Dawn Glow.<br>Today I share my journey out of the emotional valley, hoping to inspire those in difficult situations.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Once overwhelmed by anxiety and depression,<br>life felt completely dark.<br>But I refused to give up and began exploring healing methods.</p></div><div class='cl-preview-section'><p><b>Key 1: Emotion Journaling</b><br>Tracking daily feelings revealed my negativity stemmed from fearing the future.<br>I shifted to mindfulness: savoring small moments like coffee warmth or sunlight on my skin.</p></div><div class='cl-preview-section'><p><b>Key 2: Movement Therapy</b><br>Running became my stress release, while yoga brought inner calm.<br>Sweating through exercise washed away mental heaviness, leaving me lighter.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Now:</h4></div><p>I manage emotions better, and life is filled with hope.<br>Remember: <i>Darkness always makes way for light.</i></p></div>",
+                "cover": [
+                    "http://img.example.com/cover1.jpg",
+                    "http://img.example.com/cover2.jpg",
+                    "http://img.example.com/cover3.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300002",
+                "title": "Diffusing Anger: Methods That Keep Me from Impulsivity",
+                "browse_count": 620,
+                "collection_count": 90,
+                "comments_count": [],
+                "author": {
+                    "id": "430002",
+                    "author_name": "Tranquil Harbor",
+                    "avatar": "//img1.example.com/avatar2.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion Management",
+                "thumbs_up_count": 92,
+                "create_time": "2024.09.08 16:10",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Anger Diffusion Journey</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Tranquil Harbor. Today I share my experience of diffusing anger, hoping to help those struggling with emotional control. Once dominated by anger, I often acted impulsively and regretted later, but I learned to reconcile with this emotion and found my own way to calm down. Anger is actually a normal emotion, but if not handled properly, it can hurt ourselves and those around us. When anger surges up, I first give myself 10 seconds to calm down and silently count in my heart to let the impulsive emotion subside slightly; this 'mental buffer' allows impulsive thoughts to fade, letting reason regain control. After that, I try to put myself in the other person's shoes and ask: 'Why might they have acted this way?' Understanding others' motivations often dissolves anger, replacing it with tolerance. I also write down my angry emotions to vent through words—the act of transcription transforms chaos into clarity, helping me view problems objectively. I hope these methods can help everyone better control their emotions. Now, anger no longer dictates my actions. Remember: <i>Emotions are waves—we don't need to drown in them.</i></p></div>",
+                "cover": [
+                    "http://img.example.com/cover4.jpg",
+                    "http://img.example.com/cover5.jpg",
+                    "http://img.example.com/cover6.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300003",
+                "title": "The Growth Code Behind Loneliness",
+                "browse_count": 550,
+                "collection_count": 80,
+                "comments_count": [],
+                "author": {
+                    "id": "430003",
+                    "author_name": "Solitary Traveler",
+                    "avatar": "//img1.example.com/avatar3.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion Insights",
+                "thumbs_up_count": 85,
+                "create_time": "2024.10.20 13:30",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>The Light of Loneliness</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Solitary Traveler. Today I want to talk about the emotion of loneliness, which is not scary at all but hides a growth code. On the journey of life, we will always feel lonely at times, yet it is these lonely moments that offer us the opportunity to understand ourselves deeply. I used to be afraid of loneliness, always feeling desolate when alone, but later I learned to enjoy solitary times—reading books, learning new skills, and reflecting on life during solitude. Gradually, I found myself becoming more independent and confident. Loneliness is like an inner practice, teaching us to get along with ourselves and discover our potential; when we stop running away from loneliness, we can harvest growth and strength from it. I hope everyone can understand the meaning behind loneliness and shine their own light in moments of solitude.</p></div>",
+                "cover": [
+                    "http://img.example.com/cover7.jpg",
+                    "http://img.example.com/cover8.jpg",
+                    "http://img.example.com/cover9.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300004",
+                "title": "Healing Emotions with Music: My Spiritual Medicine",
+                "browse_count": 672,
+                "collection_count": 88,
+                "comments_count": [],
+                "author": {
+                    "id": "430004",
+                    "author_name": "Note Elf",
+                    "avatar": "//img1.example.com/avatar4.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion Healing",
+                "thumbs_up_count": 90,
+                "create_time": "2024.11.12 15:40",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Healing Melodies: My Journey with Music</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Note Elf. Music is a medicine for healing emotions for me, and today I’ll share how music has accompanied me through emotional ups and downs. Music can resonate with my emotions whether I’m happy or sad: when I’m in a low mood, a soothing piano piece can calm me down, as if someone is gently comforting me; when I’m full of energy, passionate rock music can ignite my enthusiasm and make me full of motivation. I also try to play musical instruments myself—In the process of creating music, I express my inner emotions through notes, a wonderful feeling like finding an outlet for emotions. I hope everyone can also find their own musical medicine to heal emotions and feel the beauty of life.</p></div>",
+                "cover": [
+                    "http://img.example.com/cover10.jpg",
+                    "http://img.example.com/cover11.jpg",
+                    "http://img.example.com/cover12.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300005",
+                "title": "Farewell to Anxiety, Embrace a Calm Life",
+                "browse_count": 598,
+                "collection_count": 82,
+                "comments_count": [],
+                "author": {
+                    "id": "430005",
+                    "author_name": "Leisurely Time",
+                    "avatar": "//img1.example.com/avatar5.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion Management",
+                "thumbs_up_count": 86,
+                "create_time": "2024.12.05 14:50",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Anxiety Relief Journey</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Leisurely Time.<br>Today I share my journey of saying goodbye to anxiety and embracing calmness, hoping to offer a ray of light to those troubled by restlessness.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Once drowned in the whirlpool of anxiety,<br>life felt like a chaotic puzzle with no solution.<br>But I decided to take the first step toward healing.</p></div><div class='cl-preview-section'><p><b>Key 1: Plan-Based Grounding</b><br>I transformed overwhelming uncertainty into actionable steps:<br>Breaking grand goals into 'micro-tasks' like 'reply to one email' or 'stretch for 5 minutes'.<br>Each small completion built a ladder out of the anxiety pit.</p></div><div class='cl-preview-section'><p><b>Key 2: Breath-Centered Meditation</b><br>Daily 10-minute meditation became my anchor:<br>Focusing on the rhythm of inhaling/exhaling, I learned to detach from racing thoughts.<br>Slowly, the mind's clutter dissolved like mist in sunlight.</p></div><div class='cl-preview-section'><p><b>Key 3: Open Dialogue</b><br>Instead of silencing anxiety, I voiced it to trusted friends:<br>'I'm scared of tomorrow's meeting...'<br>Speaking the words turned abstract fears into tangible thoughts, robbing them of their power.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Now:</h4></div><p>Anxiety no longer dictates my days.<br>Remember: <i>You don't have to control the storm—just learn to dance in the rain.</i></p></div>",
+                "cover": [
+                    "http://img.example.com/cover13.jpg",
+                    "http://img.example.com/cover14.jpg",
+                    "http://img.example.com/cover15.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300006",
+                "title": "Emotion Diary: Recording the Trajectory of the Soul",
+                "browse_count": 652,
+                "collection_count": 87,
+                "comments_count": [],
+                "author": {
+                    "id": "430006",
+                    "author_name": "Word Catcher",
+                    "avatar": "//img1.example.com/avatar6.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion Recording",
+                "thumbs_up_count": 89,
+                "create_time": "2025.01.18 16:20",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Emotion Diary: My Mirror of the Soul</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Word Catcher.<br>Today I share my emotion diary, a mirror that helps me peer into my inner self.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Writing an emotion diary is a journey of self-discovery,<br>unveiling the subtleties of my heart that even I might miss.</p></div><div class='cl-preview-section'><p><b>Key 1: Nightly Emotional Inventory</b><br>Each evening, I document the day’s emotional tides:<br>Joyful moments that lit up my day,<br>Frustrations that weighed on me,<br>and the thoughts swirling beneath them.<br>Rereading these entries reveals recurring patterns, turning confusion into clarity.</p></div><div class='cl-preview-section'><p><b>Key 2: Pressure as Ink on Paper</b><br>Putting feelings into words is like shedding a heavy coat:<br>Anger loses its sting,<br>Sadness softens into reflection,<br>and even small joys gain sparkle when named.<br>Tracking this evolution reminds me: growth is happening, quietly.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Invitation:</h4></div><p>Pick up a pen and start your own emotional chronicle.<br>You’ll find not just words on a page,<br>but a friend who knows you deeply—<br>yourself.<br>Remember: <i>Every feeling written is a step toward self-understanding.</i></p></div>",
+                "cover": [
+                    "http://img.example.com/cover16.jpg",
+                    "http://img.example.com/cover17.jpg",
+                    "http://img.example.com/cover18.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300007",
+                "title": "How to Maintain Positive Emotions Under Pressure",
+                "browse_count": 692,
+                "collection_count": 89,
+                "comments_count": [],
+                "author": {
+                    "id": "430007",
+                    "author_name": "Sunshine Warrior",
+                    "avatar": "//img1.example.com/avatar7.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion Management",
+                "thumbs_up_count": 91,
+                "create_time": "2025.02.10 15:10",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Positive Emotion Maintenance Under Pressure</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Sunshine Warrior.<br>Today I'll share how I maintain positive emotions amid life's inevitable pressures, hoping to inspire you.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Pressure itself isn't terrible;<br>the key lies in our approach.<br>I've learned to turn it into a stepping stone for growth.</p></div><div class='cl-preview-section'><p><b>Key 1: Goal-Oriented Motivation</b><br>I break down overwhelming pressure into clear, actionable goals:<br>'Finish one project task today' or 'Read 20 pages of a book.'<br>Each small achievement is celebrated with a tiny reward—like a cup of favorite coffee—fueling my sense of progress.</p></div><div class='cl-preview-section'><p><b>Key 2: Exercise as a Stress Buster</b><br>Daily exercise becomes my 'happy pill'<br>30 minutes of jogging or yoga not only releases physical tension<br>but also boosts dopamine levels, naturally lifting my mood.<br>Sweat becomes a metaphor for letting go of stress.</p></div><div class='cl-preview-section'><p><b>Key 3: The Power of Sharing</b><br>I never carry pressure alone.<br>Opening up to family or friends about my struggles—even just venting—<br>turns heavy burdens into shared warmth.<br>Their encouragement reminds me: I'm not facing this alone.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Now:</h4></div><p>Pressure still exists, but it no longer dictates my mood.<br>Remember: <i>Positive emotions are like muscles—they grow stronger with practice.</i><br>Keep moving forward bravely, and sunshine will always follow the clouds.</p></div>",
+                "cover": [
+                    "http://img.example.com/cover19.jpg",
+                    "http://img.example.com/cover20.jpg",
+                    "http://img.example.com/cover21.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300008",
+                "title": "Emotions and Interpersonal Relationships: How to Avoid Hurting Others with Emotions",
+                "browse_count": 571,
+                "collection_count": 83,
+                "comments_count": [],
+                "author": {
+                    "id": "430005",
+                    "author_name": "Leisurely Time",
+                    "avatar": "//img1.example.com/avatar5.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotion and Social Interaction",
+                "thumbs_up_count": 87,
+                "create_time": "2025.03.08 14:30",
+                "content": "div class='cl-preview-section'><div style='text-align:center'><h3>Emotion Management: Avoid Hurting Others</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Leisurely Time.<br>Emotions influence not just us, but those around us. Today, let's explore how to avoid hurting others with our feelings.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>In relationships, emotional outbursts often lead to hurtful words or actions,<br>leaving scars that are hard to mend.<br>But learning to pause can change everything.</p></div><div class='cl-preview-section'><p><b>Key 1: The Cooling-off Pause</b><br>When emotions surge, I step away from the moment:<br>Find a quiet corner, take deep breaths, or count to 10.<br>This physical separation allows logic to catch up with passion,<br>preventing impulsive reactions.</p></div><div class='cl-preview-section'><p><b>Key 2: I-Message Communication</b><br>Instead of blaming, I focus on my own experience:<br>Replace 'You made me angry' with 'I feel wronged because of what happened.'<br>This shifts the tone from accusation to collaboration, opening space for understanding.</p></div><div class='cl-preview-section'><p><b>Key 3: The Art of Listening</b><br>Before reacting, I practice hearing the other person's perspective:<br>'How are they feeling? What's behind their words?'<br>Empathy dissolves conflict faster than any argument.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Wish:</h4></div><p>May we all handle emotions with grace,<br>turning relationships into gardens of warmth rather than battlefields of words.<br>Remember: <i>Kindness begins with pausing to care—for others and for ourselves.</i></p></div>",
+                "cover": [
+                    "http://img.example.com/cover22.jpg",
+                    "http://img.example.com/cover23.jpg",
+                    "http://img.example.com/cover24.jpg"
+                ],
+                "mode": "column"
+            },
+            {
+                "id": "300009",
+                "title": "From Emotional Breakdown to Rebuilding Confidence: My Transformation Road",
+                "browse_count": 601,
+                "collection_count": 91,
+                "comments_count": [],
+                "author": {
+                   "id": "430013",
+                   "author_name": "Harmony Seeker",
+                   "avatar": "//img1.example.com/avatar13.jpg",
+                   "status": "normal"
+                },
+                "classify": "Emotional Growth",
+                "thumbs_up_count": 93,
+                "create_time": "2025.04.05 16:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>From Breakdown to Breakthrough</h3></div><p style='font-size:16px;line-height:1.6;'>Hello everyone, I'm Harmony Seeker. Once consumed by emotional collapse and fleeting confidence, I've since transformed. Today, I share my journey.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Rock bottom became my solid foundation.<br>An emotional breakdown, though painful, can be the catalyst for profound growth.</p></div><div class='cl-preview-section'><p><b>Key 1: Intentional Self-Reflection</b><br>Rather than wallowing in despair, I embraced introspection:<br>Journaling patterns, identifying triggers, and questioning limiting beliefs.<br>This clarity became my roadmap to recovery.</p></div><div class='cl-preview-section'><p><b>Key 2: Professional Guidance</b><br>Working with a psychologist taught me:<br>Emotion regulation techniques to navigate storms.<br>Cognitive restructuring to reframe negative thought cycles.<br>Tools to build resilience, not just survive but thrive.</p></div><div class='cl-preview-section'><p><b>Key 3: Social Rebuilding</b><br>I reentered the world through small steps:<br>Joining hobby groups, volunteering, and nurturing new connections.<br>Each interaction reminded me of my worth beyond my struggles.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Now:</h4></div><p>The breakdown reshaped me.<br>Today, I stand stronger, kinder to myself, and grateful for the journey.<br>Remember: <i>Your darkest moments can forge your brightest strengths.</i></p></div>",
+                "cover": [
+                    "http://img.example.com/cover22.jpg",
+                    "http://img.example.com/cover23.jpg",
+                    "http://img.example.com/cover24.jpg"
+                ],
+                "mode": "column"
+            },
+			{
+                "id": "300010",
+                "title": "The Silent Power of Solitude: My Understanding of Loneliness",
+                "browse_count": 520,
+                "collection_count": 78,
+                "comments_count": [],
+                "author": {
+                    "id": "430010",
+                    "author_name": "Star Gazer",
+                    "avatar": "//img1.example.com/avatar10.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Insights",
+                "thumbs_up_count": 82,
+                "create_time": "2025.05.01 10:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>The Beauty of Solitude</h3></div><p style='font-size:16px;line-height:1.6;'>Hi everyone, I'm Star Gazer. Loneliness once felt like an inescapable cage, but now I view it as a window to the soul, letting in the light of self-discovery.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>In the quiet of solitude,<br>I learned that silence isn’t emptiness—it’s a fertile ground where thoughts ripen and self-awareness takes root.</p></div><div class='cl-preview-section'><p><b>Key 1: Embracing Alone Time</b><br>Instead of fleeing solitude, I turned toward it as a sacred appointment with myself:<br>Canvas and paints become my confidants,<br>A journal captures the whispers of my heart,<br>And stargazing reminds me of the vastness beyond my own thoughts.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Reflection:</h4></div><p>What if loneliness is just the universe’s way of inviting us to listen?<br>In stillness, I found not isolation, but a deep, tender conversation with the self.<br>Remember: <i>Solitude is where the noise of the world fades, and your own light can finally be heard.</i></p></div>",
+                "cover": ["http://img.example.com/cover25.jpg", "http://img.example.com/cover26.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300011",
+                "title": "Tears as a Mirror: What Sadness Taught Me About Strength",
+                "browse_count": 550,
+                "collection_count": 80,
+                "comments_count": [],
+                "author": {
+                    "id": "430002",
+                    "author_name": "Tranquil Harbor",
+                    "avatar": "//img1.example.com/avatar2.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Insights",
+                "thumbs_up_count": 85,
+                "create_time": "2025.05.05 14:30",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Crying: Courage in Liquid Form</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Tranquil Harbor. Once ashamed of tears, I now honor them as rivers of release carving paths to resilience.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Each tear holds a story—<br>Grief unspoken, pain unburdened, healing in motion.<br>Learning to cry without shame taught me vulnerability is the truest strength.</p></div><div class='cl-preview-section'><p><b>Key 1: Permission to Feel</b><br>I stopped silencing the storm within:<br>Letting tears flow became a ritual of self-compassion,<br>Acknowledging emotions without judgment.<br>In surrender, I found clarity.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Reflection:</h4></div><p>What if sadness is the heart’s cleansing rain?<br>Allowing it washes away the dust of pretense,<br>Leaving behind the purity of authenticity.<br>Remember: <i>Tears are not weakness—they’re the proof that you’ve been brave enough to feel.</i></p></div>",
+                "cover": ["http://img.example.com/cover27.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300012",
+                "title": "The Beauty of Imperfection: Finding Peace in Life's Cracks",
+                "browse_count": 500,
+                "collection_count": 75,
+                "comments_count": [],
+                "author": {
+                   "id": "430001",
+                   "author_name": "Dawn Glow",
+                   "avatar": "//img1.example.com/avatar1.jpg",
+                   "status": "normal"
+                },
+                "classify": "Emotional Insights",
+                "thumbs_up_count": 80,
+                "create_time": "2025.05.10 09:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Beauty in Brokenness</h3></div><p style='font-size:16px;line-height:1.6;'>Greetings, I'm Dawn Glow. For years, I chased perfection until I realized flaws are where light enters.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Emotional wisdom often blooms from the soil of imperfection.<br>A failed project, a fractured bond—these aren't endings, but portals to deeper understanding.</p></div><div class='cl-preview-section'><p><b>Key 1: Reframing 'Failure'</b><br>I learned to see missteps as teachers:<br>A 'failed' plan reveals hidden paths,<br>A broken heart softens the armor around it.<br>Progress, not perfection, becomes the goal.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Reflection:</h4></div><p>What if joy isn't in attaining flawless control,<br>but in cradling life's messy, imperfect gifts?<br>Remember: <i>Like pottery mended with gold, our cracks can become our most radiant features.</i></p></div>",
+                "cover": ["http://img.example.com/cover28.jpg", "http://img.example.com/cover29.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300013",
+                "title": "The Rhythm of Emotions: Why Ups and Downs Are Life's True Melody",
+                "browse_count": 580,
+                "collection_count": 83,
+                "comments_count": [],
+                "author": {
+                    "id": "430013",
+                    "author_name": "Harmony Seeker",
+                    "avatar": "//img1.example.com/avatar13.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Insights",
+                "thumbs_up_count": 88,
+                "create_time": "2025.05.12 15:15",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Emotional Rhythms</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Harmony Seeker. Emotions once felt like a storm, but now I recognize them as the seasons of my soul.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Just as autumn leaves surrender to winter's chill,<br>feelings come and go in their own time.<br>Sadness isn't a dead end—it's a cloud passing through.</p></div><div class='cl-preview-section'><p><b>Key 1: Trusting the Process</b><br>I learned to stop fighting the tide:<br>When sorrow comes, I let it rain;<br>When joy arrives, I dance in the sun.<br>All emotions are threads in life's tapestry.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Reflection:</h4></div><p>What if every feeling is a note in our personal symphony?<br>Sadness, joy, anger—each adds depth to the melody.<br>Remember: <i>To embrace the rhythm is to trust the music of your being.</i></p></div>",
+                "cover": ["http://img.example.com/cover30.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300014",
+                "title": "Regret as a Compass: How Mistakes Guide Us Forward",
+                "browse_count": 530,
+                "collection_count": 77,
+                "comments_count": [],
+                "author": {
+                   "id": "430006",
+                   "author_name": "Word Catcher",
+                   "avatar": "//img1.example.com/avatar6.jpg",
+                   "status": "normal"
+                },
+                "classify": "Emotional Insights",
+                "thumbs_up_count": 83,
+                "create_time": "2025.05.15 11:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Regret as a Compass</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Word Catcher. Regret once shadowed my steps, but now I welcome it as a silent teacher.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Mistakes are not dead ends—<br>they’re signposts on the road to wisdom.<br>Facing regret honestly turns 'what if' into 'what now.'</p></div><div class='cl-preview-section'><p><b>Key 1: The Art of Reflection</b><br>I traded self-blame for curiosity:<br>'What did this experience teach me about my values?'<br>'How can I honor this lesson in the future?'<br>Regret becomes fuel, not anchor.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Reflection:</h4></div><p>What if your deepest regret is the light guiding you to growth?<br>Every 'I wish I could change' holds the power to reshape your path.<br>Remember: <i>Regret is the echo of a heart that wants to do better.</i></p></div>",
+                "cover": ["http://img.example.com/cover31.jpg", "http://img.example.com/cover32.jpg"],
+                "mode": "column"
+            },
+ {
+                "id": "300015",
+                "title": "Art as Therapy: Painting My Way Out of Darkness",
+                "browse_count": 650,
+                "collection_count": 92,
+                "comments_count": [],
+                "author": {
+                    "id": "430015",
+                    "author_name": "Color Healer",
+                    "avatar": "//img1.example.com/avatar15.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Healing",
+                "thumbs_up_count": 95,
+                "create_time": "2025.03.20 14:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Healing Through Hues</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Color Healer. When words faltered, a brush became my translator, and canvas, my confidant.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>In the depths of emotional storms,<br>I discovered that pigments hold power words cannot always capture.<br>Art became my storm shelter, where feelings found form without explanation.</p></div><div class='cl-preview-section'><p><b>Key 1: The Language of Strokes</b><br>Anger roared as bold red swipes,<br>Sadness pooled into midnight blue gradients,<br>And hope timidly emerged as delicate gold flecks.<br>No critique, no logic—just raw emotion translated into texture and tone.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Insight:</h4></div><p>Healing isn’t always spoken.<br>Sometimes, it’s the way a crimson slash softens into pink over layers,<br>Or how a chaotic mix of colors resolves into harmony.<br>Remember: <i>Art is the heart’s dialect when the mind is tongue-tied.</i></p></div>",
+                "cover": ["http://img.example.com/cover33.jpg", "http://img.example.com/cover34.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300016",
+                "title": "The Healing Power of Nature: My Forest Bathing Journey",
+                "browse_count": 680,
+                "collection_count": 95,
+                "comments_count": [],
+                "author": {
+                    "id": "430016",
+                    "author_name": "Forest Whisperer",
+                    "avatar": "//img1.example.com/avatar16.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Healing",
+                "thumbs_up_count": 98,
+                "create_time": "2025.04.01 10:30",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Nature's Healing Embrace</h3></div><p style='font-size:16px;line-height:1.6;'>Greetings, I'm Forest Whisperer. When life's storms raged, the forest became my haven—a place where peace grows between the roots and leaves.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>In the heart of the woods,<br>I discovered the art of forest bathing:<br>Slow steps on mossy paths,<br>Deep breaths of pine-scented air,<br>And the lullaby of wind through branches.</p></div><div class='cl-preview-section'><p><b>Key 1: The Therapy of Presence</b><br>No agenda, no rush—just being:<br>Feeling sunlight filter through canopy gaps,<br>Hearing a stream murmur secrets over stones,<br>Letting ancient tree energy ground my restless mind.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Reflection:</h4></div><p>Healing doesn’t always need grand gestures.<br>Sometimes, it’s the simplicity of a dappled shadow,<br>The resilience of a fern pushing through rock,<br>Or the quiet certainty that seasons always turn.<br>Remember: <i>Nature doesn’t hurry, yet everything gets healed.</i></p></div>",
+                "cover": ["http://img.example.com/cover35.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300017",
+                "title": "Healing Through Movement: Dance as a Spiritual Release",
+                "browse_count": 630,
+                "collection_count": 90,
+                "comments_count":[],
+                "author": {
+                    "id": "430017",
+                    "author_name": "Rhythm Reviver",
+                    "avatar": "//img1.example.com/avatar17.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Healing",
+                "thumbs_up_count": 92,
+                "create_time": "2025.04.10 16:45",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Dance as Therapy</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Rhythm Reviver. When words failed to mend my heart, dance became my silent healer—a language where movement speaks what emotions whisper.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>On the dance floor, perfection dissolved:<br>No choreography, no judgment—just raw, unapologetic motion.<br>The music became a key unlocking what I'd buried.</p></div><div class='cl-preview-section'><p><b>Key 1: Freedom in Movement</b><br>A slow sway carried grief like a leaf on water,<br>A bold stomp shattered fear into rhythm,<br>And every spin released tension stored in bones.<br>My body, once a cage, became a vessel of release.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Invitation:</h4></div><p>Healing doesn’t require a stage.<br>Turn up the music, close your eyes,<br>And let your body write its own survival story.<br>Remember: <i>When the mind stumbles, the body remembers how to heal.</i></p></div>",
+                "cover": ["http://img.example.com/cover36.jpg", "http://img.example.com/cover37.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300018",
+                "title": "The Magic of Small Rituals: My Daily Healing Routine",
+                "browse_count": 600,
+                "collection_count": 88,
+                "comments_count": [],
+                "author": {
+                   "id": "430015",
+                   "author_name": "Color Healer",
+                   "avatar": "//img1.example.com/avatar15.jpg",
+                   "status": "normal"
+                },
+                "classify": "Emotional Healing",
+                "thumbs_up_count": 90,
+                "create_time": "2025.04.20 09:30",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Healing in Small Rituals</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Color Healer. Healing isn’t always about grand gestures—often, it blossoms in the quiet, intentional moments we carve for ourselves.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Each dawn, I anchor my day in simplicity:<br>A lit candle casting gentle light,<br>A cup of herbal tea steeped in warmth,<br>And three grateful thoughts penned before the world wakes.</p></div><div class='cl-preview-section'><p><b>Key 1: The Power of Tiny Rituals</b><br>These micro-moments aren’t mere routines—<br>They’re lifeboats in emotional storms:<br>Gratitude journals turn chaos into clarity,<br>Morning sips teach patience,<br>And candlelight reminds me to breathe.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Question:</h4></div><p>What small act could become your daily sanctuary?<br>A five-minute walk? A single page of poetry?<br>Remember: <i>Healing is the sum of a thousand gentle choices to tend to your soul.</i></p></div>",
+                "cover": ["http://img.example.com/cover38.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300019",
+                "title": "Healing Old Wounds: How Forgiveness Set Me Free",
+                "browse_count": 620,
+                "collection_count": 89,
+                "comments_count": [],
+                "author": {
+                    "id": "430019",
+                    "author_name": "Free Bird",
+                    "avatar": "//img1.example.com/avatar19.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Healing",
+                "thumbs_up_count": 91,
+                "create_time": "2025.04.25 13:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>The Freedom of Forgiveness</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Free Bird. For years, I clung to anger like a weapon—until I realized it was a cage I’d built for myself.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Forgiveness isn’t about absolving harm;<br>it’s about unchaining your spirit from a past that no longer serves you.<br>My healing began with a single truth: <i>Their actions wounded me, but my resentment was slow poison.</i></p></div><div class='cl-preview-section'><p><b>Key 1: The Unsent Letter</b><br>I wrote every unspoken word—rage, grief, betrayal—onto paper,<br>not to send, but to release.<br>Journaling became my exorcism:<br>Each stroke carried weight from my chest to the page,<br>leaving space for clarity to grow.</p></div><div class='cl-preview-section'><div><h4>Reflection:</h4></div><p>What grudge are you still carrying?<br>Letting go doesn’t erase the past;<br>it reclaims your present.<br>Remember: <i>Forgiveness is the key to your own freedom.</i></p></div>",
+                "cover": ["http://img.example.com/cover39.jpg", "http://img.example.com/cover40.jpg"],
+                "mode": "column"
+            },
+{
+                "id": "300020",
+                "title": "Audio Diaries: My Soundtrack of Emotional Ups and Downs",
+                "browse_count": 560,
+                "collection_count": 82,
+                "comments_count": [],
+                "author": {
+                    "id": "430001",
+                    "author_name": "Dawn Glow",
+                    "avatar": "//img1.example.com/avatar1.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Recording",
+                "thumbs_up_count": 83,
+                "create_time": "2025.05.18 12:30",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>The Intimacy of Audio Journals</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Voice Chronicler. When words felt too rigid, I let my voice become the pen for my emotions.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Every night, I press record:<br>Rants pour out unfiltered,<br>Silences linger without judgment,<br>And laughter echoes back, unpolished yet real.</p></div><div class='cl-preview-section'><p><b>Key 1: Sound as Truth-Teller</b><br>My voice doesn’t lie:<br>The tremble in a whisper betrays hidden pain,<br>The加快的语速 (quickening pace) reveals unspoken anxiety,<br>And in the pauses, I hear what my mind tries to silence.</p></div><div class='cl-preview-section'><div><h4>Invitation:</h4></div><p>Press record. Speak freely. Listen later.<br>Your voice carries echoes of courage,<br>Raw edges of healing,<br>And melodies of resilience you’ve yet to discover.<br>Remember: <i>Sometimes the truest stories are told not in writing, but in the cadence of your breath.</i></p></div>",
+                "cover": ["http://img.example.com/cover46.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300021",
+                "title": "Emoji Journaling: A Colorful Way to Track My Feelings",
+                "browse_count": 590,
+                "collection_count": 85,
+                "comments_count": [],
+                "author": {
+                    "id": "430019",
+                    "author_name": "Free Bird",
+                    "avatar": "//img1.example.com/avatar19.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Recording",
+                "thumbs_up_count": 86,
+                "create_time": "2025.05.20 15:15",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Emoji Emotional Mapping</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Free Bird. Who needs words when a 🌈 can light up a diary entry?</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>My journal transformed into a pixelated emotion map:<br>🌧️ for rainy days of sadness,<br>🎉 for joy that bursts like confetti,<br>🤔 for the fog of uncertainty.</p></div><div class='cl-preview-section'><p><b>Key 1: Symbolic Storytelling</b><br>No grammar, no filters—just raw feeling:<br>A single 🔥 emoji might represent both anger and passion,<br>A cluster of 🌸 shows a heart in bloom,<br>And 🌙✨ tracks nights of quiet wonder.</p></div><div class='cl-preview-section'><div><h4>Try This:</h4></div><p>Start your emoji diary today.<br>What emoji would you use to caption *this* moment?<br>Remember: <i>Sometimes the simplest symbols hold the deepest truths.</i></p></div>",
+                "cover": ["http://img.example.com/cover47.jpg", "http://img.example.com/cover48.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300022",
+                "title": "Sketching My Emotions: Artistic Doodles as Emotional Records",
+                "browse_count": 530,
+                "collection_count": 80,
+                "comments_count": [],
+                "author": {
+                    "id": "430019",
+                    "author_name": "Free Bird",
+                    "avatar": "//img1.example.com/avatar19.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Recording",
+                "thumbs_up_count": 81,
+                "create_time": "2025.05.22 10:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Sketching the Unsaid</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Free Bird. When words failed, my pencil became a translator for the ineffable.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>My sketchbook became a mirror:<br>Anger etched itself in sharp, chaotic lines,<br>Peace flowed in gentle, uninterrupted curves,<br>Confusion tangled into knots of overlapping strokes.</p></div><div class='cl-preview-section'><p><b>Key 1: Visual Emotion Mapping</b><br>No need for mastery—just honesty:<br>A scribbled storm of black ink might represent a panic attack,<br>A single dot expanding into concentric circles could symbolize growing calm,<br>Each page a Rorschach test of my inner world.</p></div><div class='cl-preview-section'><div><h4>Invitation:</h4></div><p>Grab a pencil. Make a mark. Let it evolve.<br>Your emotions don’t need eloquence—they need release.<br>Remember: <i>Even the messiest sketch is a step toward clarity.</i></p></div>",
+                "cover": ["http://img.example.com/cover49.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300023",
+                "title": "Digital Memory Jars: Saving Emotional Moments Online",
+                "browse_count": 580,
+                "collection_count": 84,
+                "comments_count": [],
+                "author": {
+                    "id": "430006",
+                    "author_name": "Word Catcher",
+                    "avatar": "//img1.example.com/avatar6.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Recording",
+                "thumbs_up_count": 87,
+                "create_time": "2025.05.24 14:20",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Digital Memory Jars</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Word Catcher. In a world of fleeting screens, I built digital shrines to hold my most vivid emotions.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Each virtual jar holds a fragment of time:<br>A sunset photo that captures a moment of pure awe,<br>A song that played on repeat during heartbreak,<br>A silent video of rain on a window during meditation.</p></div><div class='cl-preview-section'><p><b>Key 1: Curated Emotional Time Capsules</b><br>No algorithm dictates these collections—<br>Only I decide what stays:<br>The pixelated glow of a campfire shared with old friends,<br>The crackle of vinyl from a record that became a soundtrack to healing,<br>Each file a portal to a feeling frozen in time.</p></div><div class='cl-preview-section'><div><h4>Reflection:</h4></div><p>What digital artifacts would you preserve?<br>A screenshot of a text that made you laugh?<br>A voicemail from someone who’s gone?<br>Remember: <i>In the cloud, our emotions find eternal storage.</i></p></div>",
+                "cover": ["http://img.example.com/cover50.jpg", "http://img.example.com/cover51.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300024",
+                "title": "Time Capsules of Emotions: Yearly Emotional Check-Ins",
+                "browse_count": 586,
+                "collection_count": 83,
+                "comments_count": [],
+                "author": {
+                    "id": "430019",
+                    "author_name": "Free Bird",
+                    "avatar": "//img1.example.com/avatar19.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Recording",
+                "thumbs_up_count": 85,
+                "create_time": "2025.05.26 11:15",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Time Capsule Reflections</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Free Bird. Every solstice, I bury a part of myself to unearth later—a tradition of intentional reflection.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>My time capsules hold whispers to the future:<br>Handwritten letters spilling raw fears and hopes,<br>Dried flowers from a first garden,<br>Tickets stubbed from a concert that shifted my perspective.</p></div><div class='cl-preview-section'><p><b>Key 1: The Ritual of Reconnection</b><br>Each unearthing is a dialogue with ghosts:<br>The 2020 capsule, yellowed and brittle, held panic over a global shutdown—<br>yet also the seed of resilience I didn’t know I possessed.<br>Reading my past self’s trembling words, I realize: <i>Surviving is its own kind of bravery.</i></p></div><div class='cl-preview-section'><div><h4>Reflection:</h4></div><p>If you could open a letter from your past self today,<br>what wounds would you soothe?<br>What joys would you celebrate?<br>Remember: <i>Your journey is a story written in layers—each chapter, a lesson in becoming.</i></p></div>",
+                "cover": ["http://img.example.com/cover52.jpg"],
+                "mode": "column"
+            },
+{
+                "id": "300025",
+                "title": "Vulnerability as a Bridge: How Sharing Emotions Strengthened My Bonds",
+                "browse_count": 617,
+                "collection_count": 88,
+                "comments_count": [],
+                "author": {
+                    "id": "430003",
+                    "author_name": "Solitary Traveler",
+                    "avatar": "//img1.example.com/avatar3.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Social Interaction",
+                "thumbs_up_count": 90,
+                "create_time": "2025.05.19 13:45",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Vulnerability as Connection</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Solitary Traveler. For years, I wore armor of silence—until I realized vulnerability is the bridge between souls.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>The first crack in my armor came when I whispered, 'I'm scared.'<br>Instead of judgment, I found mirrors—others reflecting their own fears back to me.<br>Suddenly, we weren’t alone in our struggles.</p></div><div class='cl-preview-section'><p><b>Key 1: The Courage to Unmask</b><br>Sharing insecurities isn’t weakness—it’s bravery:<br>Admitting 'I feel lost' invited maps from those who’d walked similar paths,<br>Confessing 'I’m proud' sparked celebrations that amplified joy,<br>Each truth spoken was a seed planted in fertile ground.</p></div><div class='cl-preview-section'><div><h4>Invitation:</h4></div><p>What’s one truth you’re holding back?<br>A secret fear? A quiet triumph?<br>Remember: <i>The moment you let someone see your cracks is the moment they shine with shared light.</i></p></div>",
+                "cover": ["http://img.example.com/cover53.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300026",
+                "title": "Group Therapy Circles: Finding Community in Shared Emotions",
+                "browse_count": 630,
+                "collection_count": 90,
+                "comments_count": [],
+                "author": {
+                    "id": "430004",
+                    "author_name": "Note Elf",
+                    "avatar": "//img1.example.com/avatar4.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Social Interaction",
+                "thumbs_up_count": 92,
+                "create_time": "2025.05.21 15:30",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>The Healing Power of Community Circles</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Note Elf. Stepping into a group therapy circle was like opening a door to shared humanity—a space where emotions breathe freely.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>In that circle, no story was too small or too raw:<br>We traded scars like constellations,<br>Laughed through tears over triumphs,<br>And learned that silence can hold as much wisdom as words.</p></div><div class='cl-preview-section'><p><b>Key 1: The Sanctuary of Nonjudgment</b><br>No advice, no fixes—just presence:<br>A nod of understanding when grief choked a voice,<br>Shared silence after a confession of failure,<br>Collective hope when someone whispered, 'I want to heal.'</p></div><div class='cl-preview-section'><p><b>Key 2: The Mirror of Shared Experience</b><br>Hearing others say, 'I felt that too,' dissolved the illusion of isolation:<br>Anxiety became a shared storm we navigated together,<br>Joy multiplied as we celebrated tiny victories,<br>And vulnerability became the glue that bound us.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Insight:</h4></div><p>Healing is not a solo journey.<br>Sometimes, the medicine we need is the courage to sit down,<br>the trust to speak up,<br>and the grace to listen as others do the same.<br>Remember: <i>In the circle, we are both students and teachers of the heart.</i></p></div>",
+                "cover": ["http://img.example.com/cover54.jpg", "http://img.example.com/cover55.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300027",
+                "title": "Active Listening: The Secret to Deeper Emotional Connections",
+                "browse_count": 543,
+                "collection_count": 87,
+                "comments_count": [],
+                "author": {
+                   "id": "430004",
+                   "author_name": "Note Elf",
+                   "avatar": "//img1.example.com/avatar4.jpg",
+                   "status": "normal"
+                },
+                "classify": "Emotional Social Interaction",
+                "thumbs_up_count": 89,
+                "create_time": "2025.05.23 11:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>The Art of Active Listening</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Note Elf. I discovered that true connection begins when we put down our agenda and pick up empathy.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>Listening isn’t just waiting for your turn to speak—it’s:</p><ul style='padding-left:20px;list-style-type:circle;'><li>Holding space for emotions to unfold</li><li>Reflecting feelings without judgment</li><li>Letting silence be a bridge, not a void</li></ul></div><div class='cl-preview-section'><p><b>Key 1: The Power of 'I See You'/b><br>When a friend shared their struggle, I stopped rushing to fix:<br>❌ 'Just think positive!'<br>✅ 'That sounds incredibly heavy. How are you holding up?'<br>The shift from advice-giver to witness created room for deeper trust.</p></div><div class='cl-preview-section'><p><b>Key 2: Mirroring, Not Minimizing</b><br>Instead of comparing experiences:<br>❌ 'At least it’s not as bad as...'<br>✅ 'That sounds really challenging. It makes sense you’d feel that way.'<br>Validation isn’t agreement—it’s acknowledgment of another’s truth.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Practice:</h4></div><p>Try this active listening technique today:<br>1. Listen without interrupting<br>2. Reflect back what you hear<br>3. Ask, 'What else?'<br>You’ll be amazed by the stories that emerge when someone truly feels heard.<br>Remember: <i>The most profound gift we can give is the fullness of our attention.</i></p></div>",
+                "cover": ["http://img.example.com/cover56.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300028",
+                "title": "Emotional Support Networks: Building a Tribe of Empathy",
+                "browse_count": 637,
+                "collection_count": 89,
+                "comments_count":[],
+                "author": {
+                  "id": "430003",
+                  "author_name": "Solitary Traveler",
+                  "avatar": "//img1.example.com/avatar3.jpg",
+                  "status": "normal"
+                },
+                "classify": "Emotional Social Interaction",
+                "thumbs_up_count": 91,
+                "create_time": "2025.05.25 14:00",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Building a Supportive Tribe</h3></div><p style='font-size:16px;line-height:1.6;'>Hello, I'm Solitary Traveler. I learned that even lone wolves run in packs when the storm comes.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>We wove a safety net, not with words, but with actions:<br>Weekly check-ins that go beyond 'How are you?,'<br>Celebrations that amplify small wins,<br>Silent presence during the storms we can’t fix.</p></div><div class='cl-preview-section'><p><b>Key 1: Intentional Connection</b><br>We turned routine into ritual:<br>A shared text thread where no emotion is too small,<br>A 'virtual coffee date' to process the week’s weight,<br>A group chat that erupts in confetti for promotions or plant babies.</p></div><div class='cl-preview-section'><p><b>Key 2: Mutual Care, Not Martyrdom</b><br>Our tribe thrives because we give and receive:<br>❌ 'I’ll always be here for you' (burnout waiting to happen)<br>✅ 'I’m here for you today—and I need you tomorrow'br>Balance creates sustainability.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Reflection:</h4></div><p>Who’s in your emotional lifeboat?<br>If your list is empty, start small:<br>Text one person, 'I’ve been thinking about you.'<br>Remember: <i>A network grows from a single thread of trust.</i></p></div>",
+                "cover": ["http://img.example.com/cover57.jpg", "http://img.example.com/cover58.jpg"],
+                "mode": "column"
+            },
+            {
+                "id": "300029",
+                "title": "Conflict Resolution Through Emotions: Turning Arguments into Understanding",
+                "browse_count": 698,
+                "collection_count": 88,
+                "comments_count": [],
+                "author": {
+                    "id": "430001",
+                    "author_name": "Dawn Glow",
+                    "avatar": "//img1.example.com/avatar1.jpg",
+                    "status": "normal"
+                },
+                "classify": "Emotional Social Interaction",
+                "thumbs_up_count": 90,
+                "create_time": "2025.05.27 12:30",
+                "content": "<div class='cl-preview-section'><div style='text-align:center'><h3>Conflict as a Catalyst for Connection</h3></div><p style='font-size:16px;line-height:1.6;'>Hi, I'm Peacemaker. I discovered that arguments don’t have to be battles—they can be bridges.</p></div><div class='cl-preview-section'><p style='font-size:14px;line-height:1.5;'>In the heat of disagreement, I learned to replace defensiveness with curiosity:<br>Not 'You’re wrong,' but 'I’m hurt.'<br>Not 'Why can’t you see it?' but 'Help me understand.'</p></div><div class='cl-preview-section'><p><b>Key 1: The Language of Emotion</b><br>Instead of accusations, I learned to say:<br>❌ 'You always ignore me!'<br>✅ 'I feel unseen when my concerns are dismissed.'<br>Focusing on my experience, not their intent, defused defensiveness.</p></div><div class='cl-preview-section'><p><b>Key 2: The Pause That Reframes</b><br>Before reacting, I learned to ask:<br>'What’s the emotion behind their words?'<br>A shout might hide fear.<br>A dismissal could mask vulnerability.<br>Listening for the unspoken creates openings for compassion.</p></div><div class='cl-preview-section'><div style='text-align:center'><h4>Practice:</h4></div><p>Next time conflict arises, try this:<br>1. Pause before responding<br>2. Name your emotion ('I’m feeling frustrated')<br>3. Ask, 'What’s important to you about this?'<br>Remember: <i>Conflict isn’t the enemy—disconnection is.</i></p></div>",
+                "cover": ["http://img.example.com/cover59.jpg"],
+                "mode": "column"
+            }
+        ]
+	

@@ -2,20 +2,16 @@
  * @Author: mahaoxiang mahaoxiang@xiaomi.com
  * @Date: 2025-04-20 21:36:47
  * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
- * @LastEditTime: 2025-05-06 23:21:08
+ * @LastEditTime: 2025-05-11 21:46:37
  * @FilePath: \Soulwhisper\frontend\components\VoiceRecorder.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <view class="container-chat">
   <view class="voice-recorder">
-    <!-- 返回按钮 -->
-    <view class="back-button" @tap="goBack">
-      <uni-icons type="left" size="24" color="#8A2BE2"></uni-icons>
-    </view>
-    
-    <!-- 录音按钮 -->
-    <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }">
+    <img src="../static/img/voice.gif" class="voice-gif" />
+     <!-- 录音按钮 -->
+    <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }" :style="isRecording ? 'position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); z-index: 200;' : ''">
       <uni-icons :type="isRecording ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>
     </view>
     
@@ -118,8 +114,8 @@ export default {
     goBack() {
       if (this.isRecording) {
         uni.showModal({
-          title: '提示',
-          content: '正在录音中，确定要返回吗？',
+          title: 'Tip',
+          content: 'You are recording, are you sure to return?',
           success: (res) => {
             if (res.confirm) {
               this.stopRecord();
@@ -144,8 +140,8 @@ export default {
       }, (msg, isUserNotAllow) => {
         if(isUserNotAllow) {
           uni.showModal({
-            title: '提示',
-            content: '需要麦克风权限才能录音，请在设置中允许使用麦克风',
+            title: 'Tip',
+            content: 'Microphone permission is required to record',
             showCancel: false
           });
         }
@@ -164,8 +160,8 @@ export default {
         }, (msg, isUserNotAllow) => {
           if(isUserNotAllow) {
             uni.showModal({
-              title: '提示',
-              content: '需要麦克风权限才能录音，请在设置中允许使用麦克风',
+              title: 'Tip',
+              content: 'Microphone permission is required to record',
               showCancel: false
             });
           }
@@ -211,7 +207,7 @@ export default {
         console.log("开始录音");
         this.isRecording = true;
         this.recordTime = 0;
-        this.recordTip = '正在录音...';
+        this.recordTip = 'Recording...';
         
         // 创建波形显示
         RecordApp.UniFindCanvas(this, [".recwave-WaveView"], `
@@ -230,7 +226,7 @@ export default {
       }, (msg) => {
         console.error("开始录音失败：" + msg);
         uni.showToast({
-          title: '录音失败',
+          title: 'Fail to record',
           icon: 'none'
         });
       });
@@ -246,7 +242,7 @@ export default {
         if(arrayBuffer && arrayBuffer.byteLength > 0) {
           // 显示处理中的加载提示
           uni.showLoading({
-            title: '语音转写中...',
+            title: 'Speech To Text...',
             mask: true
           });
 
@@ -315,7 +311,7 @@ export default {
 
         } else {
           uni.showToast({
-            title: '录音内容为空',
+            title: 'You speek nothing?',
             icon: 'none',
             duration: 2000
           });
@@ -323,7 +319,7 @@ export default {
         }
       }, (msg) => {
         uni.showToast({
-          title: '录音失败',
+          title: 'Fail to record',
           icon: 'none',
           duration: 2000
         });
@@ -400,44 +396,44 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 20px;
   position: relative;
-  
-  .back-button {
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-    
-    &:active {
-      transform: scale(0.95);
-    }
+
+  .voice-gif {
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 80%;
+    max-width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(138, 43, 226, 0.12), 0 1.5px 6px rgba(0,0,0,0.08);
+    border: 2px solid #f3eaff;
+    background: #f8f6ff;
   }
   
   .record-button {
     width: 50px;
     height: 50px;
-    background-color: #fff;
+    background-color: #7fd5ecd2;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    margin-top: 30px;
+    margin-left: 0;
+    align-self: center;
     
     &.recording {
       border-radius: 0;
-      background-color: #8A2BE2;
+      background-color: #e22b2b;
       border-radius: 20px;
       transform: scale(1.1);
-      margin-top:140px;
+      z-index: 100;
+      margin-top: 80px;
+      margin-left: 0px;
       .uni-icons {
         color: #fff !important;
       }

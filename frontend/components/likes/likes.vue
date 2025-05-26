@@ -6,15 +6,48 @@
 
 <script>
 	export default{
+		props:{
+			item:{
+				type:Object,
+				default(){
+					return {}
+				}
+			}
+		},
 		data(){
 			return{
 				like:false
 			};
 		},
+		watch:{
+			item(newVal){
+				this.like = this.item.is_like
+			}
+		},
+		created() {
+			this.like = this.item.is_like
+		},
 		methods:{
 			likeTap(){
 				this.like = !this.like
-				console.log('收藏成功');
+				this.setupdateLike()
+				console.log('Saved successfully');
+			},
+			setupdateLike(){
+				uni.showLoading()
+				this.$api.update_like({
+					user_id:'682d74b08a5c782a2b825fdd',
+					article_id: this.item._id
+				}).then(res=>{
+					uni.hideLoading()
+					uni.showToast({
+						title:this.like?'Collection Successful':'Cancel Collection',
+						// icon:'none'
+					})
+					console.log(res);
+				}).catch(()=>{
+					uni.hideLoading()
+				})
 			}
 		}
 	}

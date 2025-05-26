@@ -2,7 +2,7 @@
  * @Author: mahaoxiang mahaoxiang@xiaomi.com
  * @Date: 2025-03-27 19:42:54
  * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
- * @LastEditTime: 2025-05-06 23:32:53
+ * @LastEditTime: 2025-05-11 17:33:46
  * @FilePath: \Soulwhisper\frontend\pages\diary\publish\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -164,11 +164,10 @@ export default {
 
     // 发起请求
     const res = await uni.request({
-      url: api.createDiary, // 替换为你的实际 API 地址
+      url: api.dairyCreate,
       method: 'POST',
       data: requestData,
       header: {
-        'Content-Type': 'text/plain',
         'Authorization': `Token ${token}` 
       }
     });
@@ -177,7 +176,7 @@ export default {
     if (res.statusCode === 200 || res.statusCode === 201) {
       uni.hideLoading();
       uni.showToast({
-        title: '发布成功',
+        title: 'Publish success!😄',
         icon: 'success',
         duration: 1500,
         success: () => {
@@ -193,7 +192,7 @@ export default {
   } catch (err) {
     uni.hideLoading();
     uni.showToast({
-      title: err.message || '网络错误',
+      title: err.message || 'Network error',
       icon: 'none'
     });
     console.error('发布日记失败:', err);

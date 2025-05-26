@@ -1,4 +1,5 @@
 const baseUrl = 'http://127.0.0.1:8000/';
+const diaryListUrl = 'http://127.0.0.1:8000/';
 
 export const api = {
     register: `${baseUrl}api/account/register/`,
@@ -11,5 +12,9 @@ export const api = {
     chatStart: `${baseUrl}api/chat/start/`,
     chatMessage: `${baseUrl}api/chat/message/`,
     chatEnd: `${baseUrl}api/chat/end/`,
-    createDiary:`${baseUrl}api/diary/diaries/create/`
+	community: `${baseUrl}api/community/daily-content/`,
+	comment: `${baseUrl}api/community/diaries/{diary_id}/comments/`,
+	createComment: `${baseUrl}api/community/diaries/{diary_id}/comments/create/`,
+	updateComment: `/api/community/comments/{comment_id}/update/`,
+	deleteComment: `/api/community/comments/{comment_id}/delete/`,
 }

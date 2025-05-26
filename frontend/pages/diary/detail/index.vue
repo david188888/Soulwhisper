@@ -58,14 +58,20 @@ export default {
   },
   
   onLoad(options) {
-    
       const record = JSON.parse(decodeURIComponent(options.data));
-      this.content = record.text;
       console.log('detail====',record);
+      this.content = record.content;
       this.mood.type = record.emotion_type;
       this.mood.intensity = record.emotion_intensity;
       this.mediaUrl = record.mediaUrl;
       this.mediaType = record.mediaType;
+  },
+  
+  onBackPress() {
+    uni.switchTab({
+      url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'
+    });
+    return true;
   }
 }
 </script>
@@ -81,6 +87,7 @@ export default {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 20px;
+    max-width: 280px;
   }
   
   .media {

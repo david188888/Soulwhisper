@@ -2,15 +2,20 @@
 	<view @click="open">
 		<view class="list-card">
 			<view class="listcard-image">
-				<image src="/frontend/static/img/logo.jpg" mode="aspectFill"></image>
+				<image src="../../static/img/logo.jpg" mode="aspectFill"></image>
 			</view>
 			<view class="listcard-content">
 				<view class="listcard-content_title">
-					<text>今天的心情今天的心情今天的心情今天的心情今天的心情今天的心情今天的心情</text>
-					<likes></likes>
+					<text>{{item.title}}</text>
+					<likes :item="item"></likes>
 				</view>
 				<view class="listcard-content_des">
-					<view class="listcard-content_des-browse">120浏览</view>
+					<view class="listcard-content_des-label">
+						<!-- <view class="listcard-content_des-label-item">
+							{{item.classify}}
+						</view> -->
+					</view>
+					<!-- <view class="listcard-content_des-browse">{{item.browse_count}}浏览</view> -->
 				</view>
 			</view>
 		</view>
@@ -37,21 +42,22 @@
 			},
 		methods: {
 			open(){
-				const item = this.item
-				this.$emit('click',this.item)
-				console.log('打开详情页面',this.item);
-				//内容预渲染
-				// const params = {
-				// 	_id:item._id,
-				// 	title:item.title,
-				// 	create_time:item.create_time,
-				// 	thumbs_up_count:item.thumbs_up_count,
-				// 	browse_count:item.browse_count
-				// }
-				//传参数
+				const item = this.item;
+				this.$emit('click',item)
+				// 内容预渲染
+				const params = {
+					_id:item._id,
+					title:item.title,
+					author:item.author,
+					create_time:item.create_time,
+					thumbs_up_count:item.thumbs_up_count,
+					browse_count:item.browse_count
+				}
+				console.log('打开详情页面',params);
+				// 传参注意长度
 				uni.navigateTo({
-					url:'/frontend/pages/list-detail/list-detail',
-					// url:'/frontend/pages/list-detail/list-detail?params='+JSON.stringify(params)
+					// url:'/frontend/pages/list-detail/list-detail',
+					url:'/frontend/pages/list-detail/list-detail?params='+JSON.stringify(params)
 				})
 			}
 		}
@@ -112,6 +118,16 @@
 				display: flex;
 				justify-content: space-between;
 				font-size: 12px;
+				.listcard-content_des-label{
+					display: flex;
+					.listcard-content_des-label-item{
+						padding: 0 5px;
+						margin-right: 5px;
+						border-radius: 15px;
+						border: 1px #8A2BE2 solid;
+						color: #8A2BE2;
+					}
+				}
 				.listcard-content_des-browse{
 					color: #999;
 					line-height: 1.5;

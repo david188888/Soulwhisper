@@ -1,0 +1,7 @@
+{
+  "name": "update_author",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

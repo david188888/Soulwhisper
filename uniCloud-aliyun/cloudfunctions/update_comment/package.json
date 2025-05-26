@@ -1,0 +1,7 @@
+{
+  "name": "update_comment",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
