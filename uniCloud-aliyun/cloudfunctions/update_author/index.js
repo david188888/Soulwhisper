@@ -22,6 +22,6 @@ exports.main = async (event, context) => {
 	
 	return {
 		code:200,
-		msg:'数据更新成功'
+		msg:'The data request was successful.'
 	}
 };

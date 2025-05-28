@@ -48,3 +48,10 @@ export const update_author= (data) =>{
 		data
 	})
 }
+
+export const update_thumbsup= (data) =>{
+	return $http({
+		url:'update_thumbsup',
+		data
+	})
+}

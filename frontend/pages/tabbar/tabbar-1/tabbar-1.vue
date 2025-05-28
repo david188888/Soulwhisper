@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<!-- 顶部幸运关键词区域 -->
+		<!-- Top lucky keyword area-->
 		<view class="header">
 			<text class="keyword">🌟 Today's Lucky Keyword：</text>
 			<view class="healing-section">
@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		
-		<!-- 顶部小部件 -->
+		<!-- Top widget-->
 		<view class="nav-bar">
 			<button class="nav-btn" @click="navigate('record')">
 				<span>🎤</span>
@@ -25,7 +25,7 @@
 			</button>
 		</view>
 
-		<!-- 情绪日历 -->
+		<!-- Emotion Calendar -->
 		<view class="calendar">
 			<text class="month">Mood Calendar</text>
 			<uni-calendar
@@ -40,7 +40,7 @@
 			/>
 		</view>
 
-		<!-- 日记内容弹出框 -->
+		<!-- A pop-up box for the diary content -->
 		<uni-popup ref="diaryPopup" type="center">
 			<view class="popup-content" v-if="selectedDiary">
 				<view class="popup-header">
@@ -132,7 +132,7 @@ export default {
 
 				if (res.statusCode === 200 && Array.isArray(res.data)) {
 					this.highlightDays = res.data.map(dateStr => {
-						// 确保日期格式为 YYYY-MM-DD
+						// Ensure that the date format is YYYY-MM-DD
 						const [y, m, d] = dateStr.split('-');
 						const formattedDate = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
 						return {
@@ -191,15 +191,15 @@ export default {
 					method: 'GET'
 				});
 
-				// 检查响应状态码和数据
+				// Check the response status code and data
 				if (res.statusCode === 200) {
-					// 如果响应成功且有数据
+					// If the response is successful and there is data
 					if (res.data && !res.data.error) {
 						this.selectedDiary = res.data;
 						this.$refs.diaryPopup.open();
 						console.log('Retrieved diary content:', this.selectedDiary);
 					} else {
-						// 如果响应成功但没有数据
+						// If the response is successful but there is no data
 						this.selectedDiary = null;
 						uni.showToast({
 							title: 'No diary for this date',
@@ -207,7 +207,7 @@ export default {
 						});
 					}
 				} else if (res.statusCode === 400) {
-					// 处理参数错误
+					// Handle parameter errors
 					console.error('Request parameter error:', res.data?.error || 'Parameter error');
 					this.selectedDiary = null;
 					uni.showToast({
@@ -215,7 +215,7 @@ export default {
 						icon: 'none'
 					});
 				} else {
-					// 处理其他错误
+					// Handle other errors
 					console.error('Server response error:', res.statusCode, res.data?.error);
 					this.selectedDiary = null;
 					uni.showToast({
@@ -232,12 +232,12 @@ export default {
 				});
 			}
 		},
-		// 格式化日期
+		// Format the date
 		formatDate(dateStr) {
 			const date = new Date(dateStr);
 			return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 		},
-		// 获取情绪对应的表情
+		// Obtain the expression corresponding to the emotion
 		getEmotionEmoji(emotion) {
 			return this.emotionEmojis[emotion] || '😐';
 		}

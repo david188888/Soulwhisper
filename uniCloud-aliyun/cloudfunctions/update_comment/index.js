@@ -15,9 +15,9 @@ exports.main = async (event, context) => {
 	
 	let user = await db.collection('user').doc(user_id).get()
 	user = user.data[0]
-	// 获取当前的文章信息
+	// Get the current article
 	const article = await db.collection('article').doc(article_id).get()
-	// 获取文章下的所有评论
+	// Get all the comments under the article
 	const comments = article.data[0].comments
 	
 	let commentObj = {
@@ -34,27 +34,27 @@ exports.main = async (event, context) => {
 		replys:[]
 	}
 	
-	//评论文章
+	// Comment on the article
 	if (comment_id === ''){
 		commentObj.replys = []
 		commentObj = dbCmd.unshift(commentObj)
 	}else{
-		// 回复对文章的评论
-		// 获取评论索引
+		// Reply to the comments on the article
+		// Get the comment index
 		let commentIndex = comments.findIndex(item => item.comment_id === comment_id)
 		//
 		let commentAuthor = ''
 		if(is_reply){
-			// 子回复
+			// Sub-reply
 			commentAuthor = comments[commentIndex].replys.find(item=>item.comment_id === reply_id)
 		}else{
-			// 主回复
-			// 获取作者信息
+			// Main reply
+			// Obtain author information
 			commentAuthor = comments.find(item => item.comment_id === comment_id)
 		}
 		commentAuthor = commentAuthor.author.author_name
 		commentObj.to = commentAuthor		
-		// 更新回复信息
+		// Update the reply information
 		commentObj = {
 			[commentIndex]: {
 				replys: dbCmd.unshift(commentObj)
@@ -66,10 +66,9 @@ exports.main = async (event, context) => {
 		comments:commentObj
 	})
 	
-	//返回数据给客户端
 	return {
 		code:200,
-		msg:'数据更新成功'
+		msg:'The data request was successful.'
 	}
 };
 

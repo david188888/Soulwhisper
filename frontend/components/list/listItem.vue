@@ -1,7 +1,7 @@
 <template>
 	<listScroll class="list-scroll" @loadmore="loadmore">
 		<listCard1 :item="item" v-for="item in list" :key="item_id"></listCard1>
-		<uni-load-more v-if="list.length === 0 || list.length > 5" icon-type="snow" status="load.loading"></uni-load-more>
+		<uni-load-more v-if="list.length === 0 || list.length > 5" icon-type="snow" status="onload"></uni-load-more>
 	</listScroll>
 </template>
 
@@ -24,7 +24,7 @@
 				type: Object,
 				default(){
 					return{
-						loading:"loading"
+						onload:'loading'
 					}
 				}
 			}

@@ -10,7 +10,7 @@
 		<!-- <navbar></navbar> -->
 		<!-- Tab options -->
 		<tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab>
-		<!-- 卡片视图 -->
+		<!--Card View -->
 		<view class="home-list">
 			<list :tab="tabList" :activeIndex="activeIndex" @change="change"></list>
 		</view>

@@ -36,18 +36,18 @@
 				<text>Share your opinion</text>
 				<uni-icons type="compose" size="16px" color="#84709B"></uni-icons>
 			</view>
-			<view class="detail-bottom-icons">
+			<view class="detail-bottom-icons" @click="open">
 				<view class="detail-bottom-icons-box">
 					<uni-icons type="chat" size="22px" color="#5D7DB3"></uni-icons>
 				</view>
 				<view class="detail-bottom-icons-box" @click="likeTap(fromData._id)">
 					<uni-icons :type="fromData.is_like?'heart-filled':'heart'" size="22px" color="#F07373"></uni-icons>
 				</view>
-				<view class="detail-bottom-icons-box">
-					<uni-icons type="hand-up" size="22px" color="#F4BB44"></uni-icons>
+				<view class="detail-bottom-icons-box" @click="thumbsup(fromData._id)">
+					<uni-icons :type="fromData.is_thumbs_up?'hand-up-filled':'hand-up'" size="22" color="#F4BB44"></uni-icons>
 				</view>
 			</view>
-		</view>
+		</view>	
 		<uni-popup ref="popup" type="bottom" :maskClick="false">
 			<view class="popup-wrap">
 				<view class="popup-header">
@@ -75,8 +75,6 @@
 			return {
 				fromData:{
 					author: {
-						// id:''
-
 				}},
 				noData:'<p style="aligin:center;color:#666">On Loading...<p>',
 				commentsValue:'',
@@ -90,6 +88,15 @@
 			this.getComments()
 		},
 		methods: {
+			// Open the comment list
+			open(){
+				uni.navigateTo({
+					url:'/frontend/pages/detail-comments/detail-comments?id='+this.fromData._id
+				})
+			},
+			thumbsup(article_id){
+				this.setUpdateThumbs(article_id)
+			},
 			follow(author_id){
 				console.log('follow')
 				this.setUpdateAuthor(author_id)
@@ -98,7 +105,7 @@
 				console.log('like');
 				this.setUpdateLike(article_id)
 			},
-			//获取详情信息
+			// Obtain detailed information
 			getDetail(){
 				this.$api.get_detail({
 					article_id:this.fromData._id,
@@ -185,10 +192,27 @@
 				}).then(res=>{
 					uni.hideLoading()
 					this.fromData.is_like = !this.fromData.is_like
+					uni.$emit('update_article')
 					uni.showToast({
 						title:this.fromData.is_like?'Collection Successful':'Cancel Collection'
 					})
 					console.log('like sucess')
+				})
+			},
+			setUpdateThumbs(article_id){
+				uni.showLoading()
+				this.$api.update_thumbsup({
+					article_id
+				}).then(res=>{
+					console.log(res)
+					uni.hideLoading()
+					uni.showToast({
+						title: res.msg
+					})
+					if (!this.fromData.is_thumbs_up) {
+						this.fromData.thumbs_up_count++
+					} 
+					this.fromData.is_thumbs_up = true
 				})
 			}
 		}

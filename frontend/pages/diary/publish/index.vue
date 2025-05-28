@@ -4,7 +4,7 @@
  * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
  * @LastEditTime: 2025-05-11 17:33:46
  * @FilePath: \Soulwhisper\frontend\pages\diary\publish\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: This is the default setting. Please set it`customMade`, open koroFileHeader to check the configuration for Settings: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <view class="publish-container">
@@ -76,7 +76,7 @@ export default {
   },
   
   methods: {
-    // 处理音频文件
+    // Process audio files
     processAudio(record) {
       uni.showLoading({
         title: 'Processing audio...',

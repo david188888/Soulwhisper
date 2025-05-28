@@ -5,13 +5,12 @@
 				<image src="@/static/img/list-detaiil/touxiang.jpg" mode="aspectFill"></image>
 			</view>
 			<view class="comments-header-info">
-				<view v-if="!comments.is_reply" class="title">{{comments.author.author_name}}</view>
-				<view v-else class="title">
-				{{comments.author.author_name}}
-				</view>
+				<!-- <view v-if="!comments.is_reply" class="title">{{comments.author.author_name}}</view>
+				<view v-else class="title">{{comments.author.author_name}}</view> -->
+				<view class="title">{{comments.author.author_name}}</view>
+				<!-- <view><text reply-text>Reply</text> -->
+				<!-- {{comments.to}}</view> -->
 				<!-- <view class="time">{{comments.create_time}}</view> -->
-			<!-- 	<view><text reply-text>Reply</text>
-				{{comments.to}}</view> -->
 			</view>
 		</view>
 		<view class="comments-content">

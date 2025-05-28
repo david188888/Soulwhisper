@@ -109,6 +109,13 @@
 			{
 				"navigationBarTitleText" : "Create"
 			}
+		},
+		{
+			"path" : "frontend/pages/detail-comments/detail-comments",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Comments"
+			}
 		}
 	],
 	"globalStyle": {

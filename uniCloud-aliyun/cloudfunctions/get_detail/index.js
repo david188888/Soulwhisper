@@ -1,5 +1,4 @@
 'use strict';
-//获取数据库的引用
 const db = uniCloud.database()
 const $ = db.command.aggregate
 exports.main = async (event, context) => {
@@ -13,11 +12,11 @@ exports.main = async (event, context) => {
 	let list = await db.collection('article')
 	.aggregate()
 	.addFields({
-		//是否关注作者
+		//Whether to follow the author
 		is_author_like:$.in(['$author.id',user.author_likes_ids]),
-		//是否收藏文章
+		//Whether to collect the article
 		is_like:$.in(['$_id',user.article_likes_ids]),
-		//是否点赞
+		//Whether to like or not
 		is_thumbs_up:$.in(['$_id',user.thumbs_up_article_ids])
 	})
 	.match({
@@ -27,10 +26,9 @@ exports.main = async (event, context) => {
 		comments:0
 	})
 	.end()
-	//返回数据给客户端
 	return {
 		code:200,
-		msg:'数据请求成功',
+		msg:'The data request was successful.',
 		data: list.data[0]
 	}
 };

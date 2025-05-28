@@ -1,6 +1,6 @@
 <template>
 	<view class="aichat-container">
-		<!-- 顶部介绍区 -->
+		<!-- Top Introduction Area -->
 		<view class="header">
 			<image class="avatar" src="\frontend\static\img\chat.png" mode="aspectFill"></image>
 			<view class="info">
@@ -14,7 +14,7 @@
 			</view>
 		</view>
 
-		<!-- 聊天消息区 -->
+		<!-- Chat message area -->
 		<scroll-view class="chat-list" scroll-y="true" :scroll-into-view="scrollToView">
 			<view v-for="(msg, idx) in messages" :key="idx" :id="'msg'+idx" :class="['msg-item', msg.role]">
 				<view class="msg-bubble">{{ msg.content }}</view>

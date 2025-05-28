@@ -4,7 +4,7 @@ export default function $http(options){
 		data
 	} = options
 	const dataObj = {
-		//如果更新数据库，确保有这个user_id
+		// If the database is updated, make sure there is this user_id
 		user_id:'682d74b08a5c782a2b825fdd',
 		...data
 	}

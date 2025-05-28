@@ -35,17 +35,24 @@
 		watch:{
 			tab(newVal){
 				if(newVal.length === 0) return
+				this.listCatchData={},
+				this.load={},
 				this.getList(this.activeIndex)
 			}
 		},
 		created(){
 			// this.getList(0)
+			uni.$on('update_article',()=>{
+				this.listCatchData={}
+				this.load={}
+				this.getList(this.activeIndex)
+			})
 		},
 		methods:{
 			loadmore(){
 				if(this.load[this.activeIndex].loading === 'noMore') return
 				this.load[this.activeIndex].page++
-				console.log('Trigger pull up')
+				// console.log('Trigger pull up')
 				this.getList(this.activeIndex)
 			},
 			change(e){

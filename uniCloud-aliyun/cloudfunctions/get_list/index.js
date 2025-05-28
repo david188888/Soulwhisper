@@ -1,5 +1,4 @@
 'use strict';
-//获取数据库引用
 const db = uniCloud.database()
 const $ = db.command.aggregate
 exports.main = async (event, context) => {
@@ -9,7 +8,7 @@ exports.main = async (event, context) => {
 		page = 1,
 		pageSize = 6
 	} = event
-	// var name = event.name 一样的
+	// var name = event.name the same
 	
 	let matchObj = {}
 	if(name !== 'All'){
@@ -21,10 +20,10 @@ exports.main = async (event, context) => {
 	const userinfo = await db.collection('user').doc(user_id).get()
 	const article_likes_ids = userinfo.data[0].article_likes_ids
 	
-	//聚合
+	//aggregation
 	const list = await db.collection('article')
 	.aggregate()
-	//追加字段
+	// Append fields
 	.addFields({
 		is_like:$.in(['$_id',article_likes_ids])
 	})
@@ -35,7 +34,7 @@ exports.main = async (event, context) => {
 	.skip(pageSize*(page-1))
 	.limit(pageSize)
 	.end()
-	//接收分类进行筛选
+	// Receive the classification for filtering
 	// const list = await db.collection('article')
 	// .field({
 	// 	content:false
@@ -43,7 +42,7 @@ exports.main = async (event, context) => {
 	// .get()
 	return {
 		code:200,
-		msg:'数据请求成功',
+		msg:'The data request was successful.',
 		data: list.data
 	}
 };

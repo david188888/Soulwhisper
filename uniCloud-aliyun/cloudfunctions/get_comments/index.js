@@ -4,7 +4,9 @@ const $ = db.command.aggregate
 exports.main = async (event, context) => {
 	const{
 		user_id,
-		article_id
+		article_id,
+		pageSize=5,
+		page = 1
 	} = event
 	const list = await db.collection('article')
 	.aggregate()
@@ -19,12 +21,13 @@ exports.main = async (event, context) => {
 	.replaceRoot({
 		newRoot:'$comments'
 	})
+	.skip(pageSize*(page-1))
+	.limit(pageSize)
 	.end()
 	
-	//返回数据给客户端
 	return {
 		code:200,
-		msg:'数据请求成功',
+		msg:'The data request was successful.',
 		data:list.data
 	}
 };

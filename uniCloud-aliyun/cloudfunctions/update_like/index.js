@@ -21,11 +21,10 @@ exports.main = async (event, context) => {
 	await db.collection('user').doc(user_id).update({
 		article_likes_ids:dbCmdFuns
 	})
-	
-	//返回数据给客户端
+
 	return {
 		code:200,
-		msg:'数据请求成功',
+		msg:'Data request successful',
 		data:userinfo.data[0]
 	}
 };

@@ -25,7 +25,10 @@ exports.main = async (event, context) => {
 		thumbs_up_article_ids:thumbs_ids
 	})
 	
-	//返回数据给客户端
+	await db.collection('article').doc(article_id).update({
+		thumbs_up_count:dbCmd.inc(1)
+	})
+
 	return {
 		code:200,
 		msg:'Like Successfully'

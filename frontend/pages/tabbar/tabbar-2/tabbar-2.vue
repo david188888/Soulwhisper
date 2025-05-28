@@ -31,7 +31,7 @@
 
 <script>
 import { api } from '../../../components/api/apiPath';
-// 你需要确保已安装qiun-data-charts组件，并已在pages.json中全局注册
+// You need to ensure that the qiun-data-charts component has been installed and globally registered in pages.json.
 	export default {
 		data() {
 			return {

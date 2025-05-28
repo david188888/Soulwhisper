@@ -1,6 +1,6 @@
 <template>
 	<view class="content" :class="{'active':active}">
-		页面3
+		page 3
 	</view>
 </template> 
 

@@ -27,7 +27,7 @@
 				default: 0
 			}
 		},
-		//可以监听data/props值的变化
+		// It is possible to listen for changes in the values of data/props
 		watch:{
 			tabIndex(newVal){
 				this.activeIndex = newVal
