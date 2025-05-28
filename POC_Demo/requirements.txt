@@ -1,0 +1,26 @@
+# SoulWhisper POC Demo 完整依赖包
+
+# 基础依赖
+numpy>=1.21.0
+pandas>=1.3.0
+requests>=2.25.0
+
+# Web框架 (如果需要)
+django>=4.0.0
+djangorestframework>=3.14.0
+
+# AI模型相关
+torch>=1.12.0
+transformers>=4.20.0
+
+# 音频处理
+librosa>=0.9.0
+soundfile>=0.10.0
+
+# API客户端
+zhipuai>=1.0.0
+
+# 其他工具
+python-dateutil>=2.8.0
+ujson>=4.0.0
+pillow>=8.3.0

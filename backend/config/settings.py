@@ -214,10 +214,10 @@ TEMP_AUDIO_DIR = os.path.join(BASE_DIR, 'temp_audio')
 os.makedirs(TEMP_AUDIO_DIR, exist_ok=True)
 
 # 添加科大讯飞 ASR API 参数配置
-XUNFEI_APPID = '7d420c2b'
-XUNFEI_API_SECRET = '48165f8baa00adb8dcce8b97df0c3108'
+XUNFEI_APPID = '539d0768'
+XUNFEI_API_SECRET = 'ebb0d4ca071b84260a50aee201208cb6'
 
 # 阿里audio_turbo API 密钥配置
-AUDIO_TURBO_API_KEY = 'sk-ff7db6fe31d2451798d4e5a09dba2eb2'  # 请替换为实际的API密钥
+AUDIO_TURBO_API_KEY = 'sk-ff7db6fe31d2451798d4e5a09dba2eb2'  
 # 智谱API密钥配置
-ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR'  # 请替换为实际的API密钥
+ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR' 
