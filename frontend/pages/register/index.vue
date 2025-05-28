@@ -204,9 +204,9 @@ export default {
           });
         }
       } catch (error) {
-        console.error('注册请求错误:', error);
+        console.error('Registration request error:', error);
         uni.showToast({
-          title: '网络错误，请稍后重试',
+          title: 'Network error, please try again later',
           icon: 'none'
         });
       }

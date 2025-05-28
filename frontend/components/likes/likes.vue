@@ -41,7 +41,7 @@
 				}).then(res=>{
 					uni.hideLoading()
 					uni.showToast({
-						title:this.like?'Collection Successful':'Cancel Collection',
+						title:this.like?'Collection Successful':'Collection Cancelled',
 						// icon:'none'
 					})
 					console.log(res);

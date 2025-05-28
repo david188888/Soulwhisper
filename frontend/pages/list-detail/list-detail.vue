@@ -76,7 +76,7 @@
 				fromData:{
 					author: {
 						// id:''
-					
+
 				}},
 				noData:'<p style="aligin:center;color:#666">On Loading...<p>',
 				commentsValue:'',
@@ -108,17 +108,17 @@
 					// console.log(res);
 				})
 			},
-			//打开评论
+			// open comment
 			openComment() {
 				this.$refs.popup.open()
 				},
-			//关闭评论
+			// close comment
 			close() {
 				this.$refs.popup.close()
 				},
-			//发布评论
+			// publish comment
 			submit(){
-				console.log('发布');
+				console.log('publish');
 				if(!this.commentsValue){
 					uni.showToast({
 						title:'please enter comment...',
@@ -164,7 +164,7 @@
 					this.commentsList = data
 				})
 			},
-			//关注作者
+			// follow author
 			setUpdateAuthor(author_id){
 				uni.showLoading()
 				this.$api.update_author({
@@ -177,7 +177,7 @@
 					})
 				})
 			},
-			//收藏文章
+			//collect the articles
 			setUpdateLike(article_id){
 				uni.showLoading()
 				this.$api.update_like({

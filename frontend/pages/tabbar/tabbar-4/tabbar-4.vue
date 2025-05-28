@@ -6,9 +6,9 @@
 				<uni-icons type="plus" size="30" color="#8A2BE2"></uni-icons>
 			</view>
 		</view>
-		<!-- 搜索栏-->
+		<!-- Search bar -->
 		<!-- <navbar></navbar> -->
-		<!--选项卡-->
+		<!-- Tab options -->
 		<tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab>
 		<!-- 卡片视图 -->
 		<view class="home-list">
@@ -84,7 +84,7 @@
 			background-color:#fff;
 			height: 40px;
 			width: 100%;
-			// 中间标题
+			// Center title
 			.header-title {
 			    position: absolute;
 			    left: 50%;

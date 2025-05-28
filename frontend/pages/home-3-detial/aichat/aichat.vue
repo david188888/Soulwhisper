@@ -46,7 +46,7 @@ export default {
 		}
 	},
 	onLoad() {
-		// 页面加载时自动发起欢迎语
+		// when page load, automatically send welcome message
 		this.messages.push({
 			role: 'assistant',
 			content: 'Hello, I am your AI mental health companion. What would you like to talk about?'
@@ -77,7 +77,7 @@ export default {
 
 				let url = '';
 				let data = {};
-				// 如果没有sessionId，先发起start
+				// if there is no sessionId, first start
 				if (!this.sessionId) {
 					url = api.chatStart;
 					data = { diary_content: userMsg };
@@ -206,7 +206,7 @@ max-width: 90%; /* 或者 calc(100% - 16px) */
 .msg-item.user .msg-bubble {
 	background: #a559f7;
 	color: #fff;
-	margin-left: auto;      /* 让气泡靠右 */
+	margin-left: auto;
 	margin-right: 24px;
 }
 .msg-item.assistant .msg-bubble {

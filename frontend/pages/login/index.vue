@@ -91,15 +91,15 @@ export default {
         if (response.statusCode === 200) {
           const { user } = response.data
 		      const { token } = user
-          // 保存token和用户信息
+          // store token and user information
           uni.setStorageSync('token', token)
           uni.setStorageSync('userInfo', user)
-          // 显示成功提示
+          // display success prompt
           uni.showToast({
             title: 'Login success',
             icon: 'success'
           })
-          // 跳转到首页
+          // jump to home page
           setTimeout(() => {
             uni.switchTab({
               url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'

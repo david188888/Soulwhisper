@@ -8,7 +8,7 @@
 -->
 <template>
   <view class="publish-container">
-    <!-- 日记内容区域 -->
+    <!-- diary content area -->
     <view class="content-area">
       <textarea
         v-model="content"
@@ -18,7 +18,7 @@
       />
     </view>
     
-    <!-- 媒体区域 -->
+    <!-- media area -->
     <view class="media-area" v-if="mediaUrl">
       <image
         v-if="mediaType === 'image'"
@@ -34,14 +34,14 @@
       <view class="delete-media" @click="deleteMedia">×</view>
     </view>
     
-    <!-- 底部工具栏 -->
+    <!-- bottom toolbar -->
     <view class="toolbar">
       <view class="media-picker" @click="chooseMedia">
         <uni-icons type="plusempty" size="24" color="#8A2BE2"></uni-icons>
       </view>
     </view>
     
-    <!-- 发布按钮 -->
+    <!-- publish button -->
     <view class="publish-button" @click="publishDiary">
       <text>Publish</text>
     </view>
@@ -53,25 +53,25 @@ import { api } from '../../../components/api/apiPath';
 export default {
   data() {
     return {
-      content: '', // 日记内容
-      mediaUrl: '', // 媒体文件路径
-      mediaType: '', // 媒体类型：image/video
-      audioPath: '', // 语音文件路径
+      content: '', // diary content
+      mediaUrl: '', // media file path
+      mediaType: '', // media type: image/video
+      audioPath: '', // audio file path
       mood: {
-        type: '', // 情绪类型
-        intensity: 0 // 情绪强度
+        type: '', // emotion type
+        intensity: 0 // emotion intensity
       },
-      record: null // 语音识别结果
+      record: null // voice recognition result
     }
   },
   
   onLoad(options) {
     try {
       this.record = JSON.parse(decodeURIComponent(options.data));
-      console.log('解析后的 record:',this.record); // 调试用
+      console.log('parsed record:',this.record); // debug
       this.processAudio(this.record);
   } catch (e) {
-    console.error('解析fail:', e);
+    console.error('parse failed:', e);
   }
   },
   
@@ -85,7 +85,7 @@ export default {
       });
     
         this.content = record.text
-        console.log('当前 content:', this.content); 
+        console.log('current content:', this.content); 
         this.mood = {
           type: record.emotion_type,
           intensity: record.emotion_intensity
@@ -94,7 +94,7 @@ export default {
       
     },
     
-    // 选择媒体文件
+    // choose media file
     chooseMedia() {
       uni.showActionSheet({
         itemList: ['Photo', 'Video'],
@@ -108,7 +108,7 @@ export default {
       });
     },
     
-    // 选择图片
+    // choose image
     chooseImage() {
       uni.chooseImage({
         count: 1,
@@ -119,7 +119,7 @@ export default {
       });
     },
     
-    // 选择视频
+    // choose video
     chooseVideo() {
       uni.chooseVideo({
         maxDuration: 60,
@@ -130,13 +130,13 @@ export default {
       });
     },
     
-    // 删除媒体文件
+    // delete media file
     deleteMedia() {
       this.mediaUrl = '';
       this.mediaType = '';
     },
     
-    // 发布日记
+    // publish diary
     async publishDiary() {
   if (!this.content.trim()) {
     uni.showToast({
@@ -152,17 +152,17 @@ export default {
   });
 
   try {
-    // 构造请求数据
+    // construct request data
     const requestData = {
-      content: this.content, // 日记内容
-      emotion_type: this.mood.type, // 情绪类型
-      emotion_intensity: this.mood.intensity, // 情绪强度
-      mediaType: this.mediaType, // 媒体类型
-      mediaUrl: this.mediaUrl, // 媒体文件路径
+      content: this.content, // diary content
+      emotion_type: this.mood.type, // emotion type
+      emotion_intensity: this.mood.intensity, // emotion intensity
+      mediaType: this.mediaType, // media type
+      mediaUrl: this.mediaUrl, // media file path
     };
-    const token = uni.getStorageSync('token'); // 或从 Vuex 获取
+    const token = uni.getStorageSync('token'); // get token from storage
 
-    // 发起请求
+    // send request
     const res = await uni.request({
       url: api.dairyCreate,
       method: 'POST',
@@ -172,7 +172,7 @@ export default {
       }
     });
 
-    // 处理响应
+    // handle response
     if (res.statusCode === 200 || res.statusCode === 201) {
       uni.hideLoading();
       uni.showToast({
@@ -180,14 +180,14 @@ export default {
         icon: 'success',
         duration: 1500,
         success: () => {
-          // 跳转到日记详情页
+          // navigate to diary detail page
           uni.navigateTo({
                 url: `/frontend/pages/diary/detail/index?data=${encodeURIComponent(JSON.stringify(requestData))}`
           });
         }
       });
     } else {
-      throw new Error(res.data.message || '发布失败');
+      throw new Error(res.data.message || 'Publish failed');
     }
   } catch (err) {
     uni.hideLoading();
@@ -195,7 +195,7 @@ export default {
       title: err.message || 'Network error',
       icon: 'none'
     });
-    console.error('发布日记失败:', err);
+    console.error('publish diary failed:', err);
   }
 }
   }

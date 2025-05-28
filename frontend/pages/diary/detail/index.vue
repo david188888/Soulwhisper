@@ -1,11 +1,11 @@
 <template>
   <view class="detail-container">
-    <!-- 日记内容 -->
+    <!-- diary content -->
     <view class="content">
       <text>{{content}}</text>
     </view>
     
-    <!-- 媒体内容 -->
+    <!-- media content -->
     <view class="media" v-if="mediaUrl">
       <image
         v-if="mediaType === 'image'"
@@ -20,7 +20,7 @@
       />
     </view>
     
-    <!-- 心情指示器 -->
+    <!-- mood indicator -->
     <view class="mood-indicator">
       <view class="mood-type">
         <text>{{getMoodEmoji}}</text>
@@ -56,7 +56,7 @@ export default {
       return moodEmojis[this.mood.type] || '😐';
     }
   },
-  
+
   onLoad(options) {
       const record = JSON.parse(decodeURIComponent(options.data));
       console.log('detail====',record);
@@ -66,7 +66,7 @@ export default {
       this.mediaUrl = record.mediaUrl;
       this.mediaType = record.mediaType;
   },
-  
+
   onBackPress() {
     uni.switchTab({
       url: '/frontend/pages/tabbar/tabbar-1/tabbar-1'

@@ -114,7 +114,7 @@ export default {
 				if (!userInfo || !userInfo.token) {
 					console.error('No token found');
 					uni.showToast({
-						title: '请先登录',
+						title: 'Please login first',
 						icon: 'none'
 					});
 					return;
@@ -141,17 +141,17 @@ export default {
 					});
 
 				} else {
-					console.error('获取日期失败:', res);
+					console.error('Failed to get dates:', res);
 					uni.showToast({
-						title: '获取日期失败',
+						title: 'Failed to get dates',
 						icon: 'none'
 					});
 				}
 			} catch (error) {
-				console.error('请求错误:', error);
-				console.error('错误详情:', error.message);
+				console.error('Request error:', error);
+				console.error('Error details:', error.message);
 				uni.showToast({
-					title: '网络请求失败',
+					title: 'Network request failed',
 					icon: 'none'
 				});
 				this.highlightDays = [];
@@ -172,9 +172,9 @@ export default {
 			try {
 				const userInfo = uni.getStorageSync('userInfo');
 				if (!userInfo || !userInfo.token) {
-					console.error('未找到用户token');
+					console.error('User token not found');
 					uni.showToast({
-						title: '请先登录',
+						title: 'Please login first',
 						icon: 'none'
 					});
 					return;
@@ -197,37 +197,37 @@ export default {
 					if (res.data && !res.data.error) {
 						this.selectedDiary = res.data;
 						this.$refs.diaryPopup.open();
-						console.log('获取到的日记内容:', this.selectedDiary);
+						console.log('Retrieved diary content:', this.selectedDiary);
 					} else {
 						// 如果响应成功但没有数据
 						this.selectedDiary = null;
 						uni.showToast({
-							title: '该日期没有日记',
+							title: 'No diary for this date',
 							icon: 'none'
 						});
 					}
 				} else if (res.statusCode === 400) {
 					// 处理参数错误
-					console.error('请求参数错误:', res.data?.error || '参数错误');
+					console.error('Request parameter error:', res.data?.error || 'Parameter error');
 					this.selectedDiary = null;
 					uni.showToast({
-						title: res.data?.error || '请求参数错误',
+						title: res.data?.error || 'Request parameter error',
 						icon: 'none'
 					});
 				} else {
 					// 处理其他错误
-					console.error('服务器响应错误:', res.statusCode, res.data?.error);
+					console.error('Server response error:', res.statusCode, res.data?.error);
 					this.selectedDiary = null;
 					uni.showToast({
-						title: res.data?.error || '获取日记失败',
+						title: res.data?.error || 'Failed to get diary',
 						icon: 'none'
 					});
 				}
 			} catch (error) {
-				console.error('获取日记详情失败:', error);
+				console.error('Failed to get diary details:', error);
 				this.selectedDiary = null;
 				uni.showToast({
-					title: '网络请求失败',
+					title: 'Network request failed',
 					icon: 'none'
 				});
 			}

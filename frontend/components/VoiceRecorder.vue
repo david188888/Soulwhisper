@@ -4,18 +4,18 @@
  * @LastEditors: mahaoxiang mahaoxiang@xiaomi.com
  * @LastEditTime: 2025-05-11 21:46:37
  * @FilePath: \Soulwhisper\frontend\components\VoiceRecorder.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: This is the default setting, please set `customMade`, open koroFileHeader to view configuration for settings: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <view class="container-chat">
   <view class="voice-recorder">
     <img src="../static/img/voice.gif" class="voice-gif" />
-     <!-- 录音按钮 -->
+     <!-- Recording button -->
     <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }" :style="isRecording ? 'position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); z-index: 200;' : ''">
       <uni-icons :type="isRecording ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>
     </view>
     
-    <!-- 录音窗口 -->
+    <!-- Recording window -->
     <view class="record-modal" v-if="isRecording">
       <view class="modal-content">
         <text class="timer">{{formatTime}}</text>
@@ -27,13 +27,13 @@
       </view>
     </view>
 
-    <!-- 转写结果展示 -->
+    <!-- Transcription result display -->
     <view class="transcript-result" v-if="transcriptText">
       <view class="result-header">
-        <text class="title">语音转写结果</text>
+        <text class="title">Speech Transcription Result</text>
         <view class="actions">
-          <button class="action-btn" @tap="editTranscript">编辑</button>
-          <button class="action-btn" @tap="confirmTranscript">确认</button>
+          <button class="action-btn" @tap="editTranscript">Edit</button>
+          <button class="action-btn" @tap="confirmTranscript">Confirm</button>
         </view>
       </view>
       <view class="result-content">
@@ -45,23 +45,23 @@
 </template>
 
 <script>
-import Recorder from 'recorder-core' //使用import、require都行
+import Recorder from 'recorder-core' // Can use import or require
 
-//必须引入的RecordApp核心文件（文件路径是 /src/app-support/app.js）
+// Must import RecordApp core file (file path is /src/app-support/app.js)
 import RecordApp from 'recorder-core/src/app-support/app'
 
-//所有平台必须引入的uni-app支持文件（如果编译出现路径错误，请把@换成 ../../ 这种）
+// Must import uni-app support file for all platforms (if compilation shows path error, replace @ with ../../)
 import '@/uni_modules/Recorder-UniCore/app-uni-support.js'
 
-/** 需要编译成微信小程序时，引入微信小程序支持文件 **/
+/** When compiling to WeChat Mini Program, import WeChat Mini Program support file **/
 // #ifdef MP-WEIXIN
     import 'recorder-core/src/app-support/app-miniProgram-wx-support.js'
 // #endif
 
-/** H5、小程序环境中：引入需要的格式编码器、可视化插件，App环境中在renderjs中引入 **/
+/** In H5 and Mini Program environments: import required format encoders and visualization plugins, in App environment import in renderjs **/
 // #ifdef H5 || MP-WEIXIN
 import 'recorder-core/src/engine/mp3'
-import 'recorder-core/src/engine/mp3-engine' //如果此格式有额外的编码引擎（*-engine.js）的话，必须要加上
+import 'recorder-core/src/engine/mp3-engine' // If this format has additional encoding engine (*-engine.js), must include it
 
 import 'recorder-core/src/extensions/waveview'
 import { api } from './api/apiPath';
@@ -80,7 +80,7 @@ export default {
       currentVolume: 0,
       transcriptText: '',
       isEditing: false,
-      recordTip: '点击方形按钮开始录音',
+      recordTip: 'Click the square button to start recording',
       processTimer: null,
       isProcessing: false,
       currentRequest: null
@@ -100,9 +100,9 @@ export default {
 
   mounted() {
     this.isMounted = true;
-    // 初始化录音功能
+    // Initialize recording functionality
     RecordApp.UniPageOnShow(this);
-    // 预请求录音权限
+    // Pre-request recording permission
     this.requestPermission();
   },
 
@@ -132,11 +132,11 @@ export default {
       }
     },
 
-    // 请求录音权限
+    // Request recording permission
     requestPermission() {
       RecordApp.UniWebViewActivate(this);
       RecordApp.RequestPermission(() => {
-        console.log("已获得录音权限");
+        console.log("Recording permission granted");
       }, (msg, isUserNotAllow) => {
         if(isUserNotAllow) {
           uni.showModal({
@@ -145,7 +145,7 @@ export default {
             showCancel: false
           });
         }
-        console.error("请求录音权限失败：" + msg);
+        console.error("Failed to request recording permission: " + msg);
       });
     },
 
@@ -153,7 +153,7 @@ export default {
       if (this.isRecording) {
         this.stopRecord();
       } else {
-        // 再次确认权限并开始录音
+        // Confirm permission again and start recording
         RecordApp.UniWebViewActivate(this);
         RecordApp.RequestPermission(() => {
           this.startRecord();
@@ -165,7 +165,7 @@ export default {
               showCancel: false
             });
           }
-          console.error("请求录音权限失败：" + msg);
+          console.error("Failed to request recording permission: " + msg);
         });
       }
     },
@@ -177,7 +177,7 @@ export default {
         sampleRate: 16000,
         bitRate: 16,
         onProcess: (buffers, powerLevel, duration, sampleRate) => {
-          // 更新音量显示
+          // Update volume display
           this.currentVolume = powerLevel / 100;
           this.recordTime = Math.floor(duration/1000);
           
@@ -187,7 +187,7 @@ export default {
           }
           // #endif
 
-          if(duration >= 600000) { // 10分钟自动停止
+          if(duration >= 600000) { // Auto stop after 10 minutes
             this.stopRecord();
           }
         },
@@ -204,12 +204,12 @@ export default {
       };
 
       RecordApp.Start(set, () => {
-        console.log("开始录音");
+        console.log("Recording started");
         this.isRecording = true;
         this.recordTime = 0;
         this.recordTip = 'Recording...';
         
-        // 创建波形显示
+        // Create waveform display
         RecordApp.UniFindCanvas(this, [".recwave-WaveView"], `
           this.waveView=Recorder.WaveView({compatibleCanvas:canvas1, width:300, height:100});
         `, (canvas1) => {
@@ -224,7 +224,7 @@ export default {
           });
         });
       }, (msg) => {
-        console.error("开始录音失败：" + msg);
+        console.error("Failed to start recording: " + msg);
         uni.showToast({
           title: 'Fail to record',
           icon: 'none'
@@ -240,19 +240,19 @@ export default {
         this.isProcessing = true;
 
         if(arrayBuffer && arrayBuffer.byteLength > 0) {
-          // 显示处理中的加载提示
+          // Show processing loading prompt
           uni.showLoading({
             title: 'Speech To Text...',
             mask: true
           });
 
-          // 上传到ASR接口
-          //使用multipart/form-data表单上传文件
+          // Upload to ASR interface
+          // Use multipart/form-data form to upload file
           const token = uni.getStorageSync('token')
           console.log('token',token)
 
 // #ifdef H5
-	//H5中直接使用浏览器提供的File接口构造一个文件
+	//H5 directly use the browser's File interface to construct a file
 	uni.uploadFile({
 		url: api.asr
 		,file: new File([arrayBuffer], "recorder.mp3")
@@ -274,7 +274,7 @@ export default {
 // #endif
 
 // #ifdef APP
-	//App中直接将二进制数据保存到本地文件，然后再上传
+	//App directly save binary data to local file, then upload
 	RecordApp.UniSaveLocalFile("recorder.mp3",arrayBuffer,(savePath)=>{
 		uni.uploadFile({
 			url: api.asr
@@ -288,7 +288,7 @@ export default {
 // #endif
 
 // #ifdef MP-WEIXIN
-	//小程序中需要将二进制数据保存到本地文件，然后再上传
+	//mini program need to save binary data to local file, then upload
 	var savePath=wx.env.USER_DATA_PATH+"/recorder.mp3";
 	wx.getFileSystemManager().writeFile({
 		filePath:savePath
@@ -333,34 +333,34 @@ export default {
 
     confirmTranscript() {
       this.isEditing = false;
-      // 跳转到日记发布页面，携带所有必要参数
+      // navigate to publish page
       uni.navigateTo({
         url: `/frontend/pages/diary/publish/index?content=${encodeURIComponent(this.transcriptText)}&emotion_type=${this.emotionType}&emotion_intensity=${this.emotionIntensity}&diary_id=${this.diaryId}`
       });
     },
 
-    // 重置录音状态
+    // reset recording status
     resetRecording() {
-      // 确保关闭加载提示
+      // ensure close loading prompt
       uni.hideLoading();
       
       this.isRecording = false;
       this.isProcessing = false;
       this.recordTime = 0;
       this.currentVolume = 0;
-      this.recordTip = '点击方形按钮开始录音';
+      this.recordTip = 'Click the square button to start recording';
       if (this.waveView) {
         this.waveView.clear(); // 清除波形图
       }
 
-      // 清理请求
+      // clean request
       if (this.currentRequest) {
         this.currentRequest.abort();
         this.currentRequest = null;
       }
     },
 
-    // 在组件销毁时清理
+    // clean up when component is destroyed
     beforeDestroy() {
       if (this.isRecording) {
         this.stopRecord();

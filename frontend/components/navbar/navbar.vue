@@ -1,9 +1,9 @@
 <template>
 	<view class="navbar">
 		<view class="navbar-fixed">
-			<!--状态栏-->
+			<!-- Status bar -->
 			<view :style="{height:statusBarHeight+'px'}"></view>
-			<!--导航栏内容-->
+			<!-- Navigation bar content -->
 			<view class="navbar-content" :style="{height:navBarHeight+'px',width:windowWidth+'px'}">
 				<view class="navbar-search">
 					<view class="navbar-search_icon">
@@ -27,17 +27,17 @@
 			};
 		},
 		created(){
-			//获取手机系统信息
+			// Get phone system information
 			const info = uni.getSystemInfoSync()
-			//设置状态栏高度
+			// Set status bar height
 			this.statusBarHeight = info.statusBarHeight
 			this.windowWidth = info.windowWidth
-			//小程序格式调试
+			// Mini program format debugging
 			//#ifndef H5||APP-PLUS||MP-ALIPAY
-			//获取胶囊位置
+			// Get capsule position
 			const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 			console.log(menuButtonInfo);
-			//导航栏高度
+			// Navigation bar height
 			this.navBarHeight = (menuButtonInfo.bottom - info.statusBarHeight) + (menuButtonInfo.top - info.statusBarHeight)
 			this.windowWidth = menuButtonInfo.left
 			//#endif

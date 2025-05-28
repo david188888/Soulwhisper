@@ -45,13 +45,13 @@
 			loadmore(){
 				if(this.load[this.activeIndex].loading === 'noMore') return
 				this.load[this.activeIndex].page++
-				console.log('触发上拉')
+				console.log('Trigger pull up')
 				this.getList(this.activeIndex)
 			},
 			change(e){
 				const {current} = e.detail
 				this.$emit('change',current)
-				//当数据不存在或长度为0，才请求数据
+				// Only request data when data doesn't exist or length is 0
 				if(!this.listCatchData[current] || this.listCatchData[current].length === 0){
 					this.getList(current)
 				}
@@ -77,13 +77,13 @@
 						oldLoad.loading = 'noMore'
 						oldLoad.page = this.load[current].page
 						this.$set(this.load,current,oldLoad)
-						//强制渲染
+						// Force render
 						this.$forceUpdate()
 						return
 					}
 					let oldList = this.listCatchData[current] || []
 					oldList.push(...data)
-					//懒加载
+					// Lazy loading
 					this.$set(this.listCatchData,current,oldList)
 				})
 			}

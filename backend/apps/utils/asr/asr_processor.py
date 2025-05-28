@@ -15,12 +15,7 @@ import numpy as np
 from pathlib import Path
 from dashscope import MultiModalConversation
 import concurrent.futures
-# from backend.config.settings import *  # 假设需要导入所有设置
-
-
-
-
-
+# from backend.config.settings import *  # Assume all settings need to be imported
 
 lfasr_host = 'https://raasr.xfyun.cn/v2/api'
 api_upload = '/upload'
@@ -91,30 +86,30 @@ class RequestApi(object):
 
 def reduce_noise(audio_path):
     """
-    对音频文件进行降噪处理
-    动态调整窗口大小以适应不同长度的音频
+    Perform noise reduction on audio file
+    Dynamically adjust window size to adapt to different audio lengths
     """
     try:
         data, rate = sf.read(audio_path)
         if data.dtype != np.float32:
             data = data.astype(np.float32)
         
-        # 计算适当的窗口大小
-        # 确保窗口大小不大于音频长度，并且是2的幂次方
+        # Calculate appropriate window size
+        # Ensure window size is not larger than audio length and is a power of 2
         audio_length = len(data)
-        window_size = min(1024, audio_length)  # 默认窗口大小为1024
-        # 找到最接近音频长度的2的幂次方
+        window_size = min(1024, audio_length)  # Default window size is 1024
+        # Find the closest power of 2 to audio length
         while window_size > audio_length:
             window_size //= 2
-        if window_size < 2:  # 确保窗口大小至少为2
+        if window_size < 2:  # Ensure window size is at least 2
             window_size = 2
             
         reduced_noise = nr.reduce_noise(
             y=data,
             sr=rate,
             prop_decrease=0.95,
-            win_length=window_size,  # 使用动态计算的窗口大小
-            n_fft=window_size,  # FFT窗口大小也相应调整
+            win_length=window_size,  # Use dynamically calculated window size
+            n_fft=window_size,  # FFT window size also adjusted accordingly
             n_std_thresh_stationary=1.5,
             stationary=True,
         )
@@ -123,14 +118,14 @@ def reduce_noise(audio_path):
         sf.write(output_path, reduced_noise, rate)
         return output_path
     except Exception as e:
-        logger.error(f"音频降噪处理失败: {str(e)}")
+        logger.error(f"Noise reduction processing failed: {str(e)}")
         return audio_path
 
 
 def detect_emotion(audio_file_path):
     """
-    使用通义的语音大模型 API 进行情感识别
-    返回格式: {'emotion_type': 'happy/sad/angry', 'emotion_intensity': 1-10}
+    Use Tongyi's speech large model API for emotion recognition
+    Return format: {'emotion_type': 'happy/sad/angry', 'emotion_intensity': 1-10}
     """
     messages = [
         {
@@ -153,32 +148,32 @@ def detect_emotion(audio_file_path):
         )
         
         if response['status_code'] == 200:
-            # 从响应中提取文本内容
+            # Extract text content from response
             content_text = ""
             for content in response.get('output', {}).get('choices', [{}])[0].get('message', {}).get('content', []):
                 if 'text' in content:
                     content_text += content['text']
             
-            # 尝试解析JSON或者从文本中提取情感信息
+            # Try to parse JSON or extract emotion information from text
             try:
                 import json
                 import re
                 
-                # 尝试直接解析JSON
+                # Try direct JSON parsing
                 try:
                     result = json.loads(content_text)
                     if 'emotion_type' in result and 'emotion_intensity' in result:
-                        # 确保情感类型是我们支持的类型
+                        # Ensure emotion type is one we support
                         if result['emotion_type'] not in ['happy', 'sad', 'angry']:
                             result['emotion_type'] = 'neutral'
-                        # 确保情感强度在 1-10 范围内
+                        # Ensure emotion intensity is in range 1-10
                         intensity = int(result['emotion_intensity'])
                         result['emotion_intensity'] = max(1, min(10, intensity))
                         return result
                 except:
                     pass
                 
-                # 如果JSON解析失败，尝试从文本中提取
+                # If JSON parsing fails, try to extract from text
                 emotion_match = re.search(r'(happy|sad|angry)', content_text.lower())
                 emotion_type = emotion_match.group(1) if emotion_match else 'neutral'
                 
@@ -187,7 +182,7 @@ def detect_emotion(audio_file_path):
                     intensity_match = re.search(r'(\d+)/10', content_text.lower())
                 emotion_intensity = int(intensity_match.group(1)) if intensity_match else 5
                 
-                # 确保情感强度在 1-10 范围内
+                # Ensure emotion intensity is in range 1-10
                 emotion_intensity = max(1, min(10, emotion_intensity))
                 
                 return {
@@ -195,23 +190,23 @@ def detect_emotion(audio_file_path):
                     'emotion_intensity': emotion_intensity
                 }
             except Exception as e:
-                logger.error(f"解析情感分析结果失败: {str(e)}")
+                logger.error(f"Failed to parse emotion analysis result: {str(e)}")
                 return {
                     'emotion_type': 'neutral',
                     'emotion_intensity': 5
                 }
         else:
-            logger.error(f"情感识别API调用失败: {response.get('message', '未知错误')}")
+            logger.error(f"Emotion recognition API call failed: {response.get('message', 'Unknown error')}")
             return {'emotion_type': 'neutral', 'emotion_intensity': 5}
     except Exception as e:
-        logger.error(f"情感识别过程出错: {str(e)}")
+        logger.error(f"Error in emotion recognition process: {str(e)}")
         return {'emotion_type': 'neutral', 'emotion_intensity': 5}
 
 
 def transcribe_audio(audio_file_path):
     """
-    使用讯飞长语音识别服务转写音频文件
-    返回格式: {'text': '识别的文本内容'}
+    Use Xunfei long speech recognition service to transcribe audio file
+    Return format: {'text': 'recognized text content'}
     """
     try:
         # print(f"audio_path is {audio_file_path}")
@@ -224,7 +219,7 @@ def transcribe_audio(audio_file_path):
         result = api.get_result()
         # print(f"result is {result}")
         if result.get('code') != '000000':
-            raise Exception(f"讯飞ASR错误: {result.get('descInfo', '未知错误')}")
+            raise Exception(f"Xunfei ASR error: {result.get('descInfo', 'Unknown error')}")
         order_result = json.loads(result['content']['orderResult'])
         final_text = ''
         if 'lattice' in order_result:
@@ -236,56 +231,56 @@ def transcribe_audio(audio_file_path):
                     final_text += text.strip()
         return {'text': final_text}
     except Exception as e:
-        logger.error(f"语音识别过程出错: {str(e)}")
+        logger.error(f"Error in speech recognition process: {str(e)}")
         return {'error': str(e)}
     finally:
         if audio_file_path and audio_file_path != audio_file_path:
             try:
                 os.remove(audio_file_path)
             except Exception as e:
-                logger.error(f"清理降噪音频文件失败: {str(e)}")
+                logger.error(f"Failed to clean up denoised audio file: {str(e)}")
 
 def process_audio(audio_file_path):
     """
-    并行处理音频文件：同时进行语音转录和情感识别
-    返回格式: {'text': '文本内容', 'emotion_type': '情感类型', 'emotion_intensity': 情感强度}
+    Process audio file in parallel: perform speech transcription and emotion recognition simultaneously
+    Return format: {'text': 'text content', 'emotion_type': 'emotion type', 'emotion_intensity': emotion intensity}
     """
     denoised_path = None
     try:
-        # 首先进行降噪处理（只需处理一次）
+        # First perform noise reduction (only need to do once)
         denoised_path = reduce_noise(audio_file_path)
         
-        # 使用ThreadPoolExecutor并行执行转录和情感识别
+        # Use ThreadPoolExecutor to perform speech transcription and emotion recognition in parallel
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            # 提交两个任务
+            # Submit two tasks
             transcribe_future = executor.submit(transcribe_audio, denoised_path)
             emotion_future = executor.submit(detect_emotion, denoised_path)
             
-            # 获取结果
+            # Get results
             transcribe_result = transcribe_future.result()
             emotion_result = emotion_future.result()
             
-        # 合并结果
+        # Merge results
         result = {}
         
-        # 添加文本转录结果
+        # Add speech transcription result
         if 'error' in transcribe_result:
             result['error'] = transcribe_result['error']
             return result
         else:
             result['text'] = transcribe_result['text']
         
-        # 添加情感分析结果
+        # Add emotion analysis result
         result['emotion_type'] = emotion_result.get('emotion_type', 'neutral')
         result['emotion_intensity'] = emotion_result.get('emotion_intensity', 5)
         
         return result
     except Exception as e:
-        logger.error(f"处理音频文件出错: {str(e)}")
+        logger.error(f"Error processing audio file: {str(e)}")
         return {'error': str(e)}
     finally:
         if denoised_path and denoised_path != audio_file_path:
             try:
                 os.remove(denoised_path)
             except Exception as e:
-                logger.error(f"清理降噪音频文件失败: {str(e)}")
+                logger.error(f"Failed to clean up denoised audio file: {str(e)}")

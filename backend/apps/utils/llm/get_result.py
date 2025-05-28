@@ -9,7 +9,7 @@ ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR'
 client = ZhipuAI(api_key=ZHIPUAI_API_KEY)
 
 def call_llm_api(messages):
-    """调用智谱AI接口获取回复"""
+    """Call Zhipu AI API to get response"""
     try:
         response = client.chat.completions.create(
             model="glm-4-air",
@@ -17,7 +17,7 @@ def call_llm_api(messages):
         )
         return response.choices[0].message.content
     except Exception as e:
-        logger.error(f"API调用失败: {str(e)}")
+        logger.error(f"API call failed: {str(e)}")
         return None
 
 class DiaryChat:
@@ -28,7 +28,7 @@ class DiaryChat:
         }]
 
     def start_chat(self, diary_content):
-        """开始新的对话"""
+        """Start a new conversation"""
         self.messages.append({
             "role": "user",
             "content": f"This is my diary content:{diary_content}"
@@ -44,7 +44,7 @@ class DiaryChat:
         return "Sorry, I can't respond right now, please try again later."
 
     def chat(self, user_input):
-        """继续对话"""
+        """Continue the conversation"""
         self.messages.append({
             "role": "user",
             "content": user_input

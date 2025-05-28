@@ -91,7 +91,7 @@ import { api } from '../../../components/api/apiPath';
 						const data = response.data;
 						this.wordcloudImage = data.wordcloud;
 						const emotionStats = data.emotion_stats || {};
-					// 组装饼图数据
+					// Assemble pie chart data
 					this.chartData = {
 						series: [
 							{

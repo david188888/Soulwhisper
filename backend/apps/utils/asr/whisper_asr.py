@@ -5,21 +5,21 @@ import os
 import logging
 from functools import lru_cache
 
-# 配置日志
+# Configure logging
 logger = logging.getLogger(__name__)
 
-# 设置GPU或CPU
+# Set GPU or CPU
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
-# 设置模型路径，使用项目根目录的绝对路径
+# Set model path, using absolute path of project root directory
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 MODEL_PATH = os.path.join(BASE_DIR, "ASR_model/model")
 
-# 支持的音频格式
+# Supported audio formats
 SUPPORTED_AUDIO_EXTENSIONS = ('.wav', '.mp3', '.m4a', '.flac')
 
-# 模型相关变量
+# Model related variables
 model = None
 processor = None
 pipe = None
@@ -27,14 +27,14 @@ pipe = None
 @lru_cache(maxsize=1)
 def load_model():
     """
-    加载语音识别模型
-    使用lru_cache装饰器确保模型只被加载一次
+    Load speech recognition model
+    Use lru_cache decorator to ensure model is only loaded once
     """
     global model, processor, pipe
     
     if model is None:
         try:
-            logger.info(f"正在加载ASR模型，设备: {device}, 精度: {torch_dtype}")
+            logger.info(f"Loading ASR model, device: {device}, precision: {torch_dtype}")
             
             model = AutoModelForSpeechSeq2Seq.from_pretrained(
                 MODEL_PATH,
@@ -56,57 +56,57 @@ def load_model():
                 device=device,
             )
             
-            logger.info("ASR模型加载成功")
+            logger.info("ASR model loaded successfully")
             return True
         except Exception as e:
-            logger.error(f"加载模型时出错: {str(e)}")
+            logger.error(f"Error loading model: {str(e)}")
             return False
     return True
 
 def validate_audio_file(file_path):
     """
-    验证音频文件是否有效
+    Validate if audio file is valid
     Args:
-        file_path: 音频文件路径
+        file_path: Audio file path
     Returns:
-        (bool, str): (是否有效, 错误信息)
+        (bool, str): (is valid, error message)
     """
     path = Path(file_path)
     
     if not path.exists():
-        return False, f"文件不存在: {file_path}"
+        return False, f"File does not exist: {file_path}"
     
     if path.suffix.lower() not in SUPPORTED_AUDIO_EXTENSIONS:
-        return False, f"不支持的音频格式: {path.suffix}，支持的格式: {SUPPORTED_AUDIO_EXTENSIONS}"
+        return False, f"Unsupported audio format: {path.suffix}, supported formats: {SUPPORTED_AUDIO_EXTENSIONS}"
     
     if path.stat().st_size == 0:
-        return False, f"文件为空: {file_path}"
+        return False, f"File is empty: {file_path}"
     
     return True, ""
 
 def transcribe_audio(audio_file_path):
     """
-    转录单个音频文件
+    Transcribe a single audio file
     Args:
-        audio_file_path: 音频文件路径
+        audio_file_path: Audio file path
     Returns:
-        转录文本结果或错误信息
+        Transcription text result or error message
     """
-    # 验证文件
+    # Validate file
     is_valid, error_msg = validate_audio_file(audio_file_path)
     if not is_valid:
         return {"error": error_msg}
     
-    # 确保模型已加载
+    # Ensure model is loaded
     if not load_model():
-        return {"error": "无法加载语音识别模型"}
+        return {"error": "Unable to load speech recognition model"}
     
     try:
-        # 进行转录
-        logger.info(f"正在转录文件: {audio_file_path}")
+        # Perform transcription
+        logger.info(f"Transcribing file: {audio_file_path}")
         result = pipe(str(audio_file_path))
-        logger.info(f"转录完成: {audio_file_path}")
+        logger.info(f"Transcription completed: {audio_file_path}")
         return {"text": result["text"]}
     except Exception as e:
-        logger.error(f"转录过程中出错: {str(e)}")
-        return {"error": f"转录过程中出错: {str(e)}"}
+        logger.error(f"Error during transcription: {str(e)}")
+        return {"error": f"Error during transcription: {str(e)}"}

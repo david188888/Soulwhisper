@@ -6,48 +6,48 @@ from pathlib import Path
 import logging
 from functools import lru_cache
 
-# 配置日志
+# Configure logging
 logger = logging.getLogger(__name__)
 
-# GPU验证函数
+# GPU validation function
 def check_gpu_status():
-    """验证GPU状态并返回详细信息"""
+    """Validate GPU status and return detailed information"""
     gpu_info = {
         "cuda_available": torch.cuda.is_available(),
         "gpu_count": torch.cuda.device_count() if torch.cuda.is_available() else 0,
-        "gpu_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "无GPU",
-        "cuda_version": torch.version.cuda if hasattr(torch.version, 'cuda') else "未知",
+        "gpu_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "No GPU",
+        "cuda_version": torch.version.cuda if hasattr(torch.version, 'cuda') else "Unknown",
     }
     
-    # 记录GPU信息
-    logger.info(f"CUDA可用: {gpu_info['cuda_available']}")
-    logger.info(f"GPU数量: {gpu_info['gpu_count']}")
-    logger.info(f"GPU名称: {gpu_info['gpu_name']}")
-    logger.info(f"CUDA版本: {gpu_info['cuda_version']}")
+    # Log GPU information
+    logger.info(f"CUDA available: {gpu_info['cuda_available']}")
+    logger.info(f"GPU count: {gpu_info['gpu_count']}")
+    logger.info(f"GPU name: {gpu_info['gpu_name']}")
+    logger.info(f"CUDA version: {gpu_info['cuda_version']}")
     
-    # 检查ONNX Runtime的GPU支持
+    # Check ONNX Runtime GPU support
     onnx_providers = onnxruntime.get_available_providers()
-    logger.info(f"ONNX可用提供者: {onnx_providers}")
+    logger.info(f"ONNX available providers: {onnx_providers}")
     if 'CUDAExecutionProvider' not in onnx_providers:
-        logger.warning("ONNX Runtime不支持CUDA，请安装GPU版本的ONNX Runtime")
+        logger.warning("ONNX Runtime does not support CUDA, please install GPU version of ONNX Runtime")
     
     return gpu_info
 
-# 设置路径
+# Set paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
 ONNX_MODEL_PATH = os.path.join(BASE_DIR, "backend/ASR_model/onnx_opt")
 TEMP_AUDIO_PATH = os.path.join(BASE_DIR, "backend/temp_audio")
 WHISPER_MODEL_PATH = os.path.join(BASE_DIR, "backend/ASR_model/model")
 
-# 设置GPU或CPU
+# Set GPU or CPU
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
-# 音频分块处理的时长设置 (单位：秒)
-CHUNK_LENGTH = 30  # Whisper的典型接收场长度为30秒
-CHUNK_OVERLAP = 1  # 块之间的重叠时间，有助于平滑拼接
+# Audio chunk processing duration settings (in seconds)
+CHUNK_LENGTH = 30  # Whisper's typical receptive field length is 30 seconds
+CHUNK_OVERLAP = 1  # Overlap time between chunks, helps with smooth concatenation
 
-# 模型相关变量
+# Model related variables
 processor = None
 encoder_session = None
 decoder_session = None
@@ -55,49 +55,49 @@ decoder_session = None
 @lru_cache(maxsize=1)
 def load_model():
     """
-    加载ONNX语音识别模型
-    使用lru_cache装饰器确保模型只被加载一次
+    Load ONNX speech recognition model
+    Use lru_cache decorator to ensure model is only loaded once
     """
     from transformers import AutoProcessor
     global processor, encoder_session, decoder_session
     
     if encoder_session is None or decoder_session is None:
         try:
-            # 检查GPU状态
+            # Check GPU status
             gpu_info = check_gpu_status()
-            logger.info(f"正在加载ONNX ASR模型，设备: {device}")
+            logger.info(f"Loading ONNX ASR model, device: {device}")
             
-            # 加载处理器
+            # Load processor
             processor = AutoProcessor.from_pretrained(
                 WHISPER_MODEL_PATH,
                 local_files_only=True,
             )
             
-            # 加载ONNX模型
+            # Load ONNX models
             encoder_path = os.path.join(ONNX_MODEL_PATH, "encoder_model.onnx")
             decoder_path = os.path.join(ONNX_MODEL_PATH, "decoder_model.onnx")
             
-            # 创建ONNX运行时会话，添加GPU优化设置
+            # Create ONNX runtime sessions, add GPU optimization settings
             providers = []
             provider_options = []
             
             if torch.cuda.is_available() and 'CUDAExecutionProvider' in onnxruntime.get_available_providers():
-                # GPU优化设置
+                # GPU optimization settings
                 cuda_provider_options = {
                     'device_id': 0,
                     'arena_extend_strategy': 'kNextPowerOfTwo',
-                    'gpu_mem_limit': 2 * 1024 * 1024 * 1024,  # 2GB GPU内存限制，根据实际情况调整
+                    'gpu_mem_limit': 2 * 1024 * 1024 * 1024,  # 2GB GPU memory limit, adjust based on actual situation
                     'cudnn_conv_algo_search': 'EXHAUSTIVE',
                     'do_copy_in_default_stream': True,
                 }
                 providers.append('CUDAExecutionProvider')
                 provider_options.append(cuda_provider_options)
             
-            # 始终添加CPU提供者作为备选
+            # Always add CPU provider as fallback
             providers.append('CPUExecutionProvider')
             provider_options.append({})
             
-            # 创建会话
+            # Create sessions
             encoder_session = onnxruntime.InferenceSession(
                 encoder_path, 
                 providers=providers,
@@ -109,99 +109,99 @@ def load_model():
                 provider_options=provider_options
             )
             
-            # 记录会话信息
-            logger.info(f"Encoder会话提供者: {encoder_session.get_providers()}")
-            logger.info(f"Decoder会话提供者: {decoder_session.get_providers()}")
-            logger.info("ONNX ASR模型加载成功")
+            # Log session information
+            logger.info(f"Encoder session provider: {encoder_session.get_providers()}")
+            logger.info(f"Decoder session provider: {decoder_session.get_providers()}")
+            logger.info("ONNX ASR model loaded successfully")
             return True
         except Exception as e:
-            logger.error(f"加载ONNX模型时出错: {str(e)}")
+            logger.error(f"Error loading ONNX model: {str(e)}")
             return False
     return True
 
 def split_audio(audio, sr, chunk_length=CHUNK_LENGTH, chunk_overlap=CHUNK_OVERLAP):
     """
-    将长音频分割成重叠的小块
+    Split long audio into overlapping chunks
     
     Args:
-        audio: 音频数组
-        sr: 采样率
-        chunk_length: 每块的长度（秒）
-        chunk_overlap: 块之间的重叠时间（秒）
+        audio: Audio array
+        sr: Sampling rate
+        chunk_length: Length of each chunk (seconds)
+        chunk_overlap: Overlap time between chunks (seconds)
     
     Returns:
-        块列表和每块的时间信息
+        List of chunks and time information for each chunk
     """
-    # 计算每个块的样本数
+    # Calculate samples per chunk
     chunk_length_samples = int(chunk_length * sr)
     chunk_overlap_samples = int(chunk_overlap * sr)
     stride = chunk_length_samples - chunk_overlap_samples
     
-    # 音频总长度
+    # Total audio length
     audio_length_samples = len(audio)
     
-    # 如果音频长度小于等于块长度，则直接返回整个音频
+    # If audio length is less than or equal to chunk length, return the entire audio
     if audio_length_samples <= chunk_length_samples:
         return [audio], [(0, len(audio)/sr)]
     
-    # 分割音频块
+    # Split audio chunks
     chunks = []
     time_info = []
     
-    # 计算可以提取的块数
+    # Calculate number of chunks that can be extracted
     num_chunks = max(1, int(np.ceil((audio_length_samples - chunk_overlap_samples) / stride)))
     
     for i in range(num_chunks):
         start_sample = i * stride
         end_sample = min(start_sample + chunk_length_samples, audio_length_samples)
         
-        # 如果是最后一个块且长度太短，则向前调整起始位置
+        # If it's the last chunk and too short, adjust start position forward
         if i == num_chunks - 1 and end_sample - start_sample < chunk_length_samples // 2:
             start_sample = max(0, audio_length_samples - chunk_length_samples)
         
-        # 提取音频块
+        # Extract audio chunk
         chunk = audio[start_sample:end_sample]
         chunks.append(chunk)
         
-        # 记录时间信息
+        # Record time information
         start_time = start_sample / sr
         end_time = end_sample / sr
         time_info.append((start_time, end_time))
     
-    logger.info(f"将{len(audio)/sr:.2f}秒的音频分割成{len(chunks)}个块")
+    logger.info(f"Split {len(audio)/sr:.2f} seconds of audio into {len(chunks)} chunks")
     for i, (start, end) in enumerate(time_info):
-        logger.info(f"  块 {i+1}: {start:.2f}s - {end:.2f}s (长度: {end-start:.2f}s)")
+        logger.info(f"  Chunk {i+1}: {start:.2f}s - {end:.2f}s (length: {end-start:.2f}s)")
     
     return chunks, time_info
 
 def transcribe_chunk(audio_chunk):
-    """使用ONNX模型转录单个音频块"""
+    """Transcribe a single audio chunk using ONNX model"""
     if not load_model():
         return None
     
     try:
-        # 使用processor进行特征提取
+        # Use processor for feature extraction
         inputs = processor(audio_chunk, sampling_rate=16000, return_tensors="np")
         input_features = inputs.input_features
         
-        # Encoder推理
+        # Encoder inference
         encoder_inputs = {encoder_session.get_inputs()[0].name: input_features}
         encoder_outputs = encoder_session.run(None, encoder_inputs)
         encoder_hidden_states = encoder_outputs[0]
         
-        # 准备解码器输入
+        # Prepare decoder input
         tokenizer = processor.tokenizer
         decoder_start_tokens = "<|startoftranscript|><|zh|><|transcribe|>"
         decoder_input_ids = tokenizer(decoder_start_tokens, return_tensors="np").input_ids
         
-        # 确保decoder_input_ids是int64类型
+        # Ensure decoder_input_ids is int64 type
         decoder_input_ids = decoder_input_ids.astype(np.int64)
         
-        # 生成变量
+        # Generation variables
         generated_ids = decoder_input_ids
         max_length = 256
         
-        # 解码过程
+        # Decoding process
         while generated_ids.shape[1] < max_length:
             decoder_inputs = {
                 decoder_session.get_inputs()[0].name: generated_ids,
@@ -214,97 +214,97 @@ def transcribe_chunk(audio_chunk):
             next_token_logits = logits[:, -1, :]
             next_token_id = np.argmax(next_token_logits, axis=-1)
             
-            # 确保next_token_id是int64类型
+            # Ensure next_token_id is int64 type
             next_token_id = np.expand_dims(next_token_id, axis=-1).astype(np.int64)
             generated_ids = np.concatenate([generated_ids, next_token_id], axis=-1)
             
             if next_token_id[0, 0] == tokenizer.eos_token_id:
                 break
         
-        # 将token ID转换为文本
+        # Convert token IDs to text
         transcription = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
         return transcription
     except Exception as e:
-        logger.error(f"转录音频块时出错: {str(e)}")
+        logger.error(f"Error transcribing audio chunk: {str(e)}")
         return None
 
 def process_transcriptions(transcriptions, time_info):
-    """处理并拼接转录结果"""
+    """Process and concatenate transcription results"""
     if len(transcriptions) == 1:
         return transcriptions[0]
     
-    # 将所有转录结果合并，考虑重叠部分
+    # Merge all transcription results, considering overlapping parts
     final_text = ""
     for i, (trans, (start_time, end_time)) in enumerate(zip(transcriptions, time_info)):
-        # 第一个块直接添加
+        # Add first chunk directly
         if i == 0:
             final_text += trans
         else:
-            # 追加新内容
+            # Append new content
             final_text += " " + trans
     
     return final_text.strip()
 
 def transcribe_audio_with_onnx(audio_path):
     """
-    使用ONNX模型转录单个音频文件
+    Transcribe a single audio file using ONNX model
     Args:
-        audio_path: 音频文件路径
+        audio_path: Audio file path
     Returns:
-        转录文本结果或错误信息
+        Transcription text result or error information
     """
     import librosa
     
-    # 确保模型已加载
+    # Ensure model is loaded
     if not load_model():
-        return {"error": "无法加载ONNX语音识别模型"}
+        return {"error": "Unable to load ONNX speech recognition model"}
     
     try:
-        # 加载音频
-        logger.info(f"正在加载音频: {audio_path}")
+        # Load audio
+        logger.info(f"Loading audio: {audio_path}")
         audio, sr = librosa.load(audio_path, sr=16000)
         
-        # 确保音频是单声道
+        # Ensure audio is mono
         if len(audio.shape) > 1:
             audio = audio.mean(axis=0)
         
-        # 检查音频长度
+        # Check audio length
         audio_length_seconds = len(audio) / sr
-        logger.info(f"音频长度: {audio_length_seconds:.2f}秒")
+        logger.info(f"Audio length: {audio_length_seconds:.2f} seconds")
         
-        # 如果音频长度超过Whisper的接收场长度，则分块处理
+        # If audio length exceeds Whisper's receptive field length, process in chunks
         if audio_length_seconds > CHUNK_LENGTH:
-            logger.info(f"音频长度超过{CHUNK_LENGTH}秒，将使用分块处理")
+            logger.info(f"Audio length exceeds {CHUNK_LENGTH} seconds, using chunk processing")
             
-            # 分割音频为块
+            # Split audio into chunks
             chunks, time_info = split_audio(audio, sr)
             
-            # 处理每个块
+            # Process each chunk
             transcriptions = []
             for i, chunk in enumerate(chunks):
-                logger.info(f"处理块 {i+1}/{len(chunks)}")
+                logger.info(f"Processing chunk {i+1}/{len(chunks)}")
                 trans = transcribe_chunk(chunk)
                 if trans:
                     transcriptions.append(trans)
-                    logger.info(f"块 {i+1} 转录完成")
+                    logger.info(f"Chunk {i+1} transcription completed")
                 else:
-                    logger.warning(f"块 {i+1} 转录失败")
+                    logger.warning(f"Chunk {i+1} transcription failed")
             
-            # 合并转录结果
+            # Merge transcription results
             if transcriptions:
                 final_text = process_transcriptions(transcriptions, time_info)
-                logger.info(f"所有块处理完成，合并结果")
+                logger.info(f"All chunks processed, merged results")
                 return {"text": final_text}
             else:
-                return {"error": "所有块转录失败"}
+                return {"error": "All chunks transcription failed"}
         else:
-            # 短音频直接处理
-            logger.info("音频长度适中，直接处理")
+            # Short audio directly processed
+            logger.info("Audio length suitable, directly processed")
             transcription = transcribe_chunk(audio)
             if transcription:
                 return {"text": transcription}
             else:
-                return {"error": "转录失败"}
+                return {"error": "Transcription failed"}
     except Exception as e:
-        logger.error(f"ONNX转录过程中出错: {str(e)}")
-        return {"error": f"ONNX转录过程中出错: {str(e)}"} 
+        logger.error(f"Error in ONNX transcription: {str(e)}")
+        return {"error": f"Error in ONNX transcription: {str(e)}"} 
