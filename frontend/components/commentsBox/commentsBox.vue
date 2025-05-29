@@ -2,7 +2,7 @@
 	<view class="comments-box">
 		<view class="comments-header">
 			<view class="comments-header-logo">
-				<image src="@/static/img/list-detaiil/touxiang.jpg" mode="aspectFill"></image>
+				<image src="/frontend/static/img/list-detaiil/touxiang.jpg" mode="aspectFill"></image>
 			</view>
 			<view class="comments-header-info">
 				<!-- <view v-if="!comments.is_reply" class="title">{{comments.author.author_name}}</view>

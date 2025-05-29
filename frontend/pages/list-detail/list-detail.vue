@@ -5,7 +5,7 @@
 		</view>
 		<view class="detail-header">
 			<view class="detail-header-logo">
-				<image src="@/static/img/list-detaiil/touxiang.jpg" mode="aspectFill"></image>
+				<image src="/frontend/static/img/list-detaiil/touxiang.jpg" mode="aspectFill"></image>
 			</view>
 			<view class="detail-header-content">
 				<view class="detail-header-content-title">
