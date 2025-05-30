@@ -1,9 +1,9 @@
 """
-工具模块包
+Utility module package
 
-包含各种实用工具和服务，如语音识别和情感分析等
+Contains various utility tools and services, such as speech recognition and emotion analysis, etc.
 """
 
-# 导出工具函数，方便直接导入
+# Export utility functions for direct import
 from .asr.asr_processor import transcribe_audio 
-# from .emotion.emotion_analysis import analyze_emotion 
+# from .emotion.emotion_analysis import analyze_emotion

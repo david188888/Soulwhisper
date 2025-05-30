@@ -13,9 +13,9 @@ User = get_user_model()
 
 class DailyKeyword(models.Model):
     """
-    每日关键词模型
-    - 存储多个关键词
-    - 每天随机返回一个
+    Daily keyword model
+    - Stores multiple keywords
+    - Returns one randomly each day
     """
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     keyword = models.CharField(max_length=50, unique=True)
@@ -29,7 +29,7 @@ class DailyKeyword(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"每日关键词: {self.keyword}"
+        return f"Daily Keyword: {self.keyword}"
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
@@ -37,9 +37,9 @@ class DailyKeyword(models.Model):
 
 class HealingQuote(models.Model):
     """
-    治愈短句模型
-    - 存储多个治愈短句
-    - 每天随机返回一个
+    Healing quote model
+    - Stores multiple healing quotes
+    - Returns one randomly each day
     """
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     content = models.TextField()
@@ -53,7 +53,7 @@ class HealingQuote(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"治愈短句: {self.content[:30]}..."
+        return f"Healing Quote: {self.content[:30]}..."
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
@@ -61,21 +61,21 @@ class HealingQuote(models.Model):
 
 class HealingActivity(models.Model):
     """
-    治愈活动模型
-    - 存储多个治愈活动
-    - 每天随机返回一个
+    Healing activity model
+    - Stores multiple healing activities
+    - Returns one randomly each day
     """
     DIFFICULTY_CHOICES = [
-        ('easy', '简单'),
-        ('medium', '中等'),
-        ('hard', '困难'),
+        ('easy', 'Easy'),
+        ('medium', 'Medium'),
+        ('hard', 'Hard'),
     ]
 
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     title = models.CharField(max_length=100)
     description = models.TextField()
     duration = models.IntegerField(
-        help_text="活动时长（分钟）",
+        help_text="Activity duration (minutes)",
         validators=[MinValueValidator(1), MaxValueValidator(180)]
     )
     difficulty = models.CharField(
@@ -92,43 +92,43 @@ class HealingActivity(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"治愈活动: {self.title}"
+        return f"Healing Activity: {self.title}"
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super().save(*args, **kwargs)
 
 class Post(models.Model):
-    """社区帖子模型"""
+    """Community post model"""
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     user = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,  # 当用户被删除时，将 user 字段设为 null
-        null=True,  # 允许 user 字段为 null
+        on_delete=models.SET_NULL,  # Set user field to null when user is deleted
+        null=True,  # Allow user field to be null
         related_name='user_posts'
     )
     title = models.CharField(
         max_length=200,
-        validators=[MinLengthValidator(1, message="标题不能为空")]
+        validators=[MinLengthValidator(1, message="Title cannot be empty")]
     )
     content = models.TextField(
-        validators=[MinLengthValidator(1, message="内容不能为空")]
+        validators=[MinLengthValidator(1, message="Content cannot be empty")]
     )
     image = models.ImageField(
         upload_to='community/posts/images/',
         null=True,
         blank=True,
-        help_text="帖子图片"
+        help_text="Post image"
     )
     video = models.FileField(
         upload_to='community/posts/videos/',
         null=True,
         blank=True,
-        help_text="帖子视频",
+        help_text="Post video",
         validators=[
             FileExtensionValidator(
                 allowed_extensions=['mp4', 'avi', 'mov', 'wmv'],
-                message="只支持 mp4, avi, mov, wmv 格式的视频文件"
+                message="Only mp4, avi, mov, wmv video formats are supported"
             )
         ]
     )
@@ -136,17 +136,17 @@ class Post(models.Model):
         upload_to='community/posts/video_thumbnails/',
         null=True,
         blank=True,
-        help_text="视频缩略图"
+        help_text="Video thumbnail"
     )
     media_type = models.CharField(
         max_length=10,
         choices=[
-            ('none', '无媒体'),
-            ('image', '图片'),
-            ('video', '视频')
+            ('none', 'No media'),
+            ('image', 'Image'),
+            ('video', 'Video')
         ],
         default='none',
-        help_text="媒体类型"
+        help_text="Media type"
     )
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
@@ -162,7 +162,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         
-        # 更新媒体类型
+        # Update media type
         if self.video:
             self.media_type = 'video'
         elif self.image:
@@ -173,7 +173,7 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        # 删除文件
+        # Delete files
         if self.image:
             self.image.delete(save=False)
         if self.video:
@@ -184,22 +184,22 @@ class Post(models.Model):
         super().delete(*args, **kwargs)
 
 class Comment(models.Model):
-    """评论模型"""
+    """Comment model"""
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     post = models.ForeignKey(
         Post,
-        on_delete=models.SET_NULL,  # 当帖子被删除时，将 post 字段设为 null
-        null=True,  # 允许 post 字段为 null
+        on_delete=models.SET_NULL,  # Set post field to null when post is deleted
+        null=True,  # Allow post field to be null
         related_name='post_comments',
     )
     user = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,  # 当用户被删除时，将 user 字段设为 null
-        null=True,  # 允许 user 字段为 null
+        on_delete=models.SET_NULL,  # Set user field to null when user is deleted
+        null=True,  # Allow user field to be null
         related_name='user_comments',
     )
     content = models.TextField(
-        validators=[MinLengthValidator(1, message="评论内容不能为空")]
+        validators=[MinLengthValidator(1, message="Comment content cannot be empty")]
     )
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
@@ -217,42 +217,42 @@ class Comment(models.Model):
 
 class Like(models.Model):
     """
-    点赞模型
-    - 支持对多种内容类型的点赞
-    - 使用 MongoDB 的 ObjectId
+    Like model
+    - Supports liking multiple content types
+    - Uses MongoDB's ObjectId
     """
     _id = models.ObjectIdField(primary_key=True, default=ObjectId)
     user = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,  # 当用户被删除时，将 user 字段设为 null
-        null=True,  # 允许 user 字段为 null
+        on_delete=models.SET_NULL,  # Set user field to null when user is deleted
+        null=True,  # Allow user field to be null
         related_name='user_likes',
-        help_text="点赞用户"
+        help_text="Liking user"
     )
     post = models.ForeignKey(
         Post,
-        on_delete=models.SET_NULL,  # 当帖子被删除时，将 post 字段设为 null
-        null=True,  # 允许 post 字段为 null
+        on_delete=models.SET_NULL,  # Set post field to null when post is deleted
+        null=True,  # Allow post field to be null
         related_name='post_likes',
-        help_text="被点赞的帖子"
+        help_text="Liked post"
     )
     created_at = models.DateTimeField(
         default=timezone.now,
-        help_text="创建时间"
+        help_text="Creation time"
     )
     updated_at = models.DateTimeField(
         default=timezone.now,
-        help_text="更新时间"
+        help_text="Update time"
     )
     is_active = models.BooleanField(
         default=True,
-        help_text="是否有效"
+        help_text="Is active"
     )
 
     class Meta:
         db_table = 'likes'
         ordering = ['-created_at']
-        unique_together = ['user', 'post']  # 确保用户不能重复点赞同一帖子
+        unique_together = ['user', 'post']  # Ensure users cannot like the same post multiple times
 
     def __str__(self):
         return f"{self.user.username} liked post {self.post._id}"

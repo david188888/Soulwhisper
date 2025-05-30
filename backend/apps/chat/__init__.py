@@ -1,3 +1,3 @@
 """
-Chat 模块 - 提供与LLM聊天的功能
-""" 
+Chat Module - Provides functionality for chatting with LLM
+"""

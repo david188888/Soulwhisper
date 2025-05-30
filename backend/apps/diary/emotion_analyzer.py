@@ -31,7 +31,7 @@ except LookupError:
 class EmotionAnalyzer:
     def __init__(self, user):
         self.user = user
-        # Emotion mapping table
+        # Emotion mapping
         self.emotions = {
             'happy': 'Happy',
             'sad': 'Sad',

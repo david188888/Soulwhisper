@@ -1,5 +1,5 @@
 """
-Account 模块的URL配置
+URL configuration for the Account module
 """
 
 from django.urls import path

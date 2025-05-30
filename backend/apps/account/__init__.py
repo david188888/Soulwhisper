@@ -1,3 +1,3 @@
 """
-Account 模块 - 提供用户账户管理功能，包括注册、登录和个人信息管理
-""" 
+Account Module - Provides user account management functions, including registration, login, and personal information management
+"""

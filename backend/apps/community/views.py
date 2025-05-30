@@ -8,8 +8,8 @@ from .models import (
     DailyKeyword, HealingQuote, HealingActivity,
     Comment, Like, Post
 )
-from apps.diary.models import Diary  # 添加 Diary 模型导入
-from django.contrib.auth import get_user_model  # 添加 User 模型导入
+from apps.diary.models import Diary  # Add Diary model import
+from django.contrib.auth import get_user_model  # Add User model import
 from django.shortcuts import get_object_or_404
 from bson import ObjectId
 from bson.errors import InvalidId
@@ -17,7 +17,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
-User = get_user_model()  # 获取 User 模型
+User = get_user_model()
 
 class DailyContent(APIView):
     """Get daily content (keywords, quotes, activities)"""
@@ -728,7 +728,6 @@ class PostListView(APIView):
                 end = start + page_size
                 posts = posts[start:end]
             except Exception as e:
-                print(f"Error getting posts: {str(e)}")
                 return Response({
                     'message': 'Failed to get post list',
                     'error': 'Database query error',
@@ -763,10 +762,8 @@ class PostListView(APIView):
                                     'created_at': like.created_at.strftime('%Y-%m-%d %H:%M:%S')
                                 })
                             except Exception as e:
-                                print(f"Error processing like: {str(e)}")
                                 continue
                     except Exception as e:
-                        print(f"Error getting likes: {str(e)}")
                         like_count = 0
                         has_liked = False
                         like_users = []
@@ -791,10 +788,8 @@ class PostListView(APIView):
                                     'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
                                 })
                             except Exception as e:
-                                print(f"Error processing comment: {str(e)}")
                                 continue
                     except Exception as e:
-                        print(f"Error getting comments: {str(e)}")
                         comment_list = []
 
                     post_list.append({
@@ -817,7 +812,6 @@ class PostListView(APIView):
                         'updated_at': post.updated_at.strftime('%Y-%m-%d %H:%M:%S')
                     })
                 except Exception as e:
-                    print(f"Error processing post: {str(e)}")
                     continue
             
             return Response({
@@ -935,10 +929,8 @@ class PostDetailView(APIView):
                             'created_at': like.created_at.strftime('%Y-%m-%d %H:%M:%S')
                         })
                     except Exception as e:
-                        print(f"Error processing like: {str(e)}")
                         continue
             except Exception as e:
-                print(f"Error getting likes: {str(e)}")
                 like_count = 0
                 has_liked = False
                 like_users = []
@@ -963,10 +955,8 @@ class PostDetailView(APIView):
                             'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
                         })
                     except Exception as e:
-                        print(f"Error processing comment: {str(e)}")
                         continue
             except Exception as e:
-                print(f"Error getting comments: {str(e)}")
                 comment_list = []
 
             # Build response data

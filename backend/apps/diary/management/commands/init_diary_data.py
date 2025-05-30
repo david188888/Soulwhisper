@@ -6,26 +6,26 @@ from apps.account.models import User
 from bson import ObjectId
 
 class Command(BaseCommand):
-    help = '初始化日记数据到MongoDB，可指定用户名或用户token'
+    help = 'Initialize diary data to MongoDB, specify username or user token'
 
     def add_arguments(self, parser):
-        parser.add_argument('--username', type=str, help='指定用户名')
-        parser.add_argument('--token', type=str, help='指定用户token(_id)')
+        parser.add_argument('--username', type=str, help='Specify username')
+        parser.add_argument('--token', type=str, help='Specify user token (_id)')
 
     def handle(self, *args, **options):
         try:
             user = None
             if options['token']:
                 user = User.objects.get(_id=ObjectId(options['token']))
-                self.stdout.write(self.style.SUCCESS(f'通过token找到用户: {user.username}'))
+                self.stdout.write(self.style.SUCCESS(f'User found by token: {user.username}'))
             elif options['username']:
                 user = User.objects.get(username=options['username'])
-                self.stdout.write(self.style.SUCCESS(f'通过用户名找到用户: {user.username}'))
+                self.stdout.write(self.style.SUCCESS(f'User found by username: {user.username}'))
             else:
-                self.stdout.write(self.style.ERROR('请通过 --username 或 --token 指定用户'))
+                self.stdout.write(self.style.ERROR('Please specify a user by --username or --token'))
                 return
 
-            # 示例日记内容
+            # Example diary content
             diary_contents = [
                 {
                     'content': 'Today was a wonderful day! I went for a walk in the park with friends, the sun was shining, and I felt full of energy. Watching children play made me especially happy.',
@@ -64,11 +64,11 @@ class Command(BaseCommand):
                 }
             ]
 
-            # 清除已有的测试数据
+            # Clear existing test data
             Diary.objects.filter(user=user).delete()
-            self.stdout.write(self.style.SUCCESS('清除已有数据'))
+            self.stdout.write(self.style.SUCCESS('Cleared existing data'))
 
-            # 插入新的日记数据
+            # Insert new diary data
             for i, content_data in enumerate(diary_contents):
                 date = timezone.now() - timedelta(days=i)
                 diary = Diary.objects.create(
@@ -78,9 +78,9 @@ class Command(BaseCommand):
                     emotion_intensity=content_data['intensity'],
                     created_at=date
                 )
-                self.stdout.write(self.style.SUCCESS(f'插入第 {i+1} 条日记'))
+                self.stdout.write(self.style.SUCCESS(f'Inserted diary entry {i+1}'))
 
-            self.stdout.write(self.style.SUCCESS(f'成功为用户 {user.username} 创建示例日记数据'))
+            self.stdout.write(self.style.SUCCESS(f'Successfully created sample diary data for user {user.username}'))
 
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f'初始化数据失败: {str(e)}'))
+            self.stdout.write(self.style.ERROR(f'Failed to initialize data: {str(e)}'))

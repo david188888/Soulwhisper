@@ -1,3 +1,3 @@
 """
-Diary 模块 - 提供用户语音转写日记及情绪分析功能
-""" 
+Diary Module - Provides functionality for transcribing user voice diaries and emotion analysis
+"""

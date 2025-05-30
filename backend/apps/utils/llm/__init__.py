@@ -1,3 +1,3 @@
 """ 
-提供glm-4-air的接口调用
+Provides interface calls for glm-4-air
 """

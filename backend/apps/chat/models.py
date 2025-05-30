@@ -1,5 +1,5 @@
 """
-Chat 模块的数据模型
+Data models for the Chat module
 """
 # from djongo import models
 # from django.conf import settings

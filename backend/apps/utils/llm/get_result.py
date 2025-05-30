@@ -1,7 +1,6 @@
 from zhipuai import ZhipuAI
-import json
-import logging
 from django.conf import settings
+import logging # Add import for logging
 
 logger = logging.getLogger(__name__)
 ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR'
