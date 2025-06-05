@@ -21,7 +21,7 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # 各功能模块API路径
+
     path('api/account/', include('apps.account.urls')),
     path('api/diary/', include('apps.diary.urls')),
     path('api/chat/', include('apps.chat.urls')),
