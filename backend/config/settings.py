@@ -80,20 +80,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'soulwhisper',  # MongoDB 数据库名称
-        'ENFORCE_SCHEMA': False,  # MongoDB是无模式的，设置为False
+        'ENGINE': 'djongo',        'NAME': 'soulwhisper',  # MongoDB database name
+        'ENFORCE_SCHEMA': False,  # MongoDB is schemaless, set to False
         'CLIENT': {
             'host': 'mongodb://localhost:27017',
-            'port': 27017,
-            'username': '',       # 如果没有设置身份验证，保持为空
-            'password': '',       # 如果没有设置身份验证，保持为空
-            'authSource': 'admin' # 身份验证数据库，默认是admin
+            'port': 27017,            'username': '',       # Leave empty if authentication is not set
+            'password': '',       # Leave empty if authentication is not set
+            'authSource': 'admin' # Authentication database, default is admin
         },
         'LOGGING': {
             'version': 1,
@@ -108,12 +103,12 @@ DATABASES = {
     }
 }
 
-# MongoDB连接优化设置
-MONGODB_CONNECT_TIMEOUT = 30000  # 毫秒
-MONGODB_SOCKET_TIMEOUT = 30000   # 毫秒
-MONGODB_SERVER_SELECTION_TIMEOUT = 30000  # 毫秒
+# MongoDB connection optimization settings
+MONGODB_CONNECT_TIMEOUT = 30000  # milliseconds
+MONGODB_SOCKET_TIMEOUT = 30000   # milliseconds
+MONGODB_SERVER_SELECTION_TIMEOUT = 30000  # milliseconds
 
-# 禁用事务支持，因为MongoDB不完全支持
+# Disable transaction support because MongoDB does not fully support it
 DATABASES['default']['ATOMIC_REQUESTS'] = False
 
 # Password validation
@@ -157,15 +152,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS设置
-CORS_ALLOW_ALL_ORIGINS = True  # 开发环境中允许所有源
-# 生产环境应该指定允许的源
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins in development
+# In production, specify allowed origins
 # CORS_ALLOWED_ORIGINS = [
 #     "https://example.com",
 #     "https://sub.example.com",
 # ]
 
-# 日志配置
+# Logging configuration
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -203,21 +198,21 @@ LOGGING = {
     },
 }
 
-# 确保日志目录存在
+# Ensure the logs directory exists
 os.makedirs(os.path.join(BASE_DIR, 'logs'), exist_ok=True)
 
-# 自定义用户模型
+# Custom user model
 AUTH_USER_MODEL = 'account.User'
 
-# 临时文件目录配置
+# Temporary audio file directory configuration
 TEMP_AUDIO_DIR = os.path.join(BASE_DIR, 'temp_audio')
 os.makedirs(TEMP_AUDIO_DIR, exist_ok=True)
 
-# 添加科大讯飞 ASR API 参数配置
+# iFLYTEK ASR API configuration
 XUNFEI_APPID = '539d0768'
 XUNFEI_API_SECRET = 'ebb0d4ca071b84260a50aee201208cb6'
 
-# 阿里audio_turbo API 密钥配置
+# Ali audio_turbo API key configuration
 AUDIO_TURBO_API_KEY = 'sk-ff7db6fe31d2451798d4e5a09dba2eb2'  
-# 智谱API密钥配置(model Chatglm)
-ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR' 
+# ZhipuAI API key configuration (model Chatglm)
+ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR'
