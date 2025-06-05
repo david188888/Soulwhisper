@@ -219,5 +219,5 @@ XUNFEI_API_SECRET = 'ebb0d4ca071b84260a50aee201208cb6'
 
 # 阿里audio_turbo API 密钥配置
 AUDIO_TURBO_API_KEY = 'sk-ff7db6fe31d2451798d4e5a09dba2eb2'  
-# 智谱API密钥配置
+# 智谱API密钥配置(model Chatglm)
 ZHIPUAI_API_KEY = '814313659f8a4194ab4acfd293b0194a.ozUuDGg6qxB38PSR' 
