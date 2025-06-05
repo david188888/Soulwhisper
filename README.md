@@ -14,10 +14,11 @@ An AI-powered emotional companion and anonymous healing platform focused on youn
 **Backend**: Django + MongoDB + AI Model Integration(api)  
 **Frontend**: uni-app + Vue3 (supports H5/Mini-programs/App)
 
+
+
 ## Quick Start
 
 ### Requirements
-
 **Backend**:  
 - Python 3.11.9
 - MongoDB 8.0.5
@@ -65,6 +66,11 @@ mongod --dbpath /data/db
 **Backend:**
 ```bash
 cd backend
+# Apply migrations and migrate database
+python manage.py makemigrations
+python manage.py migrate
+
+# start the Django development server
 python manage.py runserver
 ```
 
@@ -86,31 +92,29 @@ npm run dev:h5
 #### API Services & Models Used:
 
 1. **XUNFEI (iFlytek) Speech Recognition**
-   - **Official Website**: https://www.xfyun.cn/
-   - **Developer Console**: https://console.xfyun.cn/
-   - **Documentation**: https://www.xfyun.cn/doc/asr/voicedictation/API.html
+   - **Official Website**: [IFlytek](https://www.xfyun.cn/)
+   - **Documentation**: [API document](https://www.xfyun.cn/doc/asr/ifasr_new/API.html)
    - **Configuration**: `XUNFEI_APPID` & `XUNFEI_API_SECRET`
    - **Purpose**: Speech-to-text conversion for voice diary
 
 2. **Alibaba Cloud DashScope (Qwen Audio)**
-   - **Official Website**: https://dashscope.aliyun.com/
-   - **Documentation**: https://help.aliyun.com/zh/dashscope/
+   - **Official Website**: [Aliyun model website ](https://bailian.console.aliyun.com/?spm=5176.29597918.J_tAwMEW-mKC1CPxlfy227s.1.f3a57b08nMo0jk&tab=model#/model-market)
+   - **Documentation**: [API document](https://bailian.console.aliyun.com/?spm=5176.29597918.J_tAwMEW-mKC1CPxlfy227s.1.f3a57b08nMo0jk&tab=api#/api/?type=model&url=https%3A%2F%2Fhelp.aliyun.com%2Fdocument_detail%2F2845960.html)
    - **Model Used**: `qwen-audio-turbo-latest`
    - **Configuration**: `AUDIO_TURBO_API_KEY`
-   - **Purpose**: Audio emotion analysis and processing
+   - **Purpose**: Audio emotion analysis
 
 3. **ZHIPU AI (ChatGLM)**
-   - **Official Website**: https://open.bigmodel.cn/
-   - **Documentation**: https://open.bigmodel.cn/dev/api
+   - **Official Website**: [ZHIPU AI](https://open.bigmodel.cn/)
+   - **Documentation**: [API document](https://open.bigmodel.cn/dev/api)
    - **Model Used**: `glm-4-air`
    - **Configuration**: `ZHIPUAI_API_KEY`
-   - **Purpose**: AI conversational companion and psychological support
+   - **Purpose**: LLM conversational chatbot for emotional companionship
 
 #### If Current API Keys Don't Work:
-
 If you encounter issues with the pre-configured API keys, you have the following options:
 
-1. **Contact for Support**: Feel free to reach out for assistance with API configuration
+1. **Contact for Support**: Feel free to reach out to the repository owner or contributors for assistance with the API keys. Email: david.liu1888888@gmail.com
 2. **Configure Your Own Keys**: 
    - Visit the official websites above
    - Sign up for developer accounts
@@ -120,8 +124,5 @@ If you encounter issues with the pre-configured API keys, you have the following
 
 
 ### Important Notes
-
 1. Ensure MongoDB service is running before starting the backend
 2. API keys are already configured and ready to use
-3. Audio features need HTTPS or localhost environment
-4. Recommended to test full functionality in Chrome browser
