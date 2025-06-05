@@ -17,4 +17,5 @@ export const api = {
 	createComment: `${baseUrl}api/community/diaries/{diary_id}/comments/create/`,
 	updateComment: `/api/community/comments/{comment_id}/update/`,
 	deleteComment: `/api/community/comments/{comment_id}/delete/`,
+	dailyContent: `${baseUrl}api/community/daily-content/`,
 }

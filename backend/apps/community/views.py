@@ -16,6 +16,9 @@ from bson.errors import InvalidId
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from django.db import DatabaseError
+from django.conf import settings
+import pymongo
 
 User = get_user_model()
 
@@ -25,9 +28,11 @@ class DailyContent(APIView):
 
     def get(self, request):
         try:
-            keywords = list(DailyKeyword.objects.filter(is_active=True))
-            quotes = list(HealingQuote.objects.filter(is_active=True))
-            activities = list(HealingActivity.objects.filter(is_active=True))
+            client = pymongo.MongoClient(settings.DATABASES['default']['CLIENT']['host'])
+            db = client[settings.DATABASES['default']['NAME']]
+            keywords = list(db['daily_keywords'].find({'is_active': True}))
+            quotes = list(db['healing_quotes'].find({'is_active': True}))
+            activities = list(db['healing_activities'].find({'is_active': True}))
 
             keyword = random.choice(keywords) if keywords else None
             quote = random.choice(quotes) if quotes else None
@@ -36,26 +41,21 @@ class DailyContent(APIView):
             data = {
                 'date': timezone.now().strftime('%Y-%m-%d'),
                 'keyword': {
-                    'id': str(keyword.id),
-                    'keyword': keyword.keyword,
-                    'description': keyword.description
-                } if keyword else None,
+                    'id': str(keyword.get('_id', '')),
+                    'keyword': keyword.get('keyword', ''),
+                } if keyword else {},
                 'quote': {
-                    'id': str(quote.id),
-                    'content': quote.content,
-                    'author': quote.author
-                } if quote else None,
+                    'id': str(quote.get('_id', '')),
+                    'content': quote.get('content', ''),
+                } if quote else {},
                 'activity': {
-                    'id': str(activity.id),
-                    'title': activity.title,
-                    'description': activity.description,
-                    'duration': activity.duration,
-                    'difficulty': activity.difficulty
-                } if activity else None
+                    'id': str(activity.get('_id', '')),
+                    'description': activity.get('description', ''),
+                } if activity else {}
             }
             return Response(data)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'Exception: ' + repr(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # Daily keyword CRUD
 class DailyKeywordListView(APIView):

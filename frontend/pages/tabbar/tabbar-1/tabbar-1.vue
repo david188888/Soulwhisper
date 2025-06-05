@@ -2,10 +2,10 @@
 	<view class="container">
 		<!-- Top lucky keyword area-->
 		<view class="header">
-			<text class="keyword">🌟 Today's Lucky Keyword：</text>
+			<text class="keyword">🌟 Today's Keyword: {{ dailyKeyword.keyword || 'Loading...' }}</text>
 			<view class="healing-section">
-				<text class="sentence">✨ Healing phrases：</text>
-				<text class="activity">🌈 Recommended Healing Activities：</text>
+				<text class="sentence">✨ Healing: {{ shortQuoteContent || 'Loading...' }}</text>
+				<text class="activity">🌈 Activity: {{ dailyActivity.description || 'Loading...' }}</text>
 			</view>
 		</view>
 		
@@ -76,16 +76,21 @@ export default {
 				sad: '😢',
 				angry: '😠',
 				neutral: '😐'
-			}
+			},
+			dailyKeyword: {},
+			dailyActivity: '',
+			shortQuoteContent: ''
 		};
 	},
 	onShow() {
 		this.highlightDays = [];
 		this.fetchHighlightDays(this.currentYear, this.currentMonth);
+		this.fetchDailyContent();
 	},
 	mounted() {
 		this.highlightDays = [];
 		this.fetchHighlightDays(this.currentYear, this.currentMonth);
+		this.fetchDailyContent();
 	},
 	methods: {
 		navigate(page) {
@@ -240,6 +245,47 @@ export default {
 		// Obtain the expression corresponding to the emotion
 		getEmotionEmoji(emotion) {
 			return this.emotionEmojis[emotion] || '😐';
+		},
+		async fetchDailyContent() {
+			const today = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
+			const cache = uni.getStorageSync('dailyContentCache') || {};
+			if (cache.date === today && cache.data) {
+				// 用缓存
+				this.dailyKeyword = cache.data.keyword || {};
+				this.dailyActivity = cache.data.activity || {};
+				this.shortQuoteContent = cache.data.quote ? cache.data.quote.content : '';
+				return;
+			}
+			// 没有缓存或不是今天，重新请求
+			try {
+				const userInfo = uni.getStorageSync('userInfo');
+				if (!userInfo || !userInfo.token) {
+					uni.showToast({ title: 'Please login first', icon: 'none' });
+					return;
+				}
+				const res = await uni.request({
+					url: api.dailyContent,
+					header: {
+						'Authorization': `Token ${userInfo.token}`,
+						'Content-Type': 'application/json'
+					},
+					method: 'GET'
+				});
+				if (res.statusCode === 200 && res.data) {
+					this.dailyKeyword = res.data.keyword || {};
+					this.dailyActivity = res.data.activity || {};
+					this.shortQuoteContent = res.data.quote ? res.data.quote.content : '';
+					// 缓存到本地
+					uni.setStorageSync('dailyContentCache', {
+						date: today,
+						data: res.data
+					});
+				} else {
+					uni.showToast({ title: 'Failed to get daily content', icon: 'none' });
+				}
+			} catch (error) {
+				uni.showToast({ title: 'Network request failed', icon: 'none' });
+			}
 		}
 	}
 };

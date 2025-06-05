@@ -49,12 +49,12 @@ pip install -r requirements.txt
 ```bash
 # Windows (if installed as service)
 net start MongoDB
-
 # Linux/Mac
 sudo systemctl start mongod
 # or
 mongod --dbpath /data/db
 ```
+
 
 **Configuration:**
 - Default connection: `mongodb://localhost:27017`
@@ -69,15 +69,7 @@ python manage.py runserver
 ```
 
 **Frontend:**
-```bash
-# Option 1: Using HBuilderX
-# 1. Open HBuilderX, import project
-# 2. Run -> Run to Browser -> Chrome
-
-# Option 2: Using command line
-npm install
-npm run dev:h5
-```
+Click the "Preview" button in the top right corner of HBuilderX to directly debug your frontend page in HBuilder's built-in browser. If the window size is limited, you can choose to zoom in the browser for debugging.
 
 ### API Configuration
 
