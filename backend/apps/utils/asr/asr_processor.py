@@ -10,8 +10,6 @@ from django.conf import settings
 import requests
 import urllib
 import soundfile as sf
-import noisereduce as nr
-import numpy as np
 from pathlib import Path
 from dashscope import MultiModalConversation
 import concurrent.futures
@@ -84,42 +82,42 @@ class RequestApi(object):
         return result
 
 
-def reduce_noise(audio_path):
-    """
-    Perform noise reduction on audio file
-    Dynamically adjust window size to adapt to different audio lengths
-    """
-    try:
-        data, rate = sf.read(audio_path)
-        if data.dtype != np.float32:
-            data = data.astype(np.float32)
-        
-        # Calculate appropriate window size
-        # Ensure window size is not larger than audio length and is a power of 2
-        audio_length = len(data)
-        window_size = min(1024, audio_length)  # Default window size is 1024
-        # Find the closest power of 2 to audio length
-        while window_size > audio_length:
-            window_size //= 2
-        if window_size < 2:  # Ensure window size is at least 2
-            window_size = 2
-            
-        reduced_noise = nr.reduce_noise(
-            y=data,
-            sr=rate,
-            prop_decrease=0.95,
-            win_length=window_size,  # Use dynamically calculated window size
-            n_fft=window_size,  # FFT window size also adjusted accordingly
-            n_std_thresh_stationary=1.5,
-            stationary=True,
-        )
-        
-        output_path = str(Path(audio_path).parent / f"denoised_{Path(audio_path).name}")
-        sf.write(output_path, reduced_noise, rate)
-        return output_path
-    except Exception as e:
-        logger.error(f"Noise reduction processing failed: {str(e)}")
-        return audio_path
+# def reduce_noise(audio_path):
+#     """
+#     Perform noise reduction on audio file
+#     Dynamically adjust window size to adapt to different audio lengths
+#     """
+#     try:
+#         data, rate = sf.read(audio_path)
+#         if data.dtype != np.float32:
+#             data = data.astype(np.float32)
+#         
+#         # Calculate appropriate window size
+#         # Ensure window size is not larger than audio length and is a power of 2
+#         audio_length = len(data)
+#         window_size = min(1024, audio_length)  # Default window size is 1024
+#         # Find the closest power of 2 to audio length
+#         while window_size > audio_length:
+#             window_size //= 2
+#         if window_size < 2:  # Ensure window size is at least 2
+#             window_size = 2
+#             
+#         reduced_noise = nr.reduce_noise(
+#             y=data,
+#             sr=rate,
+#             prop_decrease=0.95,
+#             win_length=window_size,  # Use dynamically calculated window size
+#             n_fft=window_size,  # FFT window size also adjusted accordingly
+#             n_std_thresh_stationary=1.5,
+#             stationary=True,
+#         )
+#         
+#         output_path = str(Path(audio_path).parent / f"denoised_{Path(audio_path).name}")
+#         sf.write(output_path, reduced_noise, rate)
+#         return output_path
+#     except Exception as e:
+#         logger.error(f"Noise reduction processing failed: {str(e)}")
+#         return audio_path
 
 
 def detect_emotion(audio_file_path):
@@ -233,28 +231,28 @@ def transcribe_audio(audio_file_path):
     except Exception as e:
         logger.error(f"Error in speech recognition process: {str(e)}")
         return {'error': str(e)}
-    finally:
-        if audio_file_path and audio_file_path != audio_file_path:
-            try:
-                os.remove(audio_file_path)
-            except Exception as e:
-                logger.error(f"Failed to clean up denoised audio file: {str(e)}")
+    # 不再需要删除降噪文件的cleanup代码
+    # finally:
+    #     if audio_file_path and audio_file_path != audio_file_path:
+    #         try:
+    #             os.remove(audio_file_path)
+    #         except Exception as e:
+    #             logger.error(f"Failed to clean up denoised audio file: {str(e)}")
 
 def process_audio(audio_file_path):
     """
     Process audio file in parallel: perform speech transcription and emotion recognition simultaneously
     Return format: {'text': 'text content', 'emotion_type': 'emotion type', 'emotion_intensity': emotion intensity}
     """
-    denoised_path = None
     try:
-        # First perform noise reduction (only need to do once)
-        denoised_path = reduce_noise(audio_file_path)
+        # 直接使用原始音频文件，不进行降噪处理
+        # denoised_path = reduce_noise(audio_file_path)
         
         # Use ThreadPoolExecutor to perform speech transcription and emotion recognition in parallel
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            # Submit two tasks
-            transcribe_future = executor.submit(transcribe_audio, denoised_path)
-            emotion_future = executor.submit(detect_emotion, denoised_path)
+            # Submit two tasks - 直接使用原始音频文件
+            transcribe_future = executor.submit(transcribe_audio, audio_file_path)
+            emotion_future = executor.submit(detect_emotion, audio_file_path)
             
             # Get results
             transcribe_result = transcribe_future.result()
@@ -278,9 +276,10 @@ def process_audio(audio_file_path):
     except Exception as e:
         logger.error(f"Error processing audio file: {str(e)}")
         return {'error': str(e)}
-    finally:
-        if denoised_path and denoised_path != audio_file_path:
-            try:
-                os.remove(denoised_path)
-            except Exception as e:
-                logger.error(f"Failed to clean up denoised audio file: {str(e)}")
+    # 不再需要清理降噪文件
+    # finally:
+    #     if denoised_path and denoised_path != audio_file_path:
+    #         try:
+    #             os.remove(denoised_path)
+    #         except Exception as e:
+    #             logger.error(f"Failed to clean up denoised audio file: {str(e)}")

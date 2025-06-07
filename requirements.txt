@@ -9,8 +9,6 @@ onnxruntime_gpu==1.21.0
 pymongo==3.11.4
 Requests==2.32.3
 soundfile==0.13.1
-torch==2.6.0+cu126
-transformers==4.43.3
 zhipuai==2.1.5.20250106
 jieba==0.42.1
 wordcloud==1.9.3
