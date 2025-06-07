@@ -74,6 +74,8 @@ mongod --dbpath /data/db
 5. **Upload Cloud Functions & Modules:**
 - Right-click the cloudfunction folder → Select Upload All Cloud Functions, Public Modules, and Actions.
 - This deploys your backend logic to the uniCloud server.
+6. **Change the user_id**
+- go to frontend/common/http.js and frontend/components/likes/likes.vue, replace it with one of the user_id from the newly created database.
 
 - Note: uniCloud databases are managed via HBuilderX and the DCloud console, with built-in features like authentication, serverless functions, and monitoring. For more details, refer to [the uniCloud Official Documentation](https://doc.dcloud.net.cn/uniCloud/).
 
