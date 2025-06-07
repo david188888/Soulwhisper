@@ -55,3 +55,10 @@ export const update_thumbsup= (data) =>{
 		data
 	})
 }
+
+export const update_article= (data) =>{
+	return $http({
+		url:'update_article',
+		data
+	})
+}

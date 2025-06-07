@@ -40,7 +40,7 @@ cd SoulWhisper
 pip install -r requirements.txt
 ```
 
-#### 2. Database Setup (MongoDB)
+#### 2. Database Setup (MongoDB+uniCloud)
 
 **Download & Install MongoDB:**
 - Download MongoDB Community Server from: https://www.mongodb.com/try/download/community
@@ -56,10 +56,26 @@ sudo systemctl start mongod
 mongod --dbpath /data/db
 ```
 
-
 **Configuration:**
 - Default connection: `mongodb://localhost:27017`
 - Database name: `soulwhisper` (automatically created)
+
+**uniCloud Cloud Database Setup (for production)**
+- uniCloud is a cloud service integrated with DCloud's ecosystem, using MongoDB-compatible databases. Here's how to configure it:
+
+- Steps:
+1. **Install HBuilderX (the official IDE for uniApp).**
+2. **Register and authenticate a DCloud account.**
+3. **Create a Cloud Service Space:**
+- Open HBuilderX → Go to uniCloud → Click New Cloud Service Space.
+- Choose Alibaba Cloud Free Tier (recommended for starters) and follow the prompts to create.
+4. **Associate Database with Cloud Space:**
+- In HBuilderX, right-click the database folder in your project → Select Initialize Database.
+5. **Upload Cloud Functions & Modules:**
+- Right-click the cloudfunction folder → Select Upload All Cloud Functions, Public Modules, and Actions.
+- This deploys your backend logic to the uniCloud server.
+
+- Note: uniCloud databases are managed via HBuilderX and the DCloud console, with built-in features like authentication, serverless functions, and monitoring. For more details, refer to [the uniCloud Official Documentation](https://doc.dcloud.net.cn/uniCloud/).
 
 #### 3. Start Services
 

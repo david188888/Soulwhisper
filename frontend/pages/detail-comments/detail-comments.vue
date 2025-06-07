@@ -1,8 +1,9 @@
 <template>
 	<view>
 		<view>
-			<view class="comments-content" v-for="item in commentsList" :key="item.comment_id"></view>
-			<commentsBox :comments="item"></commentsBox>
+			<view class="comments-content" v-for="item in commentsList" :key="item.comment_id">
+				<commentsBox :comments="item"></commentsBox>
+			</view>
 		</view>
 		<uni-load-more v-if="commentsList.length === 0 || commentsList.length >5 " :icon-type="snow" :status="onload"></uni-load-more>
 	</view>
