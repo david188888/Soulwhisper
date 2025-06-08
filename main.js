@@ -4,6 +4,8 @@ import api from './frontend/common/api'
 
 // #ifndef VUE3
 import Vue from 'vue'
+import  VConsole  from  'vconsole';
+let vConsole = new VConsole();
 Vue.config.productionTip = false
 Vue.prototype.$api = api
 App.mpType = 'app'
