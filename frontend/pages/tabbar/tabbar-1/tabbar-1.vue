@@ -2,6 +2,7 @@
 	<view class="container">
 		<!-- Top lucky keyword area-->
 		<view class="header">
+			<image src="/frontend/static/img/tabbar/background.png" mode="aspectFill" class="header-background-image"></image>
 			<text class="keyword">🌟 Today's Keyword: {{ dailyKeyword.keyword || 'Loading...' }}</text>
 			<view class="healing-section">
 				<text class="sentence">✨ Healing: {{ shortQuoteContent || 'Loading...' }}</text>
@@ -303,17 +304,27 @@ export default {
 }
 
 .header {
-	background: url('frontend/static/img/tabbar/background.jpg') no-repeat center center;
-	background-size: cover;
+	display: flex;
+	/* background: url('frontend/static/img/tabbar/background.png') no-repeat center center; */
+	/* background-size: cover; */
 	background-color: rgba(255, 255, 255, 0.20);
+	position: relative; /* Add position relative to allow absolute positioning of the image */
 	backdrop-filter: blur(10px) saturate(180%);
 	-webkit-backdrop-filter: blur(10px) saturate(180%);
 	border-radius: 28px;
 	box-shadow: 0 0 12px rgba(0,0,0,0.08);
 	padding: 30px 38px;
 	margin-bottom: 30px;
-	position: relative;
 	overflow: hidden;
+}
+
+.header-background-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1; /* Ensure the image is behind the content */
 }
 
 .keyword {

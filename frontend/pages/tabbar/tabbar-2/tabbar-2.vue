@@ -22,10 +22,6 @@
 				/>
 			</view>
 		</view>
-
-		<view class="ai-bubble" @click="goToAIChat">
-			<image src="/static/ai-bubble.png" mode="aspectFill" class="ai-bubble-icon"/>
-		</view>
 	</view>
 </template>
 

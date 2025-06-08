@@ -1,3 +1,13 @@
+<template>
+	<view style="display: none">
+	  <image src="/frontend/static/img/tabbar/home.png" />
+	  <image src="/frontend/static/img/tabbar/information.png" />
+	  <image src="/frontend/static/img/tabbar/record.png" />
+	  <image src="/frontend/static/img/tabbar/chat.png" />
+	  <image src="/frontend/static/img/tabbar/me.png" />
+	</view>
+  </template>
+  
 <script>
 export default {
 	onLaunch: function() {

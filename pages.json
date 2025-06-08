@@ -43,9 +43,7 @@
 		{
 			"path": "frontend/pages/tabbar/tabbar-4/tabbar-4",
 			"style": {
-				// "navigationBarTitleText": "Moments"
 				"navigationStyle": "custom"
-				
 			}
 		},
 		{
@@ -132,32 +130,32 @@
 		"color": "#8F8F94",
 		"list": [{
 				"pagePath": "frontend/pages/tabbar/tabbar-1/tabbar-1",
-				"iconPath": "/frontend/static/img/tabbar/home.png",
-				"selectedIconPath": "/frontend/static/img/tabbar/home.png",
+				"iconPath": "/static/img/tabbar/home.png",
+				"selectedIconPath": "/static/img/tabbar/home.png",
 				"text": ""
 			},
 			{
 				"pagePath": "frontend/pages/tabbar/tabbar-2/tabbar-2",
-				"iconPath": "/frontend/static/img/tabbar/information.png",
-				"selectedIconPath": "/frontend/static/img/tabbar/information.png",
+				"iconPath": "/static/img/tabbar/information.png",
+				"selectedIconPath": "/static/img/tabbar/information.png",
 				"text": ""
 			},
 			{
 				"pagePath": "frontend/pages/home-3-detial/record/record",
-				"iconPath": "/frontend/static/img/tabbar/record.png",
-				"selectedIconPath": "/frontend/static/img/tabbar/record.png",
+				"iconPath": "/static/img/tabbar/record.png",
+				"selectedIconPath": "/static/img/tabbar/record.png",
 				"text": ""
 			},
 			{
 				"pagePath": "frontend/pages/tabbar/tabbar-4/tabbar-4",
-				"iconPath": "/frontend/static/img/tabbar/chat.png",
-				"selectedIconPath": "/frontend/static/img/tabbar/chat.png",
+				"iconPath": "/static/img/tabbar/chat.png",
+				"selectedIconPath": "static/img/tabbar/chat.png",
 				"text": ""
 			},
 			{
 				"pagePath": "frontend/pages/tabbar/tabbar-5/tabbar-5",
-				"iconPath": "/frontend/static/img/tabbar/me.png",
-				"selectedIconPath": "/frontend/static/img/tabbar/me.png",
+				"iconPath": "/static/img/tabbar/me.png",
+				"selectedIconPath": "/static/img/tabbar/me.png",
 				"text": ""
 			}
 		]
