@@ -10,7 +10,7 @@ class Diary(models.Model):
     user = models.ForeignKey(
         User,
         to_field='_id',
-        on_delete=models.DO_NOTHING,  # MongoDB不支持CASCADE
+        on_delete=models.DO_NOTHING,  
         related_name='diaries',
     )
 
@@ -35,10 +35,10 @@ class Diary(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        db_table = 'diary'  # 指定MongoDB中的集合名称
+        db_table = 'diary'  
         verbose_name = 'Diary'
         verbose_name_plural = 'Diaries'
-        # 移除索引定义，让MongoDB自动处理
+
 
     def __str__(self):
-        return f"{self.user.username}的日记: {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+        return f"{self.user.username}'s diary: {self.created_at.strftime('%Y-%m-%d %H:%M')}"
