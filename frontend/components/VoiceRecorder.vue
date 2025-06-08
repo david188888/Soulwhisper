@@ -9,7 +9,7 @@
 <template>
   <view class="container-chat">
   <view class="voice-recorder">
-    <img src="../static/img/voice.gif" class="voice-gif" />
+    <image src="/frontend/static/img/voice.gif" class="voice-gif" />
      <!-- Recording button -->
     <view class="record-button" @tap="handleRecord" :class="{ recording: isRecording }" :style="isRecording ? 'position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); z-index: 200;' : ''">
       <uni-icons :type="isRecording ? 'stop' : 'mic-filled'" size="30" color="#8A2BE2"></uni-icons>

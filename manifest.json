@@ -63,7 +63,8 @@
             "mode" : "hash"
         },
         "devServer" : {
-            "https" : false
+            "https" : false,
+            "port" : ""
         },
         "title" : "Soulwhisper"
     }
