@@ -13,6 +13,10 @@
             },
             "provider" : "aliyun",
             "type" : "uniCloud"
+        },
+        {
+            "playground" : "custom",
+            "type" : "uni-app:app-android"
         }
     ]
 }
