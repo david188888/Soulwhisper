@@ -1,5 +1,3 @@
-import { ssrContextKey } from "f:/hbuilderx/hbuilderx/plugins/hbuilderx-language-services/builtin-dts/common/vue2and3"
-
 export default function $http(options){
 	const{
 		url,
