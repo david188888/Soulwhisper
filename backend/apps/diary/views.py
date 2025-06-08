@@ -452,9 +452,9 @@ class DiaryDaysView(APIView):
             month = int(request.GET.get('month'))
             user = request.user
 
-            # 固定为该年1月1日
+            # Fixed to January 1st of the year
             start_date = timezone.make_aware(datetime(year, 1, 1))
-            # 结束为下月1日
+            # End is the first day of the next month
             if month == 12:
                 end_date = timezone.make_aware(datetime(year + 1, 1, 1))
             else:
@@ -476,9 +476,9 @@ class DiaryDaysView(APIView):
             return Response(days_list)
 
         except Exception as e:
-            logger.error(f"获取日记日期失败: {str(e)}", exc_info=True)
+            logger.error(f"Failed to get diary dates: {str(e)}", exc_info=True)
             return Response(
-                {'error': '获取日记日期失败'},
+                {'error': 'Failed to get diary dates'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
@@ -489,28 +489,28 @@ class DiaryDayDetailView(APIView):
         try:
             date_str = request.GET.get('date')
             if not date_str:
-                logger.error("缺少日期参数")
+                logger.error("Missing date parameter")
                 return Response(
-                    {'error': '日期参数不能为空'}, 
+                    {'error': 'Date parameter cannot be empty'}, 
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
             try:
-                # 解析日期字符串
+                # Parse date string
                 target_date = parse_date(date_str)
                 if not target_date:
                     raise ValueError("Invalid date format")
             except ValueError as e:
-                logger.error(f"日期格式无效: {date_str}")
+                logger.error(f"Invalid date format: {date_str}")
                 return Response(
-                    {'error': '日期格式无效，请使用YYYY-MM-DD格式'}, 
+                    {'error': 'Invalid date format, please use YYYY-MM-DD format'}, 
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
             user = request.user
-            logger.info(f"正在获取用户 {user.username} 在 {date_str} 的日记")
+            logger.info(f"Getting diary for user {user.username} on {date_str}")
             
-            # 使用日期范围查询
+            # Query by date range
             start_date = timezone.make_aware(datetime.combine(target_date, datetime.min.time()))
             end_date = timezone.make_aware(datetime.combine(target_date, datetime.max.time()))
             
@@ -528,15 +528,15 @@ class DiaryDayDetailView(APIView):
                     'emotion_intensity': diary.emotion_intensity,
                     'created_at': diary.created_at
                 }
-                logger.info(f"成功获取 {date_str} 的日记")
+                logger.info(f"Successfully got diary for {date_str}")
                 return Response(response_data, status=status.HTTP_200_OK)
             else:
-                logger.info(f"未找到 {date_str} 的日记记录")
+                logger.info(f"No diary record found for {date_str}")
                 return Response(None, status=status.HTTP_200_OK)
                 
         except Exception as e:
-            logger.error(f"获取日记详情时发生错误: {str(e)}", exc_info=True)
+            logger.error(f"Error occurred while getting diary detail: {str(e)}", exc_info=True)
             return Response(
-                {'error': '获取日记详情失败，请稍后重试'}, 
+                {'error': 'Failed to get diary detail, please try again later'}, 
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

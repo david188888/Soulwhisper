@@ -231,7 +231,6 @@ def transcribe_audio(audio_file_path):
     except Exception as e:
         logger.error(f"Error in speech recognition process: {str(e)}")
         return {'error': str(e)}
-    # 不再需要删除降噪文件的cleanup代码
     # finally:
     #     if audio_file_path and audio_file_path != audio_file_path:
     #         try:
@@ -245,12 +244,10 @@ def process_audio(audio_file_path):
     Return format: {'text': 'text content', 'emotion_type': 'emotion type', 'emotion_intensity': emotion intensity}
     """
     try:
-        # 直接使用原始音频文件，不进行降噪处理
         # denoised_path = reduce_noise(audio_file_path)
         
         # Use ThreadPoolExecutor to perform speech transcription and emotion recognition in parallel
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            # Submit two tasks - 直接使用原始音频文件
             transcribe_future = executor.submit(transcribe_audio, audio_file_path)
             emotion_future = executor.submit(detect_emotion, audio_file_path)
             
@@ -276,10 +273,3 @@ def process_audio(audio_file_path):
     except Exception as e:
         logger.error(f"Error processing audio file: {str(e)}")
         return {'error': str(e)}
-    # 不再需要清理降噪文件
-    # finally:
-    #     if denoised_path and denoised_path != audio_file_path:
-    #         try:
-    #             os.remove(denoised_path)
-    #         except Exception as e:
-    #             logger.error(f"Failed to clean up denoised audio file: {str(e)}")
