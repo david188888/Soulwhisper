@@ -39,7 +39,7 @@ cd SoulWhisper
 # Install all dependencies in root directory
 pip install -r requirements.txt
 
-# Note: Due to pip dependency resolution limitations, some package versions may conflict.
+# Note: Due to some version conflicts in Django-related dependencies, some package versions may conflict.
 # If you encounter version conflicts, manually install specific package versions from 
 # requirements.txt using the --force-reinstall flag:
 # pip install --force-reinstall package_name==version_number
