@@ -1,15 +1,14 @@
 <template>
 	<view class="content">
 		<view class="header">
-			<view class="header-title">Moment</view>
 			<view class="add-btn" @click="create">
-				<uni-icons type="plus" size="30" color="#8A2BE2"></uni-icons>
+				<uni-icons type="plus" size="35" color="#8A2BE2"></uni-icons>
 			</view>
 		</view>
 		<!-- Search bar -->
 		<!-- <navbar></navbar> -->
 		<!-- Tab options -->
-		<tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab>
+		<!-- <tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab> -->
 		<!--Card View -->
 		<view class="home-list">
 			<list :tab="tabList" :activeIndex="activeIndex" @change="change"></list>
@@ -84,21 +83,12 @@
 			background-color:#fff;
 			height: 40px;
 			width: 100%;
-			// Center title
-			.header-title {
-			    position: absolute;
-			    left: 50%;
-				margin: 10px 0;
-			    transform: translateX(-50%);
-			    font-size: 16px;
-			    font-weight: bold;
-			    color: #000;
-			    text-align: center;
-			  }
 			.add-btn {
 				position: absolute;
-				right: 0px;
 				margin: 5px 10px;
+				right: 20px;
+				// top: -40px;
+				z-index: 9999;
 			}
 		}
 		.home-list{

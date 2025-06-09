@@ -2,6 +2,9 @@
     "version" : "1.0",
     "configurations" : [
         {
+            "app" : {
+                "launchtype" : "local"
+            },
             "default" : {
                 "launchtype" : "local"
             },
@@ -15,7 +18,7 @@
             "type" : "uniCloud"
         },
         {
-            "playground" : "custom",
+            "playground" : "standard",
             "type" : "uni-app:app-android"
         }
     ]

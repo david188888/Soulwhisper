@@ -43,7 +43,7 @@
 		{
 			"path": "frontend/pages/tabbar/tabbar-4/tabbar-4",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "Moment"
 			}
 		},
 		{

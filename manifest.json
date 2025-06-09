@@ -2,8 +2,8 @@
     "name" : "SoulWhisper",
     "appid" : "__UNI__6FB36A2",
     "description" : "",
-    "versionName" : "2.1.2",
-    "versionCode" : "100",
+    "versionName" : "4.0.1",
+    "versionCode" : 401,
     "transformPx" : false,
     "compatConfig" : {
         "MODE" : 2

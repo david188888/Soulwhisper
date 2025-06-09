@@ -2,7 +2,7 @@
 	<view class="container">
 		<!-- Top lucky keyword area-->
 		<view class="header">
-			<image src="/frontend/static/img/tabbar/background.png" mode="aspectFill" class="header-background-image"></image>
+			<!-- <image src="/frontend/static/img/tabbar/background.png" mode="aspectFill" class="header-background-image"></image> -->
 			<text class="keyword">🌟 Today's Keyword: {{ dailyKeyword.keyword || 'Loading...' }}</text>
 			<view class="healing-section">
 				<text class="sentence">✨ Healing: {{ shortQuoteContent || 'Loading...' }}</text>
