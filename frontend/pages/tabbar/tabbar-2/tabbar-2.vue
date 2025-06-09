@@ -27,7 +27,6 @@
 
 <script>
 import { api } from '../../../components/api/apiPath';
-// You need to ensure that the qiun-data-charts component has been installed and globally registered in pages.json.
 	export default {
 		data() {
 			return {
@@ -62,7 +61,6 @@ import { api } from '../../../components/api/apiPath';
 		this.fetchStatistics();
 		},
 		methods: {
-			
 			async fetchStatistics() {
 				try {
 					const token = uni.getStorageSync('token')
@@ -82,7 +80,6 @@ import { api } from '../../../components/api/apiPath';
 							'content-type': `application/json`
 						}
 					});
-					
 					if (response.statusCode === 200 && response.data) {
 						const data = response.data;
 						this.wordcloudImage = data.wordcloud;

@@ -101,13 +101,13 @@ export default {
   mounted() {
     this.isMounted = true;
     // Initialize recording functionality
-    RecordApp.UniPageOnShow(this);
+    RecordApp.UniWebViewActivate(this);
     // Pre-request recording permission
     this.requestPermission();
   },
 
   onShow() {
-    if(this.isMounted) RecordApp.UniPageOnShow(this);
+    if(this.isMounted) RecordApp.UniWebViewActivate(this);
 
     // #ifdef APP-PLUS
     // App 环境下提前请求权限
