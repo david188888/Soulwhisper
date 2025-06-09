@@ -9,7 +9,7 @@
 		{
 			"path": "frontend/pages/login/index",
 			"style": {
-				"navigationBarTitleText": "登录",
+				"navigationBarTitleText": "login",
 				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false
@@ -19,7 +19,7 @@
 		{
 			"path": "frontend/pages/register/index",
 			"style": {
-				"navigationBarTitleText": "注册",
+				"navigationBarTitleText": "register",
 				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false

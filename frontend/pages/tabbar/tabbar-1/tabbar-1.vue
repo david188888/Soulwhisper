@@ -2,11 +2,12 @@
 	<view class="container">
 		<!-- Top lucky keyword area-->
 		<view class="header">
-			<!-- <image src="/frontend/static/img/tabbar/background.png" mode="aspectFill" class="header-background-image"></image> -->
-			<text class="keyword">🌟 Today's Keyword: {{ dailyKeyword.keyword || 'Loading...' }}</text>
+			<image src="/frontend/static/img/tabbar/background.png" mode="aspectFill" class="header-background-image"></image>
+			<text class="keyword-title">🌟 Today's Keyword:</text>
+			<text class="keyword-center">Gratitude</text>
 			<view class="healing-section">
-				<text class="sentence">✨ Healing: {{ shortQuoteContent || 'Loading...' }}</text>
-				<text class="activity">🌈 Activity: {{ dailyActivity.description || 'Loading...' }}</text>
+				<text class="sentence">✨ Healing Quote: You deserve to be treated gently.</text>
+				<text class="activity">🌈 Healing Activity: Meditation Relaxation</text>
 			</view>
 		</view>
 		
@@ -251,13 +252,11 @@ export default {
 			const today = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
 			const cache = uni.getStorageSync('dailyContentCache') || {};
 			if (cache.date === today && cache.data) {
-				// 用缓存
 				this.dailyKeyword = cache.data.keyword || {};
 				this.dailyActivity = cache.data.activity || {};
 				this.shortQuoteContent = cache.data.quote ? cache.data.quote.content : '';
 				return;
 			}
-			// 没有缓存或不是今天，重新请求
 			try {
 				const userInfo = uni.getStorageSync('userInfo');
 				if (!userInfo || !userInfo.token) {
@@ -276,7 +275,6 @@ export default {
 					this.dailyKeyword = res.data.keyword || {};
 					this.dailyActivity = res.data.activity || {};
 					this.shortQuoteContent = res.data.quote ? res.data.quote.content : '';
-					// 缓存到本地
 					uni.setStorageSync('dailyContentCache', {
 						date: today,
 						data: res.data
@@ -305,10 +303,9 @@ export default {
 
 .header {
 	display: flex;
-	/* background: url('frontend/static/img/tabbar/background.png') no-repeat center center; */
-	/* background-size: cover; */
+	flex-direction: column;
 	background-color: rgba(255, 255, 255, 0.20);
-	position: relative; /* Add position relative to allow absolute positioning of the image */
+	position: relative;
 	backdrop-filter: blur(10px) saturate(180%);
 	-webkit-backdrop-filter: blur(10px) saturate(180%);
 	border-radius: 28px;
@@ -316,6 +313,36 @@ export default {
 	padding: 30px 38px;
 	margin-bottom: 30px;
 	overflow: hidden;
+}
+
+.keyword-title {
+	font-size: 16px;
+	color: #222;
+	font-weight: 600;
+
+	display: block;
+	margin-bottom: 0;
+}
+
+.keyword-center {
+	font-size: 26px;
+	color: #222;
+	font-weight: 700;
+	text-align: center;
+	display: block;
+	margin: 4px 0 8px 0;
+}
+
+
+.healing-section {
+	margin-top: 4px;
+}
+
+.healing-section text {
+	display: block;
+	margin: 3px 0;
+	font-size: 16px;
+	color: #333;
 }
 
 .header-background-image {
@@ -327,15 +354,7 @@ export default {
 	z-index: -1; /* Ensure the image is behind the content */
 }
 
-.keyword {
-	font-size: 22px;
-	color: #222;
-	font-weight: 700;
-	display: block;
-	margin-bottom: 18px;
-	text-shadow: 0 2px 8px rgba(0,0,0,0.08);
-	letter-spacing: 1px;
-}
+
 
 .healing-section text {
 	display: block;
