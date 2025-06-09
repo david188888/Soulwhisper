@@ -101,13 +101,13 @@ export default {
   mounted() {
     this.isMounted = true;
     // Initialize recording functionality
-    RecordApp.UniWebViewActivate(this);
+    RecordApp.UniPageOnShow(this);
     // Pre-request recording permission
     this.requestPermission();
   },
 
   onShow() {
-    if(this.isMounted) RecordApp.UniWebViewActivate(this);
+    if(this.isMounted) RecordApp.UniPageOnShow(this);
 
     // #ifdef APP-PLUS
     // App 环境下提前请求权限
@@ -123,9 +123,9 @@ export default {
         if (result !== PackageManager.PERMISSION_GRANTED) {
           const ActivityCompat = plus.android.importClass('androidx.core.app.ActivityCompat');
           ActivityCompat.requestPermissions(main, [permission], 1);
-          console.log('请求麦克风权限');
+          console.log('Request microphone permission');
         } else {
-          console.log('已有麦克风权限');
+          console.log('Microphone permission granted');
           // 已有权限，可以初始化录音
           RecordApp.UniWebViewActivate(this);
         }
@@ -165,19 +165,19 @@ export default {
       const ContextCompat = plus.android.importClass('androidx.core.content.ContextCompat');
       const PackageManager = plus.android.importClass('android.content.pm.PackageManager');
 
-      // 检查权限状态
+      // Check permission status
       const permission = 'android.permission.RECORD_AUDIO';
       const result = ContextCompat.checkSelfPermission(main, permission);
 
       if (result !== PackageManager.PERMISSION_GRANTED) {
-        // 请求权限
+        // Request permission
         const ActivityCompat = plus.android.importClass('androidx.core.app.ActivityCompat');
         ActivityCompat.requestPermissions(main, [permission], 1);
 
-        console.log("请求麦克风权限");
+        console.log("Request microphone permission");
       } else {
-        console.log("已有麦克风权限");
-        // 已有权限，初始化录音
+        console.log("Microphone permission granted");
+        // Permission granted, initialize recording
         RecordApp.UniWebViewActivate(this);
         RecordApp.RequestPermission(() => {
           console.log("Recording permission granted");
@@ -222,17 +222,17 @@ export default {
             ActivityCompat.requestPermissions(main, [permission], 1);
 
             uni.showModal({
-              title: '提示',
-              content: '录音功能需要麦克风权限，请在弹出的对话框中点击"允许"',
+              title: 'Notice',
+              content: 'Recording requires microphone permission. Please click "Allow" in the dialog box.',
               showCancel: false
             });
           } else {
-            // 已有权限，直接开始录音
+            // Permission granted, start recording
               this.startRecord();
           }
         } catch (error) {
-          console.error('权限请求错误:', error);
-          // 如果权限检查出错，尝试直接开始录音
+          console.error('Permission request error:', error);
+          // If permission check fails, try to start recording directly
           this.startRecord();
         }
         // #endif
@@ -258,27 +258,26 @@ export default {
     startRecord() {
       try {
         // #ifdef APP-PLUS
-        // 确保在APP环境下先激活WebView
+
         RecordApp.UniWebViewActivate(this);
 
-        // 在APP环境下，确保在Start前再次请求权限
+
         RecordApp.RequestPermission(() => {
-          console.log("APP环境下录音权限已确认");
+          console.log("verify permission success in APP environment");
           this.initRecording();
         }, (msg) => {
-          console.error("APP环境下录音权限请求失败:", msg);
-          // 尝试直接初始化录音，因为可能已经有权限
+          console.error("fail to request permission in APP environment:", msg);
           this.initRecording();
         });
-        return; // 在APP环境下提前返回，避免执行下面的代码
+        return;
         // #endif
 
-        // 非APP环境直接初始化录音
+
         this.initRecording();
       } catch (error) {
-        console.error("录音启动异常:", error);
+        console.error("Recording initialization error:", error);
         uni.showToast({
-          title: '录音初始化异常',
+          title: 'Recording initialization error',
           icon: 'none',
           duration: 2000
         });
@@ -286,7 +285,7 @@ export default {
       }
     },
 
-    // 将录音初始化逻辑抽取为单独的方法
+
     initRecording() {
       try {
         const set = {
@@ -320,10 +319,10 @@ export default {
           }`
         };
 
-        // 添加超时处理
+        // Add timeout handling
         let initTimeout = setTimeout(() => {
           uni.showToast({
-            title: '录音初始化超时，请重试',
+            title: 'Recording initialization timeout, please try again',
             icon: 'none',
             duration: 2000
           });
@@ -331,27 +330,27 @@ export default {
         }, 5000);
 
         RecordApp.Start(set, () => {
-          clearTimeout(initTimeout); // 清除超时
+          clearTimeout(initTimeout); // Clear timeout
           console.log("Recording started");
           this.isRecording = true;
           this.recordTime = 0;
           this.recordTip = 'Recording...';
 
-          // 创建波形图代码保持不变...
+          // create wave view code remains the same...
         }, (msg) => {
-          clearTimeout(initTimeout); // 清除超时
+          clearTimeout(initTimeout); // Clear timeout
           console.error("Failed to start recording: " + msg);
 
-          // 更详细的错误提示
+          // More detailed error prompt
           if(msg.includes("permission")) {
             uni.showToast({
-              title: '请授予麦克风权限',
+              title: 'Please grant microphone permission',
               icon: 'none',
               duration: 2000
             });
           } else {
             uni.showToast({
-              title: '录音失败: ' + msg,
+              title: 'Recording failed: ' + msg,
               icon: 'none',
               duration: 2000
             });
@@ -359,9 +358,9 @@ export default {
           this.resetRecording();
         });
       } catch (error) {
-        console.error("录音初始化异常:", error);
+        console.error("Recording initialization error:", error);
         uni.showToast({
-          title: '录音初始化异常',
+          title: 'Recording initialization error',
           icon: 'none',
           duration: 2000
         });
@@ -389,7 +388,7 @@ export default {
           console.log('token',token)
 
 // #ifdef H5
-	//H5直接使用浏览器的File接口来构造一个文件
+	//H5 directly use the browser's File interface to construct a file
 	uni.uploadFile({
 		url: api.asr
 		,file: new File([arrayBuffer], "recorder.mp3")
@@ -411,9 +410,9 @@ export default {
 // #endif
 
 // #ifdef APP
-	//App直接保存二进制数据到本地文件，然后上传
+	//App directly save binary data to local file, then upload
 	RecordApp.UniSaveLocalFile("recorder.mp3", arrayBuffer, (savePath) => {
-		console.log("录音文件已保存:", savePath);
+		console.log("Recording file saved:", savePath);
 		const token = uni.getStorageSync('token');
 		uni.uploadFile({
 			url: api.asr,
@@ -426,42 +425,42 @@ export default {
 			success: (res) => {
 				console.log('上传成功:', res);
 				try {
-					// 解析返回的数据
+					// parse the returned data
 					let data = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
 					uni.hideLoading();
 					uni.navigateTo({
 						url: `/frontend/pages/diary/publish/index?data=${encodeURIComponent(JSON.stringify(data))}`
 					});
 				} catch (e) {
-					console.error('解析响应数据失败:', e);
+					console.error('Failed to parse response data:', e);
 					uni.hideLoading();
 					uni.showToast({
-						title: '处理响应失败',
+						title: 'Failed to process response',
 						icon: 'none'
 					});
 }
 			},
 			fail: (err) => {
-				console.error('上传失败:', err);
+				console.error('Upload failed:', err);
 				uni.hideLoading();
 				uni.showToast({
-					title: '上传失败',
+					title: 'Upload failed',
 					icon: 'none'
 				});
 			}
 		});
 	}, (err) => {
-		console.error('保存录音文件失败:', err);
+		console.error('Failed to save recording file:', err);
 		uni.hideLoading();
 		uni.showToast({
-			title: '保存录音失败',
+			title: 'Failed to save recording file',
 			icon: 'none'
 		});
 	});
 // #endif
 
 // #ifdef MP-WEIXIN
-	//mini program需要保存二进制数据到本地文件，然后上传
+	//mini program need to save binary data to local file, then upload
 	var savePath=wx.env.USER_DATA_PATH+"/recorder.mp3";
 	wx.getFileSystemManager().writeFile({
 		filePath:savePath
@@ -523,7 +522,7 @@ export default {
       this.currentVolume = 0;
       this.recordTip = 'Click the square button to start recording';
       if (this.waveView) {
-        this.waveView.clear(); // 清除波形图
+        this.waveView.clear(); // clear wave view
       }
 
       // clean request

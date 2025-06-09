@@ -18,7 +18,7 @@
             "type" : "uniCloud"
         },
         {
-            "playground" : "standard",
+            "playground" : "custom",
             "type" : "uni-app:app-android"
         }
     ]
