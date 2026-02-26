@@ -5,7 +5,7 @@ An AI-powered emotional companion and anonymous healing platform focused on youn
 ## Features
 
 - **Intelligent Voice Diary**: Voice recording, automatic speech-to-text, emotion analysis
-- **Emotional Data Visualization**: Quantify emotional states, generate emotion reports
+- **Emotional Data Visualization**: Quantify emotional states, generate emotion reports ([see detailed documentation](docs/VISUALIZATION_STATISTICS.md))
 - **Anonymous Community**: Emotional drift bottles, secure emotional communication platform
 - **AI Psychological Companion**: LLM conversational chatbot for conversational companionship, instant emotional support
 
@@ -141,3 +141,7 @@ If you encounter issues with the pre-configured API keys, you have the following
 ### Important Notes
 1. Ensure MongoDB service is running before starting the backend
 2. API keys are already configured and ready to use
+
+## Documentation
+
+- **[Visualization Statistics](docs/VISUALIZATION_STATISTICS.md)** - Comprehensive guide to emotional data visualization features, including word clouds, emotion distribution charts, and API endpoints
